@@ -1,0 +1,66 @@
+<h4 mat-dialog-title>Add Game</h4>
+<mat-dialog-content>
+    <form [formGroup]="form">
+        <div>
+            <mat-form-field>
+                <mat-label>Number of Turns</mat-label>
+                <input
+                    matInput
+                    type="number"
+                    formControlName="turns"
+                    cdkFocusInitial
+                />
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-form-field>
+                <mat-label>Notes</mat-label>
+                <textarea
+                    matInput
+                    cdkTextareaAutosize
+                    formControlName="notes"
+                ></textarea>
+            </mat-form-field>
+        </div>
+
+        <div>
+            <h4>
+                Players
+                <button mat-icon-button (click)="addPlayInstance()" aria-label="">
+                    <mat-icon color="primary">add</mat-icon>
+                </button>
+            </h4>
+            @for (
+                playInstanceForm of playInstances.controls;
+                track $index;
+                let i = $index
+            ) {
+                @if (decks$ | async; as decks) {
+                    @if (pilots$ | async; as pilots) {
+                        <app-game-form-play-instance
+                            [form]="playInstanceForm"
+                            [index]="i"
+                            [decks]="decks"
+                            [pilots]="pilots"
+                            (removed)="removePlayInstance(i)"
+                            (pilotAdded)="pilotCreated()"
+                        ></app-game-form-play-instance>
+                        <br />
+                    }
+                }
+            }
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="false">Cancel</button>
+    <button
+        mat-button
+        color="accent"
+        [disabled]="!form.valid || form.pristine"
+        (click)="submit()"
+    >
+        Submit
+    </button>
+</mat-dialog-actions>

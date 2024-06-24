@@ -1,0 +1,12 @@
+@for (color of colors; track color) {
+    @if (!(isReadOnly && !(color | isColorActive: colorIdentityString))) {
+        <button
+            mat-button
+            [class]="color"
+            (click)="!isReadOnly && selectColor(color)"
+            [ngClass]="{ active: color | isColorActive: colorIdentityString, selectable: !isReadOnly }"
+        >
+            {{ color }}
+        </button>
+    }
+}

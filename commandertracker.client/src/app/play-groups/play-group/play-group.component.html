@@ -1,0 +1,14 @@
+@if (playGroup$ | async; as playGroup) {
+    <h4>{{ playGroup.name }}</h4>
+
+    <div>
+        <a [routerLink]="['decks']">Decks</a>
+        &nbsp;
+        <a [routerLink]="['games']">Games</a>
+        &nbsp;
+        <a [routerLink]="['pilots']">Pilots</a>
+    </div>
+
+    <router-outlet></router-outlet>
+}
+    

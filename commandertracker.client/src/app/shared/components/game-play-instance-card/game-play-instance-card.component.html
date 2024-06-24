@@ -1,0 +1,15 @@
+<mat-card>
+    <mat-card-header [routerLink]="['/', 'decks', playInstance.deck.id]">
+        <div>
+            <span>{{ playInstance.endPosition }}</span>
+            <span> - </span>
+            <span>{{ playInstance.deck.name }}</span>
+        </div>
+        <div>
+            <app-color-identity-display [isReadOnly]="true" [colorIdentityString]="playInstance.deck.colorIdentity | toColorIdentityString"></app-color-identity-display>
+        </div>
+    </mat-card-header>
+    <mat-card-content [routerLink]="['/', 'pilots', playInstance.pilot.id]">{{
+        playInstance.pilot.name
+    }}</mat-card-content>
+</mat-card>

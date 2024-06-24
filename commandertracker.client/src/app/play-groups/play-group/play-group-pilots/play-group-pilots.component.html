@@ -1,0 +1,6 @@
+@if (pilots$ | async; as pilots) {
+    <button (click)="openPilotFormDialog()">Add Player</button>
+    @for (pilot of pilots; track pilot.id) {
+        <p>{{ pilot.name }}</p>
+    }
+}

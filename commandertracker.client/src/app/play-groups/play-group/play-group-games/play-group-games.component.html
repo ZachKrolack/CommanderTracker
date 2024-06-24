@@ -1,0 +1,5 @@
+@if (games$ | async; as games) {
+    @for (game of games; track game.id) {
+        <p>{{ game.createdDate | date }}</p>
+    }
+}

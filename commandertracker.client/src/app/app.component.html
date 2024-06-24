@@ -1,0 +1,22 @@
+<nav>
+    <mat-toolbar>
+        <button mat-icon-button aria-label="">
+            <mat-icon>menu</mat-icon>
+        </button>
+
+        <span>Commander Tracker</span>
+        &nbsp;
+        <a routerLink="/play-groups">Play Groups</a>
+        &nbsp;
+        <a routerLink="/decks">Decks</a>
+        &nbsp;
+        <a routerLink="/games">Games</a>
+        &nbsp;
+        <!-- <a routerLink="/pilots">Pilots</a>
+        &nbsp; -->
+        <button (click)="logout()">Log Out</button>
+    </mat-toolbar>
+</nav>
+<main>
+    <router-outlet />
+</main>

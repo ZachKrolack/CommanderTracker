@@ -1,0 +1,6 @@
+@if (deck$ | async; as deck) {
+    <h2>{{ deck.name }}</h2>
+    @for (playInstance of deck.playInstances; track playInstance.id) {
+        <app-game-card [game]="playInstance.game"></app-game-card>
+    }
+}

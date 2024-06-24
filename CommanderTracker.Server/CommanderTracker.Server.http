@@ -1,0 +1,6 @@
+@CommanderTracker.Server_HostAddress = http://localhost:5255
+
+GET {{CommanderTracker.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

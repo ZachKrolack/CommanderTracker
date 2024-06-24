@@ -1,0 +1,73 @@
+<h4>Register</h4>
+<form [formGroup]="form">
+    <div>
+        <mat-form-field>
+            <mat-label>Username</mat-label>
+            <input
+                matInput
+                type="text"
+                formControlName="userName"
+                cdkFocusInitial
+            />
+            @if (form.controls.userName.errors?.["required"]) {
+                <mat-error></mat-error>
+            }
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input
+                matInput
+                type="text"
+                formControlName="email"
+            />
+            @if (form.controls.email.errors?.["required"]) {
+                <mat-error></mat-error>
+            }
+            @else if (form.controls.email.errors?.["email"]) {
+                <mat-error></mat-error>
+            }
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input
+                matInput
+                type="password"
+                formControlName="password"
+            />
+            @if (form.controls.password.errors?.["minlength"]) {
+                <mat-error></mat-error>
+            }
+            @else if (form.controls.password.errors?.["maxlength"]) {
+                <mat-error></mat-error>
+            }
+            @else if (form.controls.password.errors?.["pattern"]) {
+                <mat-error></mat-error>
+            }
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field >
+            <mat-label>Confirm Password</mat-label>
+            <input
+                matInput
+                type="password"
+                [errorStateMatcher]="confirmPasswordErrorStateMatcher"
+                formControlName="confirmPassword"
+            />
+            @if (!form.controls.confirmPassword.pristine && form.errors?.[passwordsDoNotMatchErrorKey]) {
+                <mat-error></mat-error>
+            }
+        </mat-form-field>
+    </div>
+
+    <div>
+        <button mat-raised-button (click)="register()" [disabled]="!form.valid">Register</button>
+    </div>
+</form>

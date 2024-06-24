@@ -1,0 +1,6 @@
+<button (click)="openDeckFormDialog()">Add Deck</button>
+@if (decks$ | async; as decks) {
+    @for (playGroupDeck of decks; track playGroupDeck.id) {
+        <p>{{ playGroupDeck.deck.name }}</p>
+    }
+}

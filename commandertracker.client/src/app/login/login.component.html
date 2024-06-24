@@ -1,0 +1,24 @@
+<h4>Login</h4>
+<form [formGroup]="form">
+    <div>
+        <mat-form-field>
+            <mat-label>Username</mat-label>
+            <input matInput type="text" formControlName="userName" cdkFocusInitial>
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password">
+        </mat-form-field>
+    </div>
+
+    <div>
+        <a routerLink="/register">register</a>
+    </div>
+
+    <div>
+        <button mat-raised-button (click)="login()" [disabled]="!form.valid">Login</button>
+    </div>
+</form>

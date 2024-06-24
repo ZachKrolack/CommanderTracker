@@ -1,0 +1,37 @@
+button {
+    opacity: 0.25;
+    pointer-events: none;
+
+    &.active {
+        opacity: 1;
+    }
+
+    &.selectable {
+        pointer-events: all;
+    }
+}
+
+.w {
+    color: yellow !important;
+    background-color: rgba($color: yellow, $alpha: 0.1) !important;
+}
+
+.u {
+    color: blue !important;
+    background-color: rgba($color: blue, $alpha: 0.1) !important;
+}
+
+.b {
+    color: black !important;
+    background-color: rgba($color: black, $alpha: 0.1) !important;
+}
+
+.r {
+    color: red !important;
+    background-color: rgba($color: red, $alpha: 0.1) !important;
+}
+
+.g {
+    color: green !important;
+    background-color: rgba($color: green, $alpha: 0.1) !important;
+}
