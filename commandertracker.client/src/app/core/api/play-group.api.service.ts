@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Deck, DeckCreateRequest } from '../models/deck.model';
-import { Game } from '../models/game.model';
+import { Game, GameCreateRequest } from '../models/game.model';
 import { Pilot, PilotCreateRequest } from '../models/pilot.model';
 import {
     PlayGroup,
@@ -46,22 +46,32 @@ export class PlayGroupApiService {
 
     // Decks
 
-    getPlayGroupDecks(id: string): Observable<PlayGroupDeck[]> {
+    getDecks(id: string): Observable<PlayGroupDeck[]> {
         return this.http.get<PlayGroupDeck[]>(`${this.URL}/${id}/decks`);
     }
 
-    createPlayGroupDeck(id: string, deck: DeckCreateRequest): Observable<Deck> {
+    createDeck(id: string, deck: DeckCreateRequest): Observable<Deck> {
         return this.http.post<Deck>(`${this.URL}/${id}/decks`, deck);
     }
 
-    getPlayGroupDeck(id: string, deckId: string): Observable<Deck> {
-        return this.http.get<Deck>(`${this.URL}/${id}/decks/${deckId}`);
+    getDeck(id: string, deckId: string): Observable<PlayGroupDeck> {
+        return this.http.get<PlayGroupDeck>(
+            `${this.URL}/${id}/decks/${deckId}`
+        );
     }
 
     // Games
 
-    getPlayGroupGames(id: string): Observable<Game[]> {
+    getGames(id: string): Observable<Game[]> {
         return this.http.get<Game[]>(`${this.URL}/${id}/games`);
+    }
+
+    createGame(id: string, game: GameCreateRequest): Observable<Game> {
+        return this.http.post<Game>(`${this.URL}/${id}/games`, game);
+    }
+
+    getGame(id: string, gameId: string): Observable<Game> {
+        return this.http.get<Game>(`${this.URL}/${id}/games/${gameId}`);
     }
 
     // Pilots

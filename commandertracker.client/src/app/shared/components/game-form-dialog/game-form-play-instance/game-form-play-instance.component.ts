@@ -18,10 +18,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { Observable } from 'rxjs';
-import { Deck } from 'src/app/core/models/deck.model';
 import { Pilot } from 'src/app/core/models/pilot.model';
-import { DeckFormDialogComponent } from '../../deck-form-dialog/deck-form-dialog.component';
+import { PlayGroupDeck } from 'src/app/core/models/playGroupDeck.model';
 import {
     PilotFormDialogComponent,
     PilotFormDialogData
@@ -49,9 +47,7 @@ import { PlayInstanceForm } from '../game-form';
 export class GameFormPlayInstanceComponent {
     @Input() form!: FormGroup<PlayInstanceForm>;
     @Input() index = 0;
-    @Input() decks$!: Observable<Deck[]>;
-    @Input() pilots$!: Observable<Pilot[]>;
-    @Input() decks!: Deck[];
+    @Input() decks!: PlayGroupDeck[];
     @Input() pilots!: Pilot[];
 
     @Output() removed: EventEmitter<void> = new EventEmitter<void>();
@@ -63,9 +59,9 @@ export class GameFormPlayInstanceComponent {
 
     constructor(private dialog: MatDialog) {}
 
-    openDeckFormDialog(): void {
-        const dialogRef = this.dialog.open(DeckFormDialogComponent);
-    }
+    // openDeckFormDialog(): void {
+    //     const dialogRef = this.dialog.open(DeckFormDialogComponent);
+    // }
 
     openPilotFormDialog(): void {
         const dialogRef = this.dialog.open<

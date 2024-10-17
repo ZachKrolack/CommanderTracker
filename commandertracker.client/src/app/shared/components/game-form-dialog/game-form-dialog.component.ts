@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import {
     FormArray,
     FormControl,
@@ -10,7 +10,7 @@ import {
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import {
-    MatDialog,
+    MAT_DIALOG_DATA,
     MatDialogModule,
     MatDialogRef
 } from '@angular/material/dialog';
@@ -18,12 +18,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { Observable, shareReplay } from 'rxjs';
-import { DeckService } from 'src/app/core/api/deck.service';
-import { GameService } from 'src/app/core/api/game.service';
-import { PilotService } from 'src/app/core/api/pilot.service';
-import { Deck } from 'src/app/core/models/deck.model';
+import { PlayGroupApiService } from 'src/app/core/api/play-group.api.service';
 import { Game, GameCreateRequest } from 'src/app/core/models/game.model';
 import { Pilot } from 'src/app/core/models/pilot.model';
+import { PlayGroupDeck } from 'src/app/core/models/playGroupDeck.model';
 import {
     GameForm,
     PlayInstanceForm,
@@ -31,7 +29,9 @@ import {
 } from './game-form';
 import { GameFormPlayInstanceComponent } from './game-form-play-instance/game-form-play-instance.component';
 
-export type GameFormDialogData = {};
+export type GameFormDialogData = {
+    playGroupId: string;
+};
 
 @Component({
     selector: 'app-game-form-dialog',
@@ -53,24 +53,26 @@ export type GameFormDialogData = {};
 export class GameFormDialogComponent implements OnInit {
     form!: FormGroup<GameForm>;
 
-    decks$!: Observable<Deck[]>;
+    decks$!: Observable<PlayGroupDeck[]>;
     pilots$!: Observable<Pilot[]>;
+
+    get playGroupId(): string {
+        return this.data.playGroupId;
+    }
 
     get playInstances(): FormArray<FormGroup<PlayInstanceForm>> {
         return this.form.controls.playInstances;
     }
 
     constructor(
+        @Inject(MAT_DIALOG_DATA) public data: GameFormDialogData,
         private dialogRef: MatDialogRef<GameFormDialogComponent>,
-        private dialog: MatDialog,
-        private deckService: DeckService,
-        private gameService: GameService,
-        private pilotService: PilotService
+        private playGroupApiService: PlayGroupApiService
     ) {}
 
     ngOnInit(): void {
-        this.decks$ = this.getDecks();
-        this.pilots$ = this.getPilots();
+        this.decks$ = this.getDecks(this.playGroupId);
+        this.pilots$ = this.getPilots(this.playGroupId);
 
         this.form = this.initForm();
     }
@@ -87,7 +89,7 @@ export class GameFormDialogComponent implements OnInit {
     }
 
     pilotCreated(): void {
-        this.pilots$ = this.getPilots();
+        this.pilots$ = this.getPilots(this.playGroupId);
     }
 
     submit(): void {
@@ -97,19 +99,29 @@ export class GameFormDialogComponent implements OnInit {
     }
 
     private createGame(): Observable<Game> {
-        const GameCreateRequest: GameCreateRequest = parseGameCreateRequest(
+        const gameCreateRequest: GameCreateRequest = parseGameCreateRequest(
             this.form
         );
 
-        return this.gameService.createGame(GameCreateRequest);
+        return this.playGroupApiService.createGame(
+            this.playGroupId,
+            gameCreateRequest
+        );
     }
 
-    private getDecks(): Observable<Deck[]> {
-        return this.deckService.getDecks().pipe(shareReplay());
+    private getDecks(playGroupId: string): Observable<PlayGroupDeck[]> {
+        return this.playGroupApiService.getDecks(playGroupId).pipe(
+            // map((decks: PlayGroupDeck[]) =>
+            //     decks.map((deck) => deck.deck as Deck)
+            // ), // TODO
+            shareReplay()
+        );
     }
 
-    private getPilots(): Observable<Pilot[]> {
-        return this.pilotService.getPilots().pipe(shareReplay());
+    private getPilots(playGroupId: string): Observable<Pilot[]> {
+        return this.playGroupApiService
+            .getPilots(playGroupId)
+            .pipe(shareReplay());
     }
 
     private initForm(): FormGroup<GameForm> {
@@ -127,7 +139,11 @@ export class GameFormDialogComponent implements OnInit {
         playInstanceIndex: number | null = null
     ): FormGroup<PlayInstanceForm> {
         return new FormGroup<PlayInstanceForm>({
-            deckId: new FormControl<string | null>(null, Validators.required),
+            // deckId: new FormControl<string | null>(null, Validators.required),
+            playGroupDeckId: new FormControl<string | null>(
+                null,
+                Validators.required
+            ),
             pilotId: new FormControl<string | null>(null, Validators.required),
             turnOrder: new FormControl<number | null>(playInstanceIndex, [
                 Validators.required,

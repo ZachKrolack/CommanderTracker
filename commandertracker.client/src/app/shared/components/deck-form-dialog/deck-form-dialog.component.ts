@@ -103,10 +103,7 @@ export class DeckFormDialogComponent implements OnInit {
         };
 
         return this.playGroupId
-            ? this.playGroupApiService.createPlayGroupDeck(
-                  this.playGroupId,
-                  deck
-              )
+            ? this.playGroupApiService.createDeck(this.playGroupId, deck)
             : this.deckService.createDeck(deck);
     }
 

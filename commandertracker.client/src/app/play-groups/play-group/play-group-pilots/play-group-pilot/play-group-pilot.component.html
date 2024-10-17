@@ -1,0 +1,6 @@
+@if (pilot$ | async; as pilot) {
+    <h4>{{ pilot.name }}</h4>
+    @for (playInstance of pilot.playInstances; track playInstance.id) {
+        <app-game-card [game]="playInstance.game"></app-game-card>
+    }
+}

@@ -1,6 +1,10 @@
 @if (pilots$ | async; as pilots) {
     <button (click)="openPilotFormDialog()">Add Player</button>
-    @for (pilot of pilots; track pilot.id) {
-        <p>{{ pilot.name }}</p>
-    }
+    <div>
+        @for (pilot of pilots; track pilot.id) {
+            <div>
+                <a [routerLink]="pilot.id">{{ pilot.name }}</a>
+            </div>
+        }
+    </div>
 }

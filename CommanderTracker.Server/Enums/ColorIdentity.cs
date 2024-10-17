@@ -1,0 +1,37 @@
+﻿namespace CommanderTracker.Enums;
+
+public enum ColorIdentity
+{
+    Colorless,
+    MonoW,
+    MonoU,
+    MonoB,
+    MonoR,
+    MonoG,
+    Azorius,
+    Dimir,
+    Rakdos,
+    Gruul,
+    Selesnya,
+    Orzhov,
+    Izzet,
+    Golgari,
+    Boros,
+    Simic,
+    Esper,
+    Grixis,
+    Jund,
+    Naya,
+    Bant,
+    Abzan,
+    Jeskai,
+    Sultai,
+    Mardu,
+    Temur,
+    YoreTiller,
+    GlintEye,
+    DuneBrood,
+    InkTreader,
+    WitchMaw,
+    FiveColor
+}

@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CommanderTracker.Data;
-using CommanderTracker.Models;
-using CommanderTracker.Models.DTO;
+using CommanderTracker.DTOs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
-using CommanderTracker.Server.Extensions;
+using CommanderTracker.Extensions;
+using CommanderTracker.Models;
 
 namespace CommanderTracker.Controllers
 {
@@ -13,7 +13,7 @@ namespace CommanderTracker.Controllers
     [ApiController]
     public class DecksController(DataContext context, UserManager<AppUser> userManager) : ControllerBase
     {
-        private readonly DataContext _context = context;   
+        private readonly DataContext _context = context;
         private readonly UserManager<AppUser> _userManager = userManager;
 
         // GET: api/Decks
@@ -43,6 +43,7 @@ namespace CommanderTracker.Controllers
             var deck = await _context.Decks
                 .Where(deck => deck.Id == id)
                 .Include(deck => deck.CreatedBy)
+                /*
                 .Include(deck => deck.PlayInstances
                     .OrderByDescending(playInstance => playInstance.CreatedDate)
                     .ThenBy(playInstance => playInstance.Id))
@@ -54,6 +55,7 @@ namespace CommanderTracker.Controllers
                             .ThenInclude(pi => pi.Pilot)
                 .Include(deck => deck.PlayInstances)
                     .ThenInclude(pi => pi.Pilot)
+                */
                 .FirstOrDefaultAsync();
 
             if (deck == null)

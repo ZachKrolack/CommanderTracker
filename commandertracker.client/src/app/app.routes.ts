@@ -6,8 +6,11 @@ import { DecksComponent } from './decks/decks.component';
 import { GamesComponent } from './games/games.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { PlayGroupDeckComponent } from './play-groups/play-group/play-group-decks/play-group-deck/play-group-deck.component';
 import { PlayGroupDecksComponent } from './play-groups/play-group/play-group-decks/play-group-decks.component';
+import { PlayGroupGameComponent } from './play-groups/play-group/play-group-games/play-group-game/play-group-game.component';
 import { PlayGroupGamesComponent } from './play-groups/play-group/play-group-games/play-group-games.component';
+import { PlayGroupPilotComponent } from './play-groups/play-group/play-group-pilots/play-group-pilot/play-group-pilot.component';
 import { PlayGroupPilotsComponent } from './play-groups/play-group/play-group-pilots/play-group-pilots.component';
 import { PlayGroupComponent } from './play-groups/play-group/play-group.component';
 import { PlayGroupsComponent } from './play-groups/play-groups.component';
@@ -35,7 +38,7 @@ export const routes: Routes = [
         canActivate: [AuthGuard]
     },
     {
-        path: 'play-groups/:id',
+        path: 'play-groups/:playGroupId',
         component: PlayGroupComponent,
         canActivate: [AuthGuard],
         children: [
@@ -44,12 +47,24 @@ export const routes: Routes = [
                 component: PlayGroupDecksComponent
             },
             {
+                path: 'decks/:deckId',
+                component: PlayGroupDeckComponent
+            },
+            {
                 path: 'games',
                 component: PlayGroupGamesComponent
             },
             {
+                path: 'games/:gameId',
+                component: PlayGroupGameComponent
+            },
+            {
                 path: 'pilots',
                 component: PlayGroupPilotsComponent
+            },
+            {
+                path: 'pilots/:pilotId',
+                component: PlayGroupPilotComponent
             }
         ]
     },

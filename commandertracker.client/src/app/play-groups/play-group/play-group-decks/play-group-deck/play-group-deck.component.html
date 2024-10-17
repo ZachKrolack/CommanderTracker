@@ -1,0 +1,6 @@
+@if (playGroupDeck$ | async; as pgd) {
+    <h4>{{ pgd.deck.name }}</h4>
+    @for (playInstance of pgd.playInstances; track playInstance.id) {
+        <app-game-card [game]="playInstance.game"></app-game-card>
+    }
+}

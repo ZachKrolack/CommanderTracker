@@ -336,10 +336,6 @@ namespace CommanderTracker.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_date");
 
-                    b.Property<Guid>("DeckId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("deck_id");
-
                     b.Property<int>("EndPosition")
                         .HasColumnType("integer")
                         .HasColumnName("end_position");
@@ -357,8 +353,9 @@ namespace CommanderTracker.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("pilot_id");
 
-                    b.Property<Guid?>("PlayGroupDeckId")
-                        .HasColumnType("uuid");
+                    b.Property<Guid>("PlayGroupDeckId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("play_group_deck_id");
 
                     b.Property<int>("TurnOrder")
                         .HasColumnType("integer")
@@ -376,8 +373,6 @@ namespace CommanderTracker.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedById");
-
-                    b.HasIndex("DeckId");
 
                     b.HasIndex("GameId");
 
@@ -418,13 +413,13 @@ namespace CommanderTracker.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "246eaf79-c68b-4947-9790-57f876fef8fd",
+                            Id = "ec541738-858f-476d-b169-9e85881dcb6f",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "d82e2271-b655-478b-98be-dd7a61c4e58b",
+                            Id = "d8201ec3-bc58-4438-80d8-67fa8f42db76",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -683,12 +678,6 @@ namespace CommanderTracker.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CommanderTracker.Models.Deck", "Deck")
-                        .WithMany("PlayInstances")
-                        .HasForeignKey("DeckId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("CommanderTracker.Models.Game", "Game")
                         .WithMany("PlayInstances")
                         .HasForeignKey("GameId")
@@ -701,9 +690,11 @@ namespace CommanderTracker.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CommanderTracker.Models.PlayGroupDeck", null)
+                    b.HasOne("CommanderTracker.Models.PlayGroupDeck", "PlayGroupDeck")
                         .WithMany("PlayInstances")
-                        .HasForeignKey("PlayGroupDeckId");
+                        .HasForeignKey("PlayGroupDeckId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CommanderTracker.Models.AppUser", "UpdatedBy")
                         .WithMany()
@@ -713,11 +704,11 @@ namespace CommanderTracker.Migrations
 
                     b.Navigation("CreatedBy");
 
-                    b.Navigation("Deck");
-
                     b.Navigation("Game");
 
                     b.Navigation("Pilot");
+
+                    b.Navigation("PlayGroupDeck");
 
                     b.Navigation("UpdatedBy");
                 });
@@ -771,11 +762,6 @@ namespace CommanderTracker.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("CommanderTracker.Models.Deck", b =>
-                {
-                    b.Navigation("PlayInstances");
                 });
 
             modelBuilder.Entity("CommanderTracker.Models.Game", b =>

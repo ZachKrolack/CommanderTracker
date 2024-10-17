@@ -1,5 +1,10 @@
 @if (games$ | async; as games) {
-    @for (game of games; track game.id) {
-        <p>{{ game.createdDate | date }}</p>
-    }
+    <button (click)="openGameFormDialog()">Add Game</button>
+    <div>
+        @for (game of games; track game.id) {
+            <div>
+                <a [routerLink]="game.id">{{ game.createdDate | date }}</a>
+            </div>
+        }
+    </div>
 }

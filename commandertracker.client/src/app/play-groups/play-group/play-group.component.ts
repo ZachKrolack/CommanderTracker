@@ -13,14 +13,14 @@ import { PlayGroup } from 'src/app/core/models/playGroup.model';
     styleUrl: './play-group.component.scss'
 })
 export class PlayGroupComponent implements OnInit {
-    @Input() id!: string;
+    @Input() playGroupId!: string;
 
     playGroup$!: Observable<PlayGroup>;
 
     constructor(private playGroupApiService: PlayGroupApiService) {}
 
     ngOnInit(): void {
-        this.playGroup$ = this.getPlayGroup(this.id);
+        this.playGroup$ = this.getPlayGroup(this.playGroupId);
     }
 
     private getPlayGroup(id: string): Observable<PlayGroup> {

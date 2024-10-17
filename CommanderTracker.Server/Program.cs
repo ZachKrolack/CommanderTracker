@@ -1,5 +1,4 @@
 using CommanderTracker.Data;
-using CommanderTracker.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -7,6 +6,7 @@ using System.Text;
 using CommanderTracker.Interfaces;
 using CommanderTracker.Services;
 using Microsoft.OpenApi.Models;
+using CommanderTracker.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 

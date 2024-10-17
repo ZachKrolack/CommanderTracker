@@ -1,6 +1,6 @@
-import { Deck } from './deck.model';
 import { Game } from './game.model';
 import { Pilot } from './pilot.model';
+import { PlayGroupDeck } from './playGroupDeck.model';
 import { BaseModel } from './utils';
 
 type BasePlayInstance = {
@@ -11,7 +11,8 @@ type BasePlayInstance = {
 
 type PlayInstance = BaseModel &
     BasePlayInstance & {
-        deck: Deck;
+        // deck: Deck;
+        playGroupDeck: PlayGroupDeck;
         game: Game;
         pilot: Pilot;
     };
@@ -21,6 +22,7 @@ export type GamePlayInstance = Omit<PlayInstance, 'game'>;
 export type PilotPlayInstance = Omit<PlayInstance, 'pilot'>;
 
 export type PlayInstanceCreateRequest = BasePlayInstance & {
-    deckId: string;
+    // deckId: string;
+    playGroupDeckId: string;
     pilotId: string;
 };

@@ -1,12 +1,12 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 
-namespace CommanderTracker.Server.Extensions
+namespace CommanderTracker.Extensions
 {
     public static class ClaimsExtensions
     {
         public static string GetId(this ClaimsPrincipal principal)
         {
+            // TODO
             return principal.Claims.FirstOrDefault(claim => claim.Type.Equals(ClaimTypes.NameIdentifier)).Value;
         }
     }
