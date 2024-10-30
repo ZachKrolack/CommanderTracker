@@ -18,7 +18,7 @@ public class DataContext(IConfiguration configuration) : IdentityDbContext<AppUs
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql(_configuration.GetConnectionString("CommanderTrackerDatabase"));
+        optionsBuilder.UseNpgsql(_configuration.GetConnectionString("CommanderTrackerDatabase")).EnableSensitiveDataLogging(true); // TODO
     }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

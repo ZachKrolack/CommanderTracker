@@ -7,5 +7,5 @@ public abstract class BaseResponseDTO : IEntityDate
     public Guid Id { get; set; }
     public virtual DateTime CreatedDate { get; set; }
     public virtual DateTime UpdatedDate { get; set; }
-    // public virtual AppUserResponseDTO CreatedBy { get; set; } = null!;
+    // public virtual AppUserResponseDTO CreatedBy { get; set; } = null!; // TODO
 }

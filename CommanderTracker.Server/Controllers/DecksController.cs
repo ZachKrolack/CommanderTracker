@@ -43,19 +43,28 @@ namespace CommanderTracker.Controllers
             var deck = await _context.Decks
                 .Where(deck => deck.Id == id)
                 .Include(deck => deck.CreatedBy)
-                /*
-                .Include(deck => deck.PlayInstances
-                    .OrderByDescending(playInstance => playInstance.CreatedDate)
-                    .ThenBy(playInstance => playInstance.Id))
-                .Include(deck => deck.PlayInstances)
-                    .ThenInclude(pi => pi.Game)
-                        .ThenInclude(game => game.PlayInstances)
-                            .ThenInclude(pi => pi.Deck)
-                        .ThenInclude(game => game.PlayInstances)
-                            .ThenInclude(pi => pi.Pilot)
-                .Include(deck => deck.PlayInstances)
-                    .ThenInclude(pi => pi.Pilot)
-                */
+                .Include(deck => deck.PlayGroupDecks)   
+                    .ThenInclude(deck => deck.PlayInstances
+                        .OrderByDescending(playInstance => playInstance.CreatedDate)
+                            .ThenBy(playInstance => playInstance.Id))
+                .Include(deck => deck.PlayGroupDecks)
+                    .ThenInclude(deck => deck.PlayInstances)
+                        .ThenInclude(pi => pi.Pilot)
+                .Include(deck => deck.PlayGroupDecks)
+                    .ThenInclude(deck => deck.PlayInstances)
+                        .ThenInclude(pi => pi.Game)
+                            .ThenInclude(game => game.PlayInstances)
+                                .ThenInclude(pi => pi.PlayGroupDeck)
+                                    .ThenInclude(pgd => pgd.Deck)
+                .Include(deck => deck.PlayGroupDecks)
+                    .ThenInclude(deck => deck.PlayInstances)
+                        .ThenInclude(pi => pi.Game)
+                            .ThenInclude(game => game.PlayInstances)
+                                .ThenInclude(pi => pi.Pilot)
+                .Include(deck => deck.PlayGroupDecks)
+                    .ThenInclude(deck => deck.PlayInstances)
+                        .ThenInclude(pi => pi.Game)
+                            .ThenInclude(game => game.PlayGroup)
                 .FirstOrDefaultAsync();
 
             if (deck == null)

@@ -70,10 +70,6 @@ export class PlayGroupApiService {
         return this.http.post<Game>(`${this.URL}/${id}/games`, game);
     }
 
-    getGame(id: string, gameId: string): Observable<Game> {
-        return this.http.get<Game>(`${this.URL}/${id}/games/${gameId}`);
-    }
-
     // Pilots
 
     getPilots(id: string): Observable<Pilot[]> {
@@ -82,9 +78,5 @@ export class PlayGroupApiService {
 
     createPilot(id: string, pilot: PilotCreateRequest): Observable<Pilot> {
         return this.http.post<Pilot>(`${this.URL}/${id}/pilots`, pilot);
-    }
-
-    getPilot(id: string, pilotId: string): Observable<Pilot> {
-        return this.http.get<Pilot>(`${this.URL}/${id}/pilots/${pilotId}`);
     }
 }

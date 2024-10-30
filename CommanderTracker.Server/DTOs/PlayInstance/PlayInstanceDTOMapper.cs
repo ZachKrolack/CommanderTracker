@@ -12,7 +12,6 @@ public class PlayInstanceDTOMapper
             TurnOrder = playInstance.TurnOrder,
             EndPosition = playInstance.EndPosition,
             Notes = playInstance.Notes,
-            // DeckId = playInstance.DeckId,
             PlayGroupDeckId = playInstance.PlayGroupDeckId,
             GameId = playInstance.GameId,
             PilotId = playInstance.PilotId,
@@ -46,7 +45,6 @@ public class PlayInstanceDTOMapper
             Notes = playInstance.Notes,
             CreatedDate = playInstance.CreatedDate,
             UpdatedDate = playInstance.UpdatedDate,
-            // Deck = DeckDTOMapper.ToDeckBaseResponseDTO(playInstance.Deck),
             PlayGroupDeck = PlayGroupDeckDTOMapper.ToPlayGroupDeckBaseResponseDTO(playInstance.PlayGroupDeck),
             Pilot = PilotDTOMapper.ToPilotBaseResponseDTO(playInstance.Pilot)
         };
@@ -62,7 +60,6 @@ public class PlayInstanceDTOMapper
             Notes = playInstance.Notes,
             CreatedDate = playInstance.CreatedDate,
             UpdatedDate = playInstance.UpdatedDate,
-            // Deck = DeckDTOMapper.ToDeckBaseResponseDTO(playInstance.Deck),
             PlayGroupDeck = PlayGroupDeckDTOMapper.ToPlayGroupDeckBaseResponseDTO(playInstance.PlayGroupDeck),
             Game = GameDTOMapper.ToGameResponseDTO(playInstance.Game)
         };
@@ -75,7 +72,6 @@ public class PlayInstanceDTOMapper
             TurnOrder = request.TurnOrder,
             EndPosition = request.EndPosition,
             Notes = request.Notes,
-            // DeckId = request.DeckId,
             PlayGroupDeckId = request.PlayGroupDeckId,
             PilotId = request.PilotId,
             GameId = gameId,

@@ -1,30 +1,27 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Observable, switchMap } from 'rxjs';
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { DeckService } from 'src/app/core/api/deck.service';
 import { Deck } from 'src/app/core/models/deck.model';
 import { GameCardComponent } from 'src/app/shared/components/game-card/game-card.component';
+import { PlayInstanceAggregatorPipe } from './play-instance-aggregator.pipe';
 
 @Component({
     selector: 'app-deck',
     standalone: true,
-    imports: [CommonModule, GameCardComponent],
+    imports: [CommonModule, GameCardComponent, PlayInstanceAggregatorPipe],
     templateUrl: './deck.component.html',
     styleUrl: './deck.component.scss'
 })
 export class DeckComponent implements OnInit {
+    @Input() id!: string;
+
     deck$!: Observable<Deck>;
 
-    constructor(
-        private deckService: DeckService,
-        private route: ActivatedRoute
-    ) {}
+    constructor(private deckService: DeckService) {}
 
     ngOnInit(): void {
-        this.deck$ = this.route.params.pipe(
-            switchMap(({ id }) => this.getDeck(id))
-        );
+        this.deck$ = this.getDeck(this.id);
     }
 
     private getDeck(id: string): Observable<Deck> {

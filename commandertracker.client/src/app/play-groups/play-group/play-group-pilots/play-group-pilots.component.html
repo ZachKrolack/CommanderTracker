@@ -3,7 +3,7 @@
     <div>
         @for (pilot of pilots; track pilot.id) {
             <div>
-                <a [routerLink]="pilot.id">{{ pilot.name }}</a>
+                <a [routerLink]="['/pilots', pilot.id]">{{ pilot.name }}</a>
             </div>
         }
     </div>

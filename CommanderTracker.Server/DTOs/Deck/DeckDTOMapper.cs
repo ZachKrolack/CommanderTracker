@@ -23,8 +23,7 @@ public class DeckDTOMapper
             Id = deck.Id,
             Name = deck.Name,
             ColorIdentity = deck.ColorIdentity,
-            // CreatedBy = AppUserDTOMapper.ToAppUserResponseDTO(deck.CreatedBy),
-            // PlayInstances = deck.PlayInstances.Select(PlayInstanceDTOMapper.ToDeckPlayInstanceResponseDTO).ToList(),
+            PlayGroupDecks = deck.PlayGroupDecks != null ? deck.PlayGroupDecks.Select(PlayGroupDeckDTOMapper.ToPlayGroupDeckResponseDTO).ToList() : [],
             CreatedDate = deck.CreatedDate,
             UpdatedDate = deck.UpdatedDate,
         };

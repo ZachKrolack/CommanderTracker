@@ -3,7 +3,7 @@
     <div>
         @for (playGroupDeck of decks; track playGroupDeck.id) {
             <div>
-                <a [routerLink]="playGroupDeck.id">{{ playGroupDeck.deck.name }}</a>
+                <a [routerLink]="[playGroupDeck.deck.id]">{{ playGroupDeck.deck.name }}</a>
             </div>
         }
     </div>

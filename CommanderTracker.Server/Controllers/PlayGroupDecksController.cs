@@ -23,7 +23,8 @@ public class PlayGroupDecksController(DataContext context, UserManager<AppUser> 
         return await _context.PlayGroupDecks
             .Where(pgd => pgd.PlayGroupId == playGroupId)
             .Include(pgd => pgd.Deck)
-            .Include(pgd => pgd.Pilot)
+            .Include(pgd => pgd.PlayGroup)
+            // .Include(pgd => pgd.Pilot)
             .Select(pgd => PlayGroupDeckDTOMapper.ToPlayGroupDeckBaseResponseDTO(pgd))
             .ToListAsync();
     }
@@ -33,21 +34,25 @@ public class PlayGroupDecksController(DataContext context, UserManager<AppUser> 
     public async Task<ActionResult<PlayGroupDeckResponseDTO>> GetPlayGroupDeck(Guid playGroupId, Guid deckId)
     {
         var deck = await _context.PlayGroupDecks
-            .Where(pgd => pgd.PlayGroupId == playGroupId && pgd.Id == deckId)
+            .Where(pgd => pgd.PlayGroupId == playGroupId && pgd.DeckId == deckId)
             .Include(pgd => pgd.Deck)
-            .Include(pgd => pgd.Pilot)
-            .Include(deck => deck.PlayInstances)
+            .Include(pgd => pgd.PlayGroup)
+            // .Include(pgd => pgd.Pilot)         
+            .Include(pgd => pgd.PlayInstances
+                .OrderByDescending(playInstance => playInstance.CreatedDate)
+                .ThenBy(playInstance => playInstance.Id))
+            .Include(pgd => pgd.PlayInstances)
                 .ThenInclude(pi => pi.Pilot)
-            .Include(deck => deck.PlayInstances)
+            .Include(pgd => pgd.PlayInstances)
                 .ThenInclude(pi => pi.Game)
                     .ThenInclude(game => game.PlayInstances)
                         .ThenInclude(pi => pi.PlayGroupDeck)
                             .ThenInclude(pgd => pgd.Deck)
-            .Include(deck => deck.PlayInstances)
+            .Include(pgd => pgd.PlayInstances)
                 .ThenInclude(pi => pi.Game)
                     .ThenInclude(game => game.PlayInstances)
                         .ThenInclude(pi => pi.Pilot)
-            .Include(deck => deck.PlayInstances)
+            .Include(pgd => pgd.PlayInstances)
                 .ThenInclude(pi => pi.Game)
                     .ThenInclude(game => game.PlayGroup)
             .FirstOrDefaultAsync();
@@ -80,7 +85,7 @@ public class PlayGroupDecksController(DataContext context, UserManager<AppUser> 
         var playGroupDeckRequest = new PlayGroupDeckCreateRequestDTO
         {
             DeckId = deck.Id,
-            PilotId = null // TODO
+            // PilotId = null // TODO
         };
 
         var playGroupDeck = PlayGroupDeckDTOMapper.ToPlayGroupDeck(playGroupDeckRequest, playGroupId, appUser.Id);

@@ -9,7 +9,6 @@ export type GameForm = {
 };
 
 export type PlayInstanceForm = {
-    // deckId: FormControl<string | null>;
     playGroupDeckId: FormControl<string | null>;
     pilotId: FormControl<string | null>;
     turnOrder: FormControl<number | null>;
@@ -41,7 +40,6 @@ export function parsePlayInstanceCreateRequest(
         form.value;
 
     return {
-        // deckId: deckId!,
         playGroupDeckId: playGroupDeckId!,
         pilotId: pilotId!,
         turnOrder: turnOrder!,

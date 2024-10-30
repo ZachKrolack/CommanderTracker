@@ -22,7 +22,6 @@ export type GamePlayInstance = Omit<PlayInstance, 'game'>;
 export type PilotPlayInstance = Omit<PlayInstance, 'pilot'>;
 
 export type PlayInstanceCreateRequest = BasePlayInstance & {
-    // deckId: string;
     playGroupDeckId: string;
     pilotId: string;
 };

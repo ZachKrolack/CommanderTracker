@@ -1,5 +1,7 @@
 <mat-card>
-    <mat-card-header>{{ game.createdDate | date }}</mat-card-header>
+    <mat-card-header>
+        <a [routerLink]="['/games', game.id]">{{ game.createdDate | date }}</a>
+    </mat-card-header>
     <mat-card-content>
         <div class="play-instance-container">
             @for (playInstance of game.playInstances; track playInstance.id) {

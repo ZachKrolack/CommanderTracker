@@ -26,51 +26,6 @@ public class PlayGroupPilotsController(DataContext context, UserManager<AppUser>
             .ToListAsync();
     }
 
-    // GET: api/PlayGroups/5/Pilots/5
-    [HttpGet("{pilotId}")]
-    public async Task<ActionResult<PilotResponseDTO>> GetPlayGroupPilot(Guid playGroupId, Guid pilotId)
-    {
-        var pilot = await _context.Pilots
-            .Where(pilot => pilot.PlayGroupId == playGroupId && pilot.Id == pilotId)
-            .Include(pilot => pilot.PlayInstances
-                .OrderByDescending(playInstance => playInstance.CreatedDate)
-                .ThenBy(playInstance => playInstance.Id))
-            /*
-            .Include(pilot => pilot.PlayInstances)
-                .ThenInclude(pi => pi.Game)
-                    .ThenInclude(game => game.PlayInstances)
-                        .ThenInclude(pi => pi.PlayGroupDeck)
-                            .ThenInclude(pgd => pgd.Deck)
-            .Include(pilot => pilot.PlayInstances)
-                .ThenInclude(pi => pi.Game)
-                    .ThenInclude(game => game.PlayInstances)
-                        .ThenInclude(pi => pi.Pilot)
-            */
-            .Include(deck => deck.PlayInstances)
-                .ThenInclude(pi => pi.Game)
-                    .ThenInclude(game => game.PlayInstances)
-                        .ThenInclude(pi => pi.PlayGroupDeck)
-                            .ThenInclude(pgd => pgd.Deck)
-            .Include(deck => deck.PlayInstances)
-                .ThenInclude(pi => pi.Game)
-                    .ThenInclude(game => game.PlayInstances)
-                        .ThenInclude(pi => pi.Pilot)
-            .Include(deck => deck.PlayInstances)
-                .ThenInclude(pi => pi.Game)
-                    .ThenInclude(game => game.PlayGroup)
-            .Include(pilot => pilot.PlayInstances)
-                .ThenInclude(pi => pi.PlayGroupDeck)
-                    .ThenInclude(pgd => pgd.Deck)
-            .FirstOrDefaultAsync();
-
-        if (pilot == null)
-        {
-            return NotFound();
-        }
-
-        return PilotDTOMapper.ToPilotResponseDTO(pilot);
-    }
-
     // POST: api/PlayGroups/5/Pilots
     [HttpPost]
     [Authorize]

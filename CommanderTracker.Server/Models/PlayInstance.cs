@@ -14,12 +14,6 @@ public class PlayInstance : BaseEntity
     [Column("notes")]
     public string Notes { get; set; } = string.Empty;
 
-    /*
-    [Column("deck_id")]
-    public Guid DeckId { get; set; }
-    public Deck Deck { get; set; } = null!;
-    */
-
     [Column("pilot_id")]
     public Guid PilotId { get; set; }
     public Pilot Pilot { get; set; } = null!;

@@ -3,14 +3,14 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { NoAuthGuard } from './core/guards/no-auth.guard';
 import { DeckComponent } from './decks/deck/deck.component';
 import { DecksComponent } from './decks/decks.component';
+import { GameComponent } from './games/game/game.component';
 import { GamesComponent } from './games/games.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { PilotComponent } from './pilots/pilot/pilot.component';
 import { PlayGroupDeckComponent } from './play-groups/play-group/play-group-decks/play-group-deck/play-group-deck.component';
 import { PlayGroupDecksComponent } from './play-groups/play-group/play-group-decks/play-group-decks.component';
-import { PlayGroupGameComponent } from './play-groups/play-group/play-group-games/play-group-game/play-group-game.component';
 import { PlayGroupGamesComponent } from './play-groups/play-group/play-group-games/play-group-games.component';
-import { PlayGroupPilotComponent } from './play-groups/play-group/play-group-pilots/play-group-pilot/play-group-pilot.component';
 import { PlayGroupPilotsComponent } from './play-groups/play-group/play-group-pilots/play-group-pilots.component';
 import { PlayGroupComponent } from './play-groups/play-group/play-group.component';
 import { PlayGroupsComponent } from './play-groups/play-groups.component';
@@ -55,16 +55,8 @@ export const routes: Routes = [
                 component: PlayGroupGamesComponent
             },
             {
-                path: 'games/:gameId',
-                component: PlayGroupGameComponent
-            },
-            {
                 path: 'pilots',
                 component: PlayGroupPilotsComponent
-            },
-            {
-                path: 'pilots/:pilotId',
-                component: PlayGroupPilotComponent
             }
         ]
     },
@@ -83,16 +75,16 @@ export const routes: Routes = [
         component: GamesComponent,
         canActivate: [AuthGuard]
     },
-    // {
-    //     path: 'pilots',
-    //     component: PilotsComponent,
-    //     canActivate: [AuthGuard]
-    // },
-    // {
-    //     path: 'pilots/:id',
-    //     component: PilotComponent,
-    //     canActivate: [AuthGuard]
-    // },
+    {
+        path: 'games/:id',
+        component: GameComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'pilots/:id',
+        component: PilotComponent,
+        canActivate: [AuthGuard]
+    },
     {
         path: '**',
         redirectTo: '/'

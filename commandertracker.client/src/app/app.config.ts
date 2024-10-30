@@ -10,6 +10,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { errorInterceptor } from './core/interceptors/error.interceptor';
+import { loggingInterceptor } from './core/interceptors/logging.interceptor';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -20,7 +21,11 @@ export const appConfig: ApplicationConfig = {
             withRouterConfig({ paramsInheritanceStrategy: 'always' })
         ),
         provideHttpClient(
-            withInterceptors([authInterceptor, errorInterceptor])
+            withInterceptors([
+                loggingInterceptor,
+                authInterceptor,
+                errorInterceptor
+            ])
         ),
         provideAnimationsAsync()
     ]

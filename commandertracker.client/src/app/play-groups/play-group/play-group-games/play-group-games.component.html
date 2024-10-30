@@ -3,7 +3,7 @@
     <div>
         @for (game of games; track game.id) {
             <div>
-                <a [routerLink]="game.id">{{ game.createdDate | date }}</a>
+                <a [routerLink]="['/games', game.id]">{{ game.createdDate | date }}</a>
             </div>
         }
     </div>

@@ -413,13 +413,13 @@ namespace CommanderTracker.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ec541738-858f-476d-b169-9e85881dcb6f",
+                            Id = "1303b2fd-584f-4781-95ae-192087751445",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "d8201ec3-bc58-4438-80d8-67fa8f42db76",
+                            Id = "8b469f2d-4827-435d-b4b8-a09350f2c094",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -638,7 +638,7 @@ namespace CommanderTracker.Migrations
                         .IsRequired();
 
                     b.HasOne("CommanderTracker.Models.Deck", "Deck")
-                        .WithMany()
+                        .WithMany("PlayGroupDecks")
                         .HasForeignKey("DeckId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -762,6 +762,11 @@ namespace CommanderTracker.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("CommanderTracker.Models.Deck", b =>
+                {
+                    b.Navigation("PlayGroupDecks");
                 });
 
             modelBuilder.Entity("CommanderTracker.Models.Game", b =>

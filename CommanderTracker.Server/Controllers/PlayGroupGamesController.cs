@@ -26,29 +26,6 @@ public class PlayGroupGamesController(DataContext context, UserManager<AppUser> 
             .ToListAsync();
     }
 
-    // GET: api/PlayGroups/5/Games/5
-    [HttpGet("{gameId}")]
-    public async Task<ActionResult<GameResponseDTO>> GetPlayGroupGame(Guid playGroupId, Guid gameId)
-    {
-        var game = await _context.Games
-            .Where(game => game.PlayGroupId == playGroupId && game.Id == gameId)
-            .Include(game => game.CreatedBy)
-            .Include(game => game.PlayInstances.OrderBy(playInstance => playInstance.EndPosition))
-            .Include(game => game.PlayInstances)
-                .ThenInclude(playInstance => playInstance.Pilot)
-            .Include(game => game.PlayInstances)
-                .ThenInclude(playInstance => playInstance.PlayGroupDeck)
-                    .ThenInclude(pgd => pgd.Deck)
-            .FirstOrDefaultAsync();
-
-        if (game == null)
-        {
-            return NotFound();
-        }
-
-        return GameDTOMapper.ToGameResponseDTO(game);
-    }
-
     // POST: api/PlayGroups/5/Games
     [HttpPost]
     [Authorize]

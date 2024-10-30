@@ -22,7 +22,6 @@ public class PilotDTOMapper
             Id = pilot.Id,
             Name = pilot.Name,
             PlayGroup = PlayGroupDTOMapper.ToPlayGroupBaseResponseDTO(pilot.PlayGroup),
-            // CreatedBy = AppUserDTOMapper.ToAppUserResponseDTO(pilot.CreatedBy),
             PlayInstances = pilot.PlayInstances.Select(PlayInstanceDTOMapper.ToPilotPlayInstanceResponseDTO).ToList(),
             CreatedDate = pilot.CreatedDate,
             UpdatedDate = pilot.UpdatedDate

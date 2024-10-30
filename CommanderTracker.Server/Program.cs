@@ -7,6 +7,7 @@ using CommanderTracker.Interfaces;
 using CommanderTracker.Services;
 using Microsoft.OpenApi.Models;
 using CommanderTracker.Models;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -76,6 +77,14 @@ builder.Services.AddSwaggerGen(option =>
 });
 
 builder.Services.AddScoped<ITokenService, TokenService>();
+
+builder.Services.AddLogging(loggingBuilder =>
+{
+    loggingBuilder
+        .AddConsole()
+        .AddFilter(DbLoggerCategory.Database.Command.Name, LogLevel.Information);
+    loggingBuilder.AddDebug();
+});
 
 var app = builder.Build();
 

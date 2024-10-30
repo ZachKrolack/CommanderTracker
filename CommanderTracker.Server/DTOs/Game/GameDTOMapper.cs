@@ -23,7 +23,6 @@ public class GameDTOMapper
             Id = game.Id,
             Notes = game.Notes,
             Turns = game.Turns,
-            // CreatedBy = AppUserDTOMapper.ToAppUserResponseDTO(game.CreatedBy),
             CreatedDate = game.CreatedDate,
             UpdatedDate = game.UpdatedDate,
             PlayGroup = PlayGroupDTOMapper.ToPlayGroupBaseResponseDTO(game.PlayGroup),

@@ -12,5 +12,5 @@ public class Deck : BaseEntity
     [Column("color_identity")]
     public ColorIdentity ColorIdentity { get; set; }
 
-    // public List<PlayInstance> PlayInstances { get; set; } = [];
+    public List<PlayGroupDeck> PlayGroupDecks { get; set; } = [];
 }

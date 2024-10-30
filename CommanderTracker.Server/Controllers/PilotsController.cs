@@ -2,8 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using CommanderTracker.Data;
 using CommanderTracker.DTOs;
-using Microsoft.AspNetCore.Identity;
-using CommanderTracker.Models;
 
 namespace CommanderTracker.Controllers;
 
@@ -12,15 +10,6 @@ namespace CommanderTracker.Controllers;
 public class PilotsController(DataContext context) : ControllerBase
 {
     private readonly DataContext _context = context;
-
-    // GET: api/Pilots
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<PilotBaseResponseDTO>>> GetPilots()
-    {
-        return await _context.Pilots
-            .Select(pilot => PilotDTOMapper.ToPilotBaseResponseDTO(pilot))
-            .ToListAsync();
-    }
 
     // GET: api/Pilots/5
     [HttpGet("{id}")]
@@ -37,6 +26,11 @@ public class PilotsController(DataContext context) : ControllerBase
                     .ThenInclude(game => game.PlayInstances)
                         .ThenInclude(pi => pi.PlayGroupDeck)
                             .ThenInclude(pgd => pgd.Deck)
+            .Include(pilot => pilot.PlayInstances)
+                .ThenInclude(pi => pi.Game)
+                    .ThenInclude(game => game.PlayInstances)
+                        .ThenInclude(pi => pi.PlayGroupDeck)
+                            .ThenInclude(pgd => pgd.PlayGroup)
             .Include(pilot => pilot.PlayInstances)
                 .ThenInclude(pi => pi.Game)
                     .ThenInclude(game => game.PlayInstances)
