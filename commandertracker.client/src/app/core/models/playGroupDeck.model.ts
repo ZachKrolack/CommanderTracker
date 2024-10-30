@@ -1,12 +1,13 @@
-import { Deck } from './deck.model';
-import { BasePilot } from './pilot.model';
-import { PlayGroup } from './playGroup.model';
+import { BaseDeck } from './deck.model';
+import { BasePlayGroup } from './playGroup.model';
 import { DeckPlayInstance } from './playInstance.model';
 import { BaseModel } from './utils';
 
-export type PlayGroupDeck = BaseModel & {
-    deck: Deck;
-    playGroup: PlayGroup;
-    pilot?: BasePilot;
+export type BasePlayGroupDeck = BaseModel & {
+    deck: BaseDeck;
+    playGroup: BasePlayGroup;
+};
+
+export type PlayGroupDeck = BasePlayGroupDeck & {
     playInstances: DeckPlayInstance[];
 };

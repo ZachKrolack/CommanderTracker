@@ -2,16 +2,17 @@ import { ColorIdentity } from '../enums/colorIdentity.enum';
 import { PlayGroupDeck } from './playGroupDeck.model';
 import { BaseModel, ModelId } from './utils';
 
-export type BaseDeck = {
+type CoreDeck = {
     name: string;
     colorIdentity: ColorIdentity;
 };
 
-export type Deck = BaseModel &
-    BaseDeck & {
-        playGroupDecks: PlayGroupDeck[];
-    };
+export type BaseDeck = BaseModel & CoreDeck;
 
-export type DeckCreateRequest = BaseDeck;
+export type Deck = BaseDeck & {
+    playGroupDecks: PlayGroupDeck[];
+};
+
+export type DeckCreateRequest = CoreDeck;
 
 export type DeckUpdateRequest = Partial<DeckCreateRequest> & ModelId;

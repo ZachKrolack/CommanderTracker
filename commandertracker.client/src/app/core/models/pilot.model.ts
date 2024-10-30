@@ -2,16 +2,17 @@ import { BasePlayGroup } from './playGroup.model';
 import { PilotPlayInstance } from './playInstance.model';
 import { BaseModel, ModelId } from './utils';
 
-export type BasePilot = {
+type CorePilot = {
     name: string;
 };
 
-export type Pilot = BaseModel &
-    BasePilot & {
-        playGroup: BasePlayGroup;
-        playInstances: PilotPlayInstance[];
-    };
+export type BasePilot = BaseModel & CorePilot;
 
-export type PilotCreateRequest = BasePilot;
+export type Pilot = BasePilot & {
+    playGroup: BasePlayGroup;
+    playInstances: PilotPlayInstance[];
+};
+
+export type PilotCreateRequest = CorePilot;
 
 export type PilotUpdateRequest = Partial<PilotCreateRequest> & ModelId;

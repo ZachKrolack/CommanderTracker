@@ -23,7 +23,7 @@ public class DeckDTOMapper
             Id = deck.Id,
             Name = deck.Name,
             ColorIdentity = deck.ColorIdentity,
-            PlayGroupDecks = deck.PlayGroupDecks != null ? deck.PlayGroupDecks.Select(PlayGroupDeckDTOMapper.ToPlayGroupDeckResponseDTO).ToList() : [],
+            PlayGroupDecks = deck.PlayGroupDecks.Select(PlayGroupDeckDTOMapper.ToPlayGroupDeckResponseDTO).ToList(),
             CreatedDate = deck.CreatedDate,
             UpdatedDate = deck.UpdatedDate,
         };

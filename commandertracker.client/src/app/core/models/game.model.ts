@@ -5,18 +5,19 @@ import {
 } from './playInstance.model';
 import { BaseModel, ModelId } from './utils';
 
-type BaseGame = {
+type CoreGame = {
     turns: number;
     notes: string;
 };
 
-export type Game = BaseModel &
-    BaseGame & {
-        playGroup: BasePlayGroup;
-        playInstances: GamePlayInstance[];
-    };
+export type BaseGame = BaseModel & CoreGame;
 
-export type GameCreateRequest = BaseGame & {
+export type Game = BaseGame & {
+    playGroup: BasePlayGroup;
+    playInstances: GamePlayInstance[];
+};
+
+export type GameCreateRequest = CoreGame & {
     playInstances: PlayInstanceCreateRequest[];
 };
 

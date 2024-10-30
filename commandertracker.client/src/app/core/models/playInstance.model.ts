@@ -3,25 +3,25 @@ import { Pilot } from './pilot.model';
 import { PlayGroupDeck } from './playGroupDeck.model';
 import { BaseModel } from './utils';
 
-type BasePlayInstance = {
+type CorePlayInstance = {
     turnOrder: number;
     endPosition: number;
     notes: string;
 };
 
-type PlayInstance = BaseModel &
-    BasePlayInstance & {
-        // deck: Deck;
-        playGroupDeck: PlayGroupDeck;
-        game: Game;
-        pilot: Pilot;
-    };
+type BasePlayInstance = BaseModel & CorePlayInstance;
 
-export type DeckPlayInstance = Omit<PlayInstance, 'deck'>;
+type PlayInstance = BasePlayInstance & {
+    playGroupDeck: PlayGroupDeck;
+    game: Game;
+    pilot: Pilot;
+};
+
+export type DeckPlayInstance = Omit<PlayInstance, 'playGroupDeck'>;
 export type GamePlayInstance = Omit<PlayInstance, 'game'>;
 export type PilotPlayInstance = Omit<PlayInstance, 'pilot'>;
 
-export type PlayInstanceCreateRequest = BasePlayInstance & {
+export type PlayInstanceCreateRequest = CorePlayInstance & {
     playGroupDeckId: string;
     pilotId: string;
 };
