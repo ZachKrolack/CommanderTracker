@@ -1,33 +1,4 @@
-@use "@angular/material" as mat;
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@include mat.core();
-
-$theme: mat.define-theme(
-    (
-        color: (
-            theme-type: dark,
-            primary: mat.$violet-palette
-        ),
-        density: (
-            scale: -1
-        )
-    )
-);
-
-html,
-body {
-    height: 100%;
-}
-
-body {
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
-html {
-    @include mat.all-component-themes($theme);
-}
+@import "./app/styles/material.scss";
+@import "./app/styles/colors.scss";
+@import "./app/styles/tailwind.scss";
+@import "./app/styles/custom.scss";
