@@ -1,20 +1,173 @@
+@use "sass:map";
 @use "@angular/material" as mat;
 
 @include mat.core();
 
-$theme: mat.define-theme(
+$_palettes: (
+    primary: (
+        0: #000000,
+        // 5: #091400,
+        10: #102000,
+        // 15: #182b00,
+        20: #203701,
+        25: #2a420a,
+        30: #354e15,
+        35: #415a20,
+        40: #4c662b,
+        50: #648041,
+        60: #7d9a59,
+        70: #97b571,
+        80: #b2d189,
+        90: #cdeda3,
+        95: #dcfcb0,
+        98: #f0ffd6,
+        99: #f9ffe8,
+        100: #ffffff
+    ),
+    secondary: (
+        0: #000000,
+        // 5: #0d1306,
+        10: #171d0f,
+        // 15: #222819,
+        20: #2c3323,
+        25: #373e2d,
+        30: #424938,
+        35: #4e5543,
+        40: #5a614f,
+        50: #737a66,
+        60: #8c937f,
+        70: #a7ae99,
+        80: #c2c9b3,
+        90: #dee5ce,
+        95: #edf4dc,
+        98: #f5fce5,
+        99: #f9ffe8,
+        100: #ffffff
+    ),
+    tertiary: (
+        0: #000000,
+        // 5: #001413,
+        10: #00201e,
+        // 15: #0b2a28,
+        20: #173533,
+        25: #23403e,
+        30: #2e4c4a,
+        35: #3a5855,
+        40: #466461,
+        50: #5e7d7a,
+        60: #789794,
+        70: #92b1ae,
+        80: #adcdc9,
+        90: #c8e9e5,
+        95: #d6f7f4,
+        98: #e3fffc,
+        99: #f2fffd,
+        100: #ffffff
+    ),
+    neutral: (
+        0: #000000,
+        // 5: #10110e,
+        10: #1b1c19,
+        // 15: #252623,
+        20: #30312d,
+        25: #3b3c38,
+        30: #474743,
+        35: #52534f,
+        40: #5e5f5a,
+        50: #777773,
+        60: #91918c,
+        70: #acaba6,
+        80: #c8c6c1,
+        90: #e4e2dd,
+        95: #f2f1eb,
+        98: #fbf9f3,
+        99: #fefcf6,
+        100: #ffffff
+    ),
+    neutral-variant: (
+        0: #000000,
+        // 5: #0f120b,
+        10: #1a1c16,
+        // 15: #242720,
+        20: #2f312a,
+        25: #3a3c35,
+        30: #454840,
+        35: #51534b,
+        40: #5d5f57,
+        50: #76786f,
+        60: #909288,
+        70: #aaaca2,
+        80: #c6c7bd,
+        90: #e2e3d8,
+        95: #f1f2e6,
+        98: #f9faef,
+        99: #fcfdf2,
+        100: #ffffff
+    ),
+    error: (
+        0: #000000,
+        10: #410002,
+        20: #690005,
+        25: #7e0007,
+        30: #93000a,
+        35: #a80710,
+        40: #ba1a1a,
+        50: #de3730,
+        60: #ff5449,
+        70: #ff897d,
+        80: #ffb4ab,
+        90: #ffdad6,
+        95: #ffedea,
+        98: #fff8f7,
+        99: #fffbff,
+        100: #ffffff
+    )
+);
+
+$_rest: (
+    secondary: map.get($_palettes, secondary),
+    neutral: map.get($_palettes, neutral),
+    neutral-variant: map.get($_palettes, neutral-variant),
+    error: map.get($_palettes, error)
+);
+$_primary: map.merge(map.get($_palettes, primary), $_rest);
+$_tertiary: map.merge(map.get($_palettes, tertiary), $_rest);
+
+$light-theme: mat.define-theme(
     (
         color: (
             theme-type: light,
-            primary: mat.$spring-green-palette,
+            primary: $_primary,
+            tertiary: $_tertiary,
             use-system-variables: true
         ),
         density: (
             scale: -1
         )
+        // typography: (
+    //     use-system-variables: true
+    // )
+    )
+);
+
+$dark-theme: mat.define-theme(
+    (
+        color: (
+            theme-type: dark,
+            primary: $_primary,
+            tertiary: $_tertiary,
+            use-system-variables: true
+        ),
+        density: (
+            scale: -1
+        )
+        // typography: (
+    //     use-system-variables: true
+    // )
     )
 );
 
 html {
-    @include mat.all-component-themes($theme);
+    @include mat.core-theme($light-theme);
+    @include mat.all-component-themes($light-theme);
 }

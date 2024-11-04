@@ -1,7 +1,7 @@
 <h4>
     Pilots
     <button mat-icon-button (click)="openPilotFormDialog()" aria-label="">
-        <mat-icon color="primary">add</mat-icon>
+        <mat-icon>add</mat-icon>
     </button>
 </h4>
 @if (pilots$ | async; as pilots) {
@@ -19,7 +19,6 @@
                 </button>
                 <button
                     mat-button
-                    color="warn"
                     (click)="openDeletePilotDialog(pilot.id)"
                 >
                     Delete

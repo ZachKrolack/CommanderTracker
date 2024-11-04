@@ -1,9 +1,10 @@
 <h4>
     Play Groups
     <button mat-icon-button (click)="openPlayGroupFormDialog()" aria-label="">
-        <mat-icon color="primary">add</mat-icon>
+        <mat-icon>add</mat-icon>
     </button>
 </h4>
+
 @if (playGroups$ | async; as playGroups) {
     @for (playGroup of playGroups; track playGroup.id) {
         <div [routerLink]="[playGroup.id, 'games']">{{ playGroup.name }}</div>

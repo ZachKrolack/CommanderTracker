@@ -28,7 +28,7 @@
             <h4>
                 Players
                 <button mat-icon-button (click)="addPlayInstance()" aria-label="">
-                    <mat-icon color="primary">add</mat-icon>
+                    <mat-icon>add</mat-icon>
                 </button>
             </h4>
             @for (
@@ -57,7 +57,7 @@
     <button mat-button [mat-dialog-close]="false">Cancel</button>
     <button
         mat-button
-        color="accent"
+        
         [disabled]="!form.valid || form.pristine"
         (click)="submit()"
     >

@@ -17,8 +17,7 @@
 <mat-dialog-actions align="end">
     <button mat-button [mat-dialog-close]="false">Cancel</button>
     <button
-        mat-button
-        color="accent"
+        mat-button  
         [disabled]="!form.valid || form.pristine"
         (click)="submit()"
     >
