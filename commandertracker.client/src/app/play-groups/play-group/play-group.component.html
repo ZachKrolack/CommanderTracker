@@ -1,14 +1,12 @@
-@if (playGroup$ | async; as playGroup) {
-    <h4>{{ playGroup.name }}</h4>
+<app-page-container>
+    @if (playGroup$ | async; as playGroup) {
+        <app-header>{{ playGroup.name }}</app-header>
 
-    <div>
-        <a [routerLink]="['decks']">Decks</a>
-        &nbsp;
-        <a [routerLink]="['games']">Games</a>
-        &nbsp;
-        <a [routerLink]="['pilots']">Pilots</a>
-    </div>
+        <app-play-group-nav></app-play-group-nav>
 
-    <router-outlet></router-outlet>
-}
+        <mat-divider class="my-4"></mat-divider>
+    
+        <router-outlet></router-outlet>
+    }
+</app-page-container>
     

@@ -1,10 +1,10 @@
-@if (decks$ | async; as decks) {
-    <button (click)="openDeckFormDialog()">Add Deck</button>
-    <div>
-        @for (playGroupDeck of decks; track playGroupDeck.id) {
-            <div>
-                <a [routerLink]="[playGroupDeck.deck.id]">{{ playGroupDeck.deck.name }}</a>
-            </div>
-        }
-    </div>
+<button mat-button (click)="openDeckFormDialog()" aria-label="">
+    <mat-icon>add</mat-icon>
+    <span>Add Deck</span>
+</button>
+
+<mat-divider class="my-4"></mat-divider>
+
+@if (playGroupDecks$ | async; as playGroupDecks) {
+    <app-play-group-decks-table [playGroupDecks]="playGroupDecks" (handleEditDeck)="openDeckFormDialog($event)" (handleRemoveDeckFromPlayGroup)="temp()"></app-play-group-decks-table>
 }

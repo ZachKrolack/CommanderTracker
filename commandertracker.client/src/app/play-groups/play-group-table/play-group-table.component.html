@@ -1,0 +1,15 @@
+<table mat-table [dataSource]="playGroups">
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let playGroup">
+            <a class="text-primary font-medium hover:underline" [routerLink]="playGroup.id">{{ playGroup.name }}</a>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+        class="hover:bg-surface-variant"
+        mat-row
+        *matRowDef="let playGroup columns: displayedColumns"
+    ></tr>
+</table>

@@ -19,6 +19,7 @@ import { DeckService } from 'src/app/core/api/deck.service';
 import { PlayGroupApiService } from 'src/app/core/api/play-group.api.service';
 import { ColorIdentity } from 'src/app/core/enums/colorIdentity.enum';
 import {
+    BaseDeck,
     Deck,
     DeckCreateRequest,
     DeckUpdateRequest
@@ -27,7 +28,7 @@ import { ColorIdentitySelectorComponent } from '../color-identity-selector/color
 
 export type DeckFormDialogData = {
     playGroupId?: string;
-    deck?: Deck;
+    deck?: BaseDeck;
 };
 
 export type DeckForm = {
@@ -53,7 +54,7 @@ export type DeckForm = {
 export class DeckFormDialogComponent implements OnInit {
     form!: FormGroup<DeckForm>;
 
-    get deck(): Deck | null {
+    get deck(): BaseDeck | null {
         return this.data?.deck ?? null;
     }
 
@@ -120,7 +121,7 @@ export class DeckFormDialogComponent implements OnInit {
         return this.deckService.updateDeck(id, deck);
     }
 
-    private initForm(deck: Deck | null = null): FormGroup<DeckForm> {
+    private initForm(deck: BaseDeck | null = null): FormGroup<DeckForm> {
         return new FormGroup<DeckForm>({
             name: new FormControl<string | null>(
                 deck?.name ?? null,

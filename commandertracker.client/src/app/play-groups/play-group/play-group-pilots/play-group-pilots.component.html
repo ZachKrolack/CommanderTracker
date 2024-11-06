@@ -1,10 +1,10 @@
+<button mat-button (click)="openPilotFormDialog()">
+    <mat-icon>add</mat-icon>
+    <span>Add Player To Play Group</span>
+</button>
+
+<mat-divider class="my-4"></mat-divider>
+
 @if (pilots$ | async; as pilots) {
-    <button (click)="openPilotFormDialog()">Add Player</button>
-    <div>
-        @for (pilot of pilots; track pilot.id) {
-            <div>
-                <a [routerLink]="['/pilots', pilot.id]">{{ pilot.name }}</a>
-            </div>
-        }
-    </div>
+    <app-play-group-pilots-table [pilots]="pilots" (handleEditPilot)="openPilotFormDialog($event)"></app-play-group-pilots-table>
 }

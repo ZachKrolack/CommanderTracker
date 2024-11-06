@@ -1,0 +1,35 @@
+<table mat-table [dataSource]="decks">
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let deck">
+            <a class="text-primary font-medium hover:underline" [routerLink]="deck.id">{{ deck.name }}</a>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="colorIdentity">
+        <th mat-header-cell *matHeaderCellDef>Colors</th>
+        <td mat-cell *matCellDef="let deck">
+            <app-color-identity-display [isReadOnly]="true" [colorIdentityString]="deck.colorIdentity | toColorIdentityString"></app-color-identity-display>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let deck">
+            <button mat-button (click)="editDeck(deck)">Edit</button>
+            <button
+                mat-button
+                (click)="deleteDeck(deck.id)"
+            >
+                <span class="text-error">Delete</span>
+            </button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+        class="hover:bg-surface-variant"
+        mat-row
+        *matRowDef="let deck; columns: displayedColumns"
+    ></tr>
+</table>

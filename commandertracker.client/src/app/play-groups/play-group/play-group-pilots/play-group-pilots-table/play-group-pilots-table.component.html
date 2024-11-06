@@ -1,0 +1,29 @@
+<table mat-table [dataSource]="pilots">
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let pilot">
+            <a class="text-primary font-medium hover:underline" [routerLink]="['/pilots', pilot.id]">{{ pilot.name }}</a>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let pilot">
+            <button mat-button (click)="editPilot(pilot)">Edit</button>
+            <button
+                mat-button
+                (click)="deletePilot(pilot.id)"
+            >
+                <span class="text-error">Delete</span>
+            </button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+        class="hover:bg-surface-variant"
+        mat-row
+        *matRowDef="let pilot columns: displayedColumns"
+    ></tr>
+</table>
+

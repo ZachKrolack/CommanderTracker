@@ -1,14 +1,25 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { MatDividerModule } from '@angular/material/divider';
+import { RouterOutlet } from '@angular/router';
 import { Observable } from 'rxjs';
 import { PlayGroupApiService } from 'src/app/core/api/play-group.api.service';
 import { PlayGroup } from 'src/app/core/models/playGroup.model';
+import { HeaderComponent } from 'src/app/shared/components/header/header.component';
+import { PageContainerComponent } from 'src/app/shared/components/page-container/page-container.component';
+import { PlayGroupNavComponent } from './play-group-nav/play-group-nav.component';
 
 @Component({
     selector: 'app-play-group',
     standalone: true,
-    imports: [RouterOutlet, CommonModule, RouterLink],
+    imports: [
+        CommonModule,
+        RouterOutlet,
+        PlayGroupNavComponent,
+        PageContainerComponent,
+        HeaderComponent,
+        MatDividerModule
+    ],
     templateUrl: './play-group.component.html',
     styleUrl: './play-group.component.scss'
 })

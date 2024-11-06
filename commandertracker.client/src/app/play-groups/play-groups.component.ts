@@ -2,17 +2,32 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 import { PlayGroupApiService } from '../core/api/play-group.api.service';
 import { PlayGroup } from '../core/models/playGroup.model';
+import { HeaderComponent } from '../shared/components/header/header.component';
+import { PageContainerComponent } from '../shared/components/page-container/page-container.component';
 import { PlayGroupFormDialogComponent } from '../shared/components/play-group-form-dialog/play-group-form-dialog.component';
+import { PlayGroupTableComponent } from './play-group-table/play-group-table.component';
 
 @Component({
     selector: 'app-play-groups',
     standalone: true,
-    imports: [CommonModule, MatButtonModule, MatIconModule, RouterLink],
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatIconModule,
+        MatDividerModule,
+        MatProgressSpinnerModule,
+        RouterLink,
+        PageContainerComponent,
+        HeaderComponent,
+        PlayGroupTableComponent
+    ],
     templateUrl: './play-groups.component.html',
     styleUrl: './play-groups.component.scss'
 })

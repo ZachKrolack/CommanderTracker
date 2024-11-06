@@ -20,28 +20,37 @@ export const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent,
-        canActivate: [NoAuthGuard]
+        canActivate: [NoAuthGuard],
+        title: 'Login | CT'
     },
     {
         path: 'register',
         component: RegisterComponent,
-        canActivate: [NoAuthGuard]
+        canActivate: [NoAuthGuard],
+        title: 'Register | CT'
     },
     {
         path: '',
         component: HomeComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
+        title: 'CT'
     },
     {
         path: 'play-groups',
         component: PlayGroupsComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
+        title: 'Your Play Groups | CT'
     },
     {
         path: 'play-groups/:playGroupId',
         component: PlayGroupComponent,
         canActivate: [AuthGuard],
         children: [
+            {
+                path: '',
+                pathMatch: 'full',
+                redirectTo: 'games'
+            },
             {
                 path: 'decks',
                 component: PlayGroupDecksComponent
@@ -63,7 +72,8 @@ export const routes: Routes = [
     {
         path: 'decks',
         component: DecksComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
+        title: 'Your Decks | CT'
     },
     {
         path: 'decks/:id',
@@ -73,7 +83,8 @@ export const routes: Routes = [
     {
         path: 'games',
         component: GamesComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
+        title: 'Your Games | CT'
     },
     {
         path: 'games/:id',

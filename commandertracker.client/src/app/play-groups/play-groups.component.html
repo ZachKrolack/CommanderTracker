@@ -1,12 +1,20 @@
-<h4>
-    Play Groups
-    <button mat-icon-button (click)="openPlayGroupFormDialog()" aria-label="">
-        <mat-icon>add</mat-icon>
-    </button>
-</h4>
+<app-page-container>
+    <app-header>
+        Your Play Groups
+    </app-header>
 
-@if (playGroups$ | async; as playGroups) {
-    @for (playGroup of playGroups; track playGroup.id) {
-        <div [routerLink]="[playGroup.id, 'games']">{{ playGroup.name }}</div>
+    <button mat-button (click)="openPlayGroupFormDialog()" aria-label="">
+        <mat-icon>add</mat-icon>
+        <span>Create Play Group</span>
+    </button>
+
+    <mat-divider class="my-4"></mat-divider>
+    
+    @if (playGroups$ | async; as playGroups) {
+        <app-play-group-table [playGroups]="playGroups"></app-play-group-table>
+    } @else {
+        <div class="my-16 flex justify-center items-center">
+            <mat-spinner></mat-spinner>
+        </div>
     }
-}
+</app-page-container>

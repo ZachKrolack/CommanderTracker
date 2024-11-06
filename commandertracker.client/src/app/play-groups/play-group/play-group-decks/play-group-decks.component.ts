@@ -1,23 +1,39 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 import { PlayGroupApiService } from 'src/app/core/api/play-group.api.service';
+import { BaseDeck } from 'src/app/core/models/deck.model';
 import { PlayGroupDeck } from 'src/app/core/models/playGroupDeck.model';
 import { DeckFormDialogComponent } from 'src/app/shared/components/deck-form-dialog/deck-form-dialog.component';
+import { HeaderComponent } from 'src/app/shared/components/header/header.component';
+import { PageContainerComponent } from 'src/app/shared/components/page-container/page-container.component';
+import { PlayGroupDecksTableComponent } from './play-group-decks-table/play-group-decks-table.component';
 
 @Component({
     selector: 'app-play-group-decks',
     standalone: true,
-    imports: [CommonModule, RouterLink],
+    imports: [
+        CommonModule,
+        RouterLink,
+        MatButtonModule,
+        MatIconModule,
+        MatDividerModule,
+        PageContainerComponent,
+        HeaderComponent,
+        PlayGroupDecksTableComponent
+    ],
     templateUrl: './play-group-decks.component.html',
     styleUrl: './play-group-decks.component.scss'
 })
 export class PlayGroupDecksComponent implements OnInit {
     @Input() playGroupId!: string;
 
-    decks$!: Observable<PlayGroupDeck[]>;
+    playGroupDecks$!: Observable<PlayGroupDeck[]>;
 
     constructor(
         private playGroupApiService: PlayGroupApiService,
@@ -25,20 +41,24 @@ export class PlayGroupDecksComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.decks$ = this.getDecks(this.playGroupId);
+        this.playGroupDecks$ = this.getDecks(this.playGroupId);
     }
 
-    openDeckFormDialog(): void {
+    openDeckFormDialog(deck?: BaseDeck): void {
         const dialogRef = this.dialog.open<DeckFormDialogComponent>(
             DeckFormDialogComponent,
-            { data: { playGroupId: this.playGroupId } }
+            { data: { playGroupId: this.playGroupId, deck } }
         );
 
         dialogRef.afterClosed().subscribe((shouldUpdate: boolean) => {
             if (shouldUpdate) {
-                this.decks$ = this.getDecks(this.playGroupId);
+                this.playGroupDecks$ = this.getDecks(this.playGroupId);
             }
         });
+    }
+
+    temp() {
+        // TODO
     }
 
     private getDecks(id: string): Observable<PlayGroupDeck[]> {

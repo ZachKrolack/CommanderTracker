@@ -1,17 +1,17 @@
 <nav>
-    <mat-toolbar class="bg-primary">
+    <mat-toolbar class="bg-primary text-on-primary">
         <button mat-icon-button aria-label="">
             <mat-icon>menu</mat-icon>
         </button>
 
-        <span>Commander Tracker</span>
-        &nbsp;
-        <a routerLink="/play-groups">Play Groups</a>
-        &nbsp;
-        <a routerLink="/decks">Decks</a>
-        &nbsp;
-        <a routerLink="/games">Games</a>
-        &nbsp;
+        <span class="px-4">Commander Tracker</span>
+
+        <a routerLink="/play-groups" class="text-sm px-4">Play Groups</a>
+
+        <a routerLink="/games" class="text-sm px-4">Games</a>
+
+        <a routerLink="/decks" class="text-sm px-4">Decks</a>
+
         <button (click)="logout()">Log Out</button>
     </mat-toolbar>
 </nav>
