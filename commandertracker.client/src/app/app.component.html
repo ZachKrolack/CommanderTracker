@@ -1,20 +1,4 @@
-<nav>
-    <mat-toolbar class="bg-primary text-on-primary">
-        <button mat-icon-button aria-label="">
-            <mat-icon>menu</mat-icon>
-        </button>
-
-        <span class="px-4">Commander Tracker</span>
-
-        <a routerLink="/play-groups" class="text-sm px-4">Play Groups</a>
-
-        <a routerLink="/games" class="text-sm px-4">Games</a>
-
-        <a routerLink="/decks" class="text-sm px-4">Decks</a>
-
-        <button (click)="logout()">Log Out</button>
-    </mat-toolbar>
-</nav>
+<app-header></app-header>
 <main class="bg-surface">
     <router-outlet />
 </main>

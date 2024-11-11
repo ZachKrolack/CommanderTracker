@@ -1,0 +1,9 @@
+<button mat-icon-button class="text-on-primary" [matMenuTriggerFor]="menu" aria-label="">
+    <mat-icon>menu</mat-icon>
+</button>
+
+<mat-menu #menu>
+    <a mat-menu-item routerLink="play-groups">PlayGroups</a>
+    <a mat-menu-item routerLink="games">Games</a>
+    <a mat-menu-item routerLink="decks">Decks</a>
+</mat-menu>

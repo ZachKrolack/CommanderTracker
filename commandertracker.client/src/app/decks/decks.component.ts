@@ -44,7 +44,13 @@ export class DecksComponent implements OnInit {
             DeckFormDialogComponent,
             DeckFormDialogData,
             boolean
-        >(DeckFormDialogComponent, { data: { deck } });
+        >(DeckFormDialogComponent, {
+            data: { deck },
+            width: 'auto',
+            height: 'auto',
+            maxWidth: '60vw',
+            maxHeight: '80vh'
+        });
 
         dialogRef.afterClosed().subscribe((shouldUpdate: boolean = false) => {
             if (shouldUpdate) {

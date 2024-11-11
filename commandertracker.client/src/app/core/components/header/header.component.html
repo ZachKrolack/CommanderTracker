@@ -1,0 +1,26 @@
+<nav>
+    <!-- Monitor size toolbar -->
+    <mat-toolbar class="bg-primary text-on-primary hidden md:flex">
+        <span class="px-4">Commander Tracker</span>
+
+        <a routerLink="/play-groups" class="text-sm px-4 hover:underline font-medium">Play Groups</a>
+
+        <a routerLink="/games" class="text-sm px-4 hover:underline font-medium">Games</a>
+
+        <a routerLink="/decks" class="text-sm px-4 hover:underline font-medium">Decks</a>
+
+        <div class="ml-auto">
+            <app-account-menu class="px-4"></app-account-menu>
+        </div>
+    </mat-toolbar>
+
+    <!-- Mobile size toolbar -->
+    <mat-toolbar class="bg-primary text-on-primary md:hidden flex">
+        <span class="px-4">Commander Tracker</span>
+
+        <div class="ml-auto">
+            <app-account-menu class="px-4"></app-account-menu>
+            <app-header-menu class="px-4"></app-header-menu>
+        </div>
+    </mat-toolbar>
+</nav>

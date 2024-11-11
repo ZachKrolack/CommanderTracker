@@ -1,5 +1,5 @@
 <h2 mat-dialog-title>{{ title }}</h2>
-<mat-dialog-content>
+<mat-dialog-content class="rounded-none">
     <form [formGroup]="form">
         <div>
             <mat-form-field>
@@ -14,15 +14,10 @@
         </div>
 
         <div>
+            <label>Colors</label>
+            <br>
             <app-color-identity-selector formControlName="colorIdentity"></app-color-identity-selector>
         </div>
-
-        <!-- <div>
-            <mat-form-field>
-                <mat-label>Color Identity</mat-label>
-                <input matInput type="number" formControlName="colorIdentity" />
-            </mat-form-field>
-        </div> -->
     </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

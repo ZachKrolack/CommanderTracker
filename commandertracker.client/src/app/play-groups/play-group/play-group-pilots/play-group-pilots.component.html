@@ -6,5 +6,9 @@
 <mat-divider class="my-4"></mat-divider>
 
 @if (pilots$ | async; as pilots) {
-    <app-play-group-pilots-table [pilots]="pilots" (handleEditPilot)="openPilotFormDialog($event)"></app-play-group-pilots-table>
+    <app-play-group-pilots-table
+        [pilots]="pilots"
+        (handleEditPilot)="openPilotFormDialog($event)"
+        (handleDeletePilot)="temp()">
+    </app-play-group-pilots-table>
 }
