@@ -4,12 +4,12 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
 import { PilotService } from 'src/app/core/api/pilot.service';
 import { Pilot } from 'src/app/core/models/pilot.model';
-import { GameCardComponent } from 'src/app/shared/components/game-card/game-card.component';
+import { GameSummaryComponent } from 'src/app/shared/components/game-summary/game-summary.component';
 
 @Component({
     selector: 'app-pilot',
     standalone: true,
-    imports: [CommonModule, GameCardComponent],
+    imports: [CommonModule, GameSummaryComponent],
     templateUrl: './pilot.component.html',
     styleUrl: './pilot.component.scss'
 })

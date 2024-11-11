@@ -3,13 +3,13 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DeckService } from 'src/app/core/api/deck.service';
 import { Deck } from 'src/app/core/models/deck.model';
-import { GameCardComponent } from 'src/app/shared/components/game-card/game-card.component';
+import { GameSummaryComponent } from 'src/app/shared/components/game-summary/game-summary.component';
 import { PlayInstanceAggregatorPipe } from './play-instance-aggregator.pipe';
 
 @Component({
     selector: 'app-deck',
     standalone: true,
-    imports: [CommonModule, GameCardComponent, PlayInstanceAggregatorPipe],
+    imports: [CommonModule, GameSummaryComponent, PlayInstanceAggregatorPipe],
     templateUrl: './deck.component.html',
     styleUrl: './deck.component.scss'
 })

@@ -9,7 +9,7 @@ import { RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 import { PlayGroupApiService } from '../core/api/play-group.api.service';
 import { PlayGroup } from '../core/models/playGroup.model';
-import { HeaderComponent } from '../shared/components/header/header.component';
+import { PageHeaderComponent } from '../shared/components/page-header/page-header.component';
 import { PageContainerComponent } from '../shared/components/page-container/page-container.component';
 import { PlayGroupFormDialogComponent } from '../shared/components/play-group-form-dialog/play-group-form-dialog.component';
 import { PlayGroupTableComponent } from './play-group-table/play-group-table.component';
@@ -25,7 +25,7 @@ import { PlayGroupTableComponent } from './play-group-table/play-group-table.com
         MatProgressSpinnerModule,
         RouterLink,
         PageContainerComponent,
-        HeaderComponent,
+        PageHeaderComponent,
         PlayGroupTableComponent
     ],
     templateUrl: './play-groups.component.html',

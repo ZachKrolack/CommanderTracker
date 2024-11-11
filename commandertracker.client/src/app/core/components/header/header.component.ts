@@ -7,7 +7,7 @@ import { AccountMenuComponent } from './account-menu/account-menu.component';
 import { HeaderMenuComponent } from './header-menu/header-menu.component';
 
 @Component({
-    selector: 'app-header',
+    selector: 'app-page-header',
     standalone: true,
     imports: [
         MatToolbarModule,

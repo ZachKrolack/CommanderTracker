@@ -1,11 +1,9 @@
-<h4>
-    Games
-    <button mat-icon-button (click)="openGameFormDialog()" aria-label="">
-        <mat-icon>add</mat-icon>
-    </button>
-</h4>
-@if (games$ | async; as games) {
-    @for (game of games; track game.id;) {
-        <app-game-card [game]="game" (deleted)="deleteGame(game.id)"></app-game-card>
+<app-page-container>
+    <app-page-header>Your Games</app-page-header>
+
+    @if (games$ | async; as games) {
+        @for (game of games; track game.id;) {
+            <app-game-summary [game]="game" (deleted)="deleteGame(game.id)"></app-game-summary>
+        }
     }
-}
+</app-page-container>

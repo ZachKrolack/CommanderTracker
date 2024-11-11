@@ -3,12 +3,12 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PlayGroupApiService } from 'src/app/core/api/play-group.api.service';
 import { PlayGroupDeck } from 'src/app/core/models/playGroupDeck.model';
-import { GameCardComponent } from 'src/app/shared/components/game-card/game-card.component';
+import { GameSummaryComponent } from 'src/app/shared/components/game-summary/game-summary.component';
 
 @Component({
     selector: 'app-play-group-deck',
     standalone: true,
-    imports: [CommonModule, GameCardComponent],
+    imports: [CommonModule, GameSummaryComponent],
     templateUrl: './play-group-deck.component.html',
     styleUrl: './play-group-deck.component.scss'
 })

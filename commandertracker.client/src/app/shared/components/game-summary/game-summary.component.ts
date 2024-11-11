@@ -7,7 +7,7 @@ import { Game } from 'src/app/core/models/game.model';
 import { GamePlayInstanceCardComponent } from '../game-play-instance-card/game-play-instance-card.component';
 
 @Component({
-    selector: 'app-game-card',
+    selector: 'app-game-summary',
     standalone: true,
     imports: [
         MatCardModule,
@@ -16,10 +16,10 @@ import { GamePlayInstanceCardComponent } from '../game-play-instance-card/game-p
         MatButton,
         RouterLink
     ],
-    templateUrl: './game-card.component.html',
-    styleUrl: './game-card.component.scss'
+    templateUrl: './game-summary.component.html',
+    styleUrl: './game-summary.component.scss'
 })
-export class GameCardComponent {
+export class GameSummaryComponent {
     @Input() game!: Game;
 
     @Output() deleted: EventEmitter<void> = new EventEmitter<void>();

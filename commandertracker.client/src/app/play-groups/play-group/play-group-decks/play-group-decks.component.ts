@@ -10,8 +10,8 @@ import { PlayGroupApiService } from 'src/app/core/api/play-group.api.service';
 import { BaseDeck } from 'src/app/core/models/deck.model';
 import { PlayGroupDeck } from 'src/app/core/models/playGroupDeck.model';
 import { DeckFormDialogComponent } from 'src/app/shared/components/deck-form-dialog/deck-form-dialog.component';
-import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { PageContainerComponent } from 'src/app/shared/components/page-container/page-container.component';
+import { PageHeaderComponent } from 'src/app/shared/components/page-header/page-header.component';
 import { PlayGroupDecksTableComponent } from './play-group-decks-table/play-group-decks-table.component';
 
 @Component({
@@ -24,7 +24,7 @@ import { PlayGroupDecksTableComponent } from './play-group-decks-table/play-grou
         MatIconModule,
         MatDividerModule,
         PageContainerComponent,
-        HeaderComponent,
+        PageHeaderComponent,
         PlayGroupDecksTableComponent
     ],
     templateUrl: './play-group-decks.component.html',

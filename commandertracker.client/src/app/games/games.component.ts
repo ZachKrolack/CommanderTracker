@@ -6,16 +6,25 @@ import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
 import { GameService } from '../core/api/game.service';
 import { Game } from '../core/models/game.model';
-import { GameCardComponent } from '../shared/components/game-card/game-card.component';
 import {
     GameFormDialogComponent,
     GameFormDialogData
 } from '../shared/components/game-form-dialog/game-form-dialog.component';
+import { GameSummaryComponent } from '../shared/components/game-summary/game-summary.component';
+import { PageContainerComponent } from '../shared/components/page-container/page-container.component';
+import { PageHeaderComponent } from '../shared/components/page-header/page-header.component';
 
 @Component({
     selector: 'app-games',
     standalone: true,
-    imports: [CommonModule, GameCardComponent, MatButtonModule, MatIconModule],
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatIconModule,
+        PageContainerComponent,
+        PageHeaderComponent,
+        GameSummaryComponent
+    ],
     templateUrl: './games.component.html',
     styleUrl: './games.component.scss'
 })
