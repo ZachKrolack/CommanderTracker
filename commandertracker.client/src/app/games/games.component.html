@@ -3,7 +3,9 @@
 
     @if (games$ | async; as games) {
         @for (game of games; track game.id;) {
-            <app-game-summary [game]="game" (deleted)="deleteGame(game.id)"></app-game-summary>
+            <div class="mb-4">
+                <app-game-summary [game]="game" (deleted)="deleteGame(game.id)"></app-game-summary>
+            </div>
         }
     }
 </app-page-container>

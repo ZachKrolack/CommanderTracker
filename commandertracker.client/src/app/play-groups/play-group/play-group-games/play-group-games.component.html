@@ -1,10 +1,17 @@
+<button mat-button (click)="openGameFormDialog()" aria-label="">
+    <mat-icon>add</mat-icon>
+    <span>Add Game</span>
+</button>
+
+<mat-divider class="my-4"></mat-divider>
+
 @if (games$ | async; as games) {
-    <button (click)="openGameFormDialog()">Add Game</button>
     <div>
         @for (game of games; track game.id) {
-            <div>
-                <a [routerLink]="['/games', game.id]">{{ game.createdDate | date }}</a>
+            <div class="mb-4">
+                <app-game-summary [game]="game"></app-game-summary>
             </div>
         }
     </div>
 }
+

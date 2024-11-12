@@ -4,11 +4,18 @@ import { Observable } from 'rxjs';
 import { GameService } from 'src/app/core/api/game.service';
 import { Game } from 'src/app/core/models/game.model';
 import { GameSummaryComponent } from 'src/app/shared/components/game-summary/game-summary.component';
+import { PageContainerComponent } from 'src/app/shared/components/page-container/page-container.component';
+import { PageHeaderComponent } from 'src/app/shared/components/page-header/page-header.component';
 
 @Component({
     selector: 'app-game',
     standalone: true,
-    imports: [CommonModule, GameSummaryComponent],
+    imports: [
+        CommonModule,
+        PageContainerComponent,
+        PageHeaderComponent,
+        GameSummaryComponent
+    ],
     templateUrl: './game.component.html',
     styleUrl: './game.component.scss'
 })

@@ -1,4 +1,8 @@
-@if (game$ | async; as game) {
-    <h2>{{ 'Game' }}</h2>
-    <app-game-summary [game]="game"></app-game-summary>
-}
+<app-page-container>
+    <app-page-header>Game</app-page-header>
+    
+    @if (game$ | async; as game) {
+        <app-game-summary [game]="game"></app-game-summary>
+    }
+</app-page-container>
+

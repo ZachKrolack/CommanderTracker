@@ -1,19 +1,12 @@
-<mat-card>
-    <mat-card-header>
-        <a [routerLink]="['/games', game.id]">{{ game.createdDate | date }}</a>
-    </mat-card-header>
-    <mat-card-content>
-        <div class="play-instance-container">
-            @for (playInstance of game.playInstances; track playInstance.id) {
-                <app-game-play-instance-card
-                    [playInstance]="playInstance"
-                ></app-game-play-instance-card>
-            }
-        </div>
-    </mat-card-content>
-    <mat-card-footer>
-        <button mat-button (click)="delete()">
-            Delete
-        </button>
-    </mat-card-footer>
-</mat-card>
+<div class="flex flex-col bg-surface-variant rounded p-4">
+    <div class="flex flex-col lg:flex-row lg:space-x-4">
+        @for (playInstance of game.playInstances; track playInstance.id) {
+            <div class="flex-grow flex-1 mb-4">
+                <app-play-instance-summary
+                [playInstance]="playInstance"
+                ></app-play-instance-summary>
+            </div>
+        }
+    </div>
+    <a class="hover:underline" [routerLink]="['/games', game.id]">{{ game.createdDate | date }}</a>
+</div>

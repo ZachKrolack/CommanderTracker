@@ -2,11 +2,11 @@ import { Component, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
 import { GamePlayInstance } from 'src/app/core/models/playInstance.model';
-import { ToColorIdentityStringPipe } from '../../pipes/to-color-identity-string.pipe';
-import { ColorIdentityDisplayComponent } from '../color-identity-display/color-identity-display.component';
+import { ToColorIdentityStringPipe } from 'src/app/shared/pipes/to-color-identity-string.pipe';
+import { ColorIdentityDisplayComponent } from '../../color-identity-display/color-identity-display.component';
 
 @Component({
-    selector: 'app-game-play-instance-card',
+    selector: 'app-play-instance-summary',
     standalone: true,
     imports: [
         MatCardModule,
@@ -14,9 +14,9 @@ import { ColorIdentityDisplayComponent } from '../color-identity-display/color-i
         ColorIdentityDisplayComponent,
         ToColorIdentityStringPipe
     ],
-    templateUrl: './game-play-instance-card.component.html',
-    styleUrl: './game-play-instance-card.component.scss'
+    templateUrl: './play-instance-summary.component.html',
+    styleUrl: './play-instance-summary.component.scss'
 })
-export class GamePlayInstanceCardComponent {
+export class PlayInstanceSummaryComponent {
     @Input() playInstance!: GamePlayInstance;
 }

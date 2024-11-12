@@ -18,11 +18,20 @@ public class PlayGroupGamesController(DataContext context, UserManager<AppUser> 
 
     // GET: api/PlayGroups/5/Games
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<GameBaseResponseDTO>>> GetPlayGroupGames(Guid playGroupId)
+    public async Task<ActionResult<IEnumerable<GameResponseDTO>>> GetPlayGroupGames(Guid playGroupId)
     {
         return await _context.Games
             .Where(game => game.PlayGroupId == playGroupId)
-            .Select(game => GameDTOMapper.ToGameBaseResponseDTO(game))
+                .OrderByDescending(game => game.CreatedDate)
+                .ThenBy(game => game.Id)
+            .Include(game => game.PlayInstances.OrderBy(playInstance => playInstance.EndPosition))
+            .Include(game => game.PlayInstances)
+                .ThenInclude(playInstance => playInstance.PlayGroupDeck)
+                    .ThenInclude(pgd => pgd.Deck)
+            .Include(game => game.PlayInstances)
+                .ThenInclude(playInstance => playInstance.Pilot)
+            .Include(game => game.PlayGroup)
+            .Select(game => GameDTOMapper.ToGameResponseDTO(game))
             .ToListAsync();
     }
 

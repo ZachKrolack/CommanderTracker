@@ -4,7 +4,7 @@ import { MatButton } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
 import { Game } from 'src/app/core/models/game.model';
-import { GamePlayInstanceCardComponent } from '../game-play-instance-card/game-play-instance-card.component';
+import { PlayInstanceSummaryComponent } from './play-instance-summary/play-instance-summary.component';
 
 @Component({
     selector: 'app-game-summary',
@@ -12,7 +12,7 @@ import { GamePlayInstanceCardComponent } from '../game-play-instance-card/game-p
     imports: [
         MatCardModule,
         DatePipe,
-        GamePlayInstanceCardComponent,
+        PlayInstanceSummaryComponent,
         MatButton,
         RouterLink
     ],

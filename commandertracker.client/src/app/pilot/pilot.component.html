@@ -1,0 +1,13 @@
+<app-page-container>
+    @if (pilot$ | async; as pilot) {
+        <app-page-header>{{ pilot.name }}</app-page-header>
+
+        @for (playInstance of pilot.playInstances; track playInstance.id) {
+            <div class="mb-4">
+                <app-game-summary [game]="playInstance.game"></app-game-summary>
+            </div>
+        }
+    }
+</app-page-container>
+
+

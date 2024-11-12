@@ -7,7 +7,7 @@ import { GameComponent } from './games/game/game.component';
 import { GamesComponent } from './games/games.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
-import { PilotComponent } from './pilots/pilot/pilot.component';
+import { PilotComponent } from './pilot/pilot.component';
 import { PlayGroupDeckComponent } from './play-groups/play-group/play-group-decks/play-group-deck/play-group-deck.component';
 import { PlayGroupDecksComponent } from './play-groups/play-group/play-group-decks/play-group-decks.component';
 import { PlayGroupGamesComponent } from './play-groups/play-group/play-group-games/play-group-games.component';
