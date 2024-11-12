@@ -4,7 +4,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 import { PlayGroupApiService } from 'src/app/core/api/play-group.api.service';
 import { Pilot } from 'src/app/core/models/pilot.model';
@@ -16,7 +15,6 @@ import { PlayGroupPilotsTableComponent } from './play-group-pilots-table/play-gr
     standalone: true,
     imports: [
         CommonModule,
-        RouterLink,
         MatButtonModule,
         MatIconModule,
         MatDividerModule,

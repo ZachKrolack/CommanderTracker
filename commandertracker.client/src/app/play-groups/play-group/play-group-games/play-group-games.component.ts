@@ -4,7 +4,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 import { PlayGroupApiService } from 'src/app/core/api/play-group.api.service';
 import { Game } from 'src/app/core/models/game.model';
@@ -19,8 +18,7 @@ import { GameSummaryComponent } from 'src/app/shared/components/game-summary/gam
         MatButtonModule,
         MatIconModule,
         MatDividerModule,
-        GameSummaryComponent,
-        RouterLink
+        GameSummaryComponent
     ],
     templateUrl: './play-group-games.component.html',
     styleUrl: './play-group-games.component.scss'

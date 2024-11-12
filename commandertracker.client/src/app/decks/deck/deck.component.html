@@ -1,7 +1,11 @@
-@if (deck$ | async; as deck) {
-    <h2>{{ deck.name }}</h2>
-
-    @for(playInstance of (deck.playGroupDecks | playInstanceAggregator); track playInstance.id;) {
-        <app-game-summary [game]="playInstance.game"></app-game-summary>
+<app-page-container>
+    @if (deck$ | async; as deck) {
+        <app-page-header>{{ deck.name }}</app-page-header>
+    
+        @for(playInstance of (deck.playGroupDecks | playInstanceAggregator); track playInstance.id;) {
+            <app-game-summary [game]="playInstance.game"></app-game-summary>
+        }
     }
-}
+</app-page-container>
+
+
