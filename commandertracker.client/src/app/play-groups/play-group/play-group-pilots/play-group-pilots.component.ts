@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
+import { PilotService } from 'src/app/core/api/pilot.service';
 import { PlayGroupApiService } from 'src/app/core/api/play-group.api.service';
 import { Pilot } from 'src/app/core/models/pilot.model';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
@@ -31,6 +32,7 @@ export class PlayGroupPilotsComponent implements OnInit {
 
     constructor(
         private playGroupApiService: PlayGroupApiService,
+        private pilotApiService: PilotService,
         private dialog: MatDialog
     ) {}
 
@@ -59,13 +61,11 @@ export class PlayGroupPilotsComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe((shouldDelete: boolean = false) => {
             if (shouldDelete) {
-                this.deletePilot(id);
+                this.pilotApiService.deletePilot(id).subscribe(() => {
+                    this.pilots$ = this.getPilots(this.playGroupId);
+                });
             }
         });
-    }
-
-    private deletePilot(id: string): void {
-        // TODO
     }
 
     private getPilots(id: string): Observable<Pilot[]> {
