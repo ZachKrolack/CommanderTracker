@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { PlayGroupApiService } from 'src/app/core/api/play-group.api.service';
 import { BaseDeck } from 'src/app/core/models/deck.model';
 import { PlayGroupDeck } from 'src/app/core/models/playGroupDeck.model';
+import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { DeckFormDialogComponent } from 'src/app/shared/components/deck-form-dialog/deck-form-dialog.component';
 import { PageContainerComponent } from 'src/app/shared/components/page-container/page-container.component';
 import { PageHeaderComponent } from 'src/app/shared/components/page-header/page-header.component';
@@ -57,8 +58,18 @@ export class PlayGroupDecksComponent implements OnInit {
         });
     }
 
-    temp() {
-        // TODO
+    openRemoveDeckFromPlayGroupDialog(id: string): void {
+        const dialogRef = this.dialog.open<
+            ConfirmationDialogComponent,
+            any,
+            boolean
+        >(ConfirmationDialogComponent, {});
+
+        dialogRef.afterClosed().subscribe((shouldRemove: boolean = false) => {
+            if (shouldRemove) {
+                // TODO
+            }
+        });
     }
 
     private getDecks(id: string): Observable<PlayGroupDeck[]> {

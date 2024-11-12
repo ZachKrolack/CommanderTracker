@@ -7,13 +7,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
 import { DeckService } from '../core/api/deck.service';
 import { Deck } from '../core/models/deck.model';
+import { ConfirmationDialogComponent } from '../shared/components/confirmation-dialog/confirmation-dialog.component';
 import {
     DeckFormDialogComponent,
     DeckFormDialogData
 } from '../shared/components/deck-form-dialog/deck-form-dialog.component';
 import { DecksTableComponent } from '../shared/components/decks-table/decks-table.component';
-import { PageHeaderComponent } from '../shared/components/page-header/page-header.component';
 import { PageContainerComponent } from '../shared/components/page-container/page-container.component';
+import { PageHeaderComponent } from '../shared/components/page-header/page-header.component';
 
 @Component({
     selector: 'app-decks',
@@ -60,8 +61,18 @@ export class DecksComponent implements OnInit {
     }
 
     openDeleteDeckDialog(id: string): void {
-        this.deckService.deleteDeck(id).subscribe(() => {
-            this.decks$ = this.getDecks();
+        const dialogRef = this.dialog.open<
+            ConfirmationDialogComponent,
+            any,
+            boolean
+        >(ConfirmationDialogComponent, {});
+
+        dialogRef.afterClosed().subscribe((shouldDelete: boolean = false) => {
+            if (shouldDelete) {
+                this.deckService.deleteDeck(id).subscribe(() => {
+                    this.decks$ = this.getDecks();
+                });
+            }
         });
     }
 

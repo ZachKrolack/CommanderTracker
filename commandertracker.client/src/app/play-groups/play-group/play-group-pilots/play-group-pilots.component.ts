@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
 import { PlayGroupApiService } from 'src/app/core/api/play-group.api.service';
 import { Pilot } from 'src/app/core/models/pilot.model';
+import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { PilotFormDialogComponent } from 'src/app/shared/components/pilot-form-dialog/pilot-form-dialog.component';
 import { PlayGroupPilotsTableComponent } from './play-group-pilots-table/play-group-pilots-table.component';
 
@@ -49,7 +50,21 @@ export class PlayGroupPilotsComponent implements OnInit {
         });
     }
 
-    temp() {
+    openDeletePilotDialog(id: string): void {
+        const dialogRef = this.dialog.open<
+            ConfirmationDialogComponent,
+            any,
+            boolean
+        >(ConfirmationDialogComponent, {});
+
+        dialogRef.afterClosed().subscribe((shouldDelete: boolean = false) => {
+            if (shouldDelete) {
+                this.deletePilot(id);
+            }
+        });
+    }
+
+    private deletePilot(id: string): void {
         // TODO
     }
 

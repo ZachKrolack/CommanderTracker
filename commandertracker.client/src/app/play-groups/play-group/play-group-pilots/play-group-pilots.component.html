@@ -9,6 +9,6 @@
     <app-play-group-pilots-table
         [pilots]="pilots"
         (handleEditPilot)="openPilotFormDialog($event)"
-        (handleDeletePilot)="temp()">
+        (handleDeletePilot)="openDeletePilotDialog($event)">
     </app-play-group-pilots-table>
 }

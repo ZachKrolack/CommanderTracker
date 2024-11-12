@@ -6,5 +6,10 @@
 <mat-divider class="my-4"></mat-divider>
 
 @if (playGroupDecks$ | async; as playGroupDecks) {
-    <app-play-group-decks-table [playGroupDecks]="playGroupDecks" (handleEditDeck)="openDeckFormDialog($event)" (handleRemoveDeckFromPlayGroup)="temp()"></app-play-group-decks-table>
+    <app-play-group-decks-table
+        [playGroupDecks]="playGroupDecks"
+        (handleEditDeck)="openDeckFormDialog($event)"
+        (handleRemoveDeckFromPlayGroup)="openRemoveDeckFromPlayGroupDialog($event)"
+    >
+    </app-play-group-decks-table>
 }
