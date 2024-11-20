@@ -9,7 +9,7 @@ using CommanderTracker.Models;
 
 namespace CommanderTracker.Controllers;
 
-[Route("api/play-groups")]
+[Route("api")]
 [ApiController]
 public class PlayGroupsController(DataContext context, UserManager<AppUser> userManager) : ControllerBase
 {
@@ -17,17 +17,14 @@ public class PlayGroupsController(DataContext context, UserManager<AppUser> user
     private readonly UserManager<AppUser> _userManager = userManager;
 
     // GET: api/PlayGroups
-    [HttpGet]
+    [HttpGet("play-groups")]
     [Authorize]
     public async Task<ActionResult<IEnumerable<PlayGroupBaseResponseDTO>>> GetPlayGroups()
     {
         var userId = User.GetId();
         var appUser = await _userManager.FindByIdAsync(userId);
 
-        if (appUser == null)
-        {
-            return Unauthorized();
-        }
+        if (appUser == null) { return Unauthorized(); }
 
         return await _context.Pilots
             .Where(pilot => pilot.AppUserId == appUser.Id)
@@ -37,11 +34,11 @@ public class PlayGroupsController(DataContext context, UserManager<AppUser> user
     }
 
     // GET: api/PlayGroups/5
-    [HttpGet("{id}")]
-    public async Task<ActionResult<PlayGroupResponseDTO>> GetPlayGroup(Guid id)
+    [HttpGet("play-groups/{playGroupId}")]
+    public async Task<ActionResult<PlayGroupResponseDTO>> GetPlayGroup(Guid playGroupId)
     {
         var playGroup = await _context.PlayGroups
-            .Where(pg => pg.Id == id)
+            .Where(pg => pg.Id == playGroupId)
             .Include(pg => pg.CreatedBy)
             .Include(pg => pg.Games)
             .Include(pg => pg.Pilots)
@@ -51,44 +48,28 @@ public class PlayGroupsController(DataContext context, UserManager<AppUser> user
                 .ThenInclude(pgd => pgd.Pilot)
             .FirstOrDefaultAsync();
 
-        if (playGroup == null)
-        {
-            return NotFound();
-        }
+        if (playGroup == null) { return NotFound(); }
 
         return PlayGroupDTOMapper.ToPlayGroupResponseDTO(playGroup);
     }
 
     // PUT: api/PlayGroups/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-    [HttpPut("{id}")]
+    [HttpPut("play-groups/{playGroupId}")]
     [Authorize]
-    public async Task<IActionResult> PutPlayGroup(Guid id, PlayGroupUpdateRequestDTO request)
+    public async Task<IActionResult> PutPlayGroup(Guid playGroupId, PlayGroupUpdateRequestDTO request)
     {
+        if (playGroupId != request.Id) { return BadRequest(); }
+
         var userId = User.GetId();
         var appUser = await _userManager.FindByIdAsync(userId);
 
-        if (appUser == null)
-        {
-            return Unauthorized();
-        }
+        if (appUser == null) { return Unauthorized(); }
 
-        if (id != request.Id)
-        {
-            return BadRequest();
-        }
+        var playGroup = await _context.PlayGroups.FindAsync(playGroupId);
 
-        var playGroup = await _context.PlayGroups.FindAsync(id);
-
-        if (playGroup == null)
-        {
-            return NotFound();
-        }
-
-        if (appUser.Id != playGroup.CreatedById)
-        {
-            return Unauthorized();
-        }
+        if (playGroup == null) { return NotFound(); }
+        if (playGroup.CreatedById != userId) { return NotFound(); }
 
         _context.Entry(playGroup).State = EntityState.Modified;
 
@@ -100,7 +81,7 @@ public class PlayGroupsController(DataContext context, UserManager<AppUser> user
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!PlayGroupExists(id))
+            if (!PlayGroupExists(playGroupId))
             {
                 return NotFound();
             }
@@ -115,17 +96,14 @@ public class PlayGroupsController(DataContext context, UserManager<AppUser> user
 
     // POST: api/PlayGroups
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-    [HttpPost]
+    [HttpPost("play-groups")]
     [Authorize]
     public async Task<ActionResult<PlayGroupBaseResponseDTO>> PostPlayGroup(PlayGroupCreateRequestDTO request)
     {
         var userId = User.GetId();
         var appUser = await _userManager.FindByIdAsync(userId);
 
-        if (appUser == null)
-        {
-            return Unauthorized();
-        }
+        if (appUser == null) { return Unauthorized(); }
 
         var playGroup = PlayGroupDTOMapper.ToPlayGroup(request, appUser.Id);
 
@@ -149,29 +127,19 @@ public class PlayGroupsController(DataContext context, UserManager<AppUser> user
     }
 
     // DELETE: api/PlayGroups/5
-    [HttpDelete("{id}")]
+    [HttpDelete("play-groups/{playGroupId}")]
     [Authorize]
-    public async Task<IActionResult> DeletePlayGroup(Guid id)
+    public async Task<IActionResult> DeletePlayGroup(Guid playGroupId)
     {
         var userId = User.GetId();
         var appUser = await _userManager.FindByIdAsync(userId);
 
-        if (appUser == null)
-        {
-            return Unauthorized();
-        }
+        if (appUser == null) { return Unauthorized(); }
 
-        var playGroup = await _context.PlayGroups.FindAsync(id);
+        var playGroup = await _context.PlayGroups.FindAsync(playGroupId);
 
-        if (playGroup == null)
-        {
-            return NotFound();
-        }
-
-        if (appUser.Id != playGroup.CreatedById)
-        {
-            return Unauthorized();
-        }
+        if (playGroup == null) { return NotFound(); }
+        if (appUser.Id != playGroup.CreatedById) { return Unauthorized(); }
 
         _context.PlayGroups.Remove(playGroup);
         await _context.SaveChangesAsync();

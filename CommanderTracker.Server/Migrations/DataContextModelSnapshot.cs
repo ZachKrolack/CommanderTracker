@@ -207,6 +207,10 @@ namespace CommanderTracker.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("play_group_id");
 
+                    b.Property<int>("Role")
+                        .HasColumnType("integer")
+                        .HasColumnName("role");
+
                     b.Property<string>("UpdatedById")
                         .IsRequired()
                         .HasColumnType("text")
@@ -409,20 +413,6 @@ namespace CommanderTracker.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1303b2fd-584f-4781-95ae-192087751445",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "8b469f2d-4827-435d-b4b8-a09350f2c094",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -534,7 +524,7 @@ namespace CommanderTracker.Migrations
             modelBuilder.Entity("CommanderTracker.Models.Deck", b =>
                 {
                     b.HasOne("CommanderTracker.Models.AppUser", "CreatedBy")
-                        .WithMany()
+                        .WithMany("Decks")
                         .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -553,7 +543,7 @@ namespace CommanderTracker.Migrations
             modelBuilder.Entity("CommanderTracker.Models.Game", b =>
                 {
                     b.HasOne("CommanderTracker.Models.AppUser", "CreatedBy")
-                        .WithMany()
+                        .WithMany("Games")
                         .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -580,11 +570,11 @@ namespace CommanderTracker.Migrations
             modelBuilder.Entity("CommanderTracker.Models.Pilot", b =>
                 {
                     b.HasOne("CommanderTracker.Models.AppUser", "AppUser")
-                        .WithMany()
+                        .WithMany("Pilots")
                         .HasForeignKey("AppUserId");
 
                     b.HasOne("CommanderTracker.Models.AppUser", "CreatedBy")
-                        .WithMany()
+                        .WithMany("CreatedPilots")
                         .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -613,7 +603,7 @@ namespace CommanderTracker.Migrations
             modelBuilder.Entity("CommanderTracker.Models.PlayGroup", b =>
                 {
                     b.HasOne("CommanderTracker.Models.AppUser", "CreatedBy")
-                        .WithMany()
+                        .WithMany("PlayGroups")
                         .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -632,7 +622,7 @@ namespace CommanderTracker.Migrations
             modelBuilder.Entity("CommanderTracker.Models.PlayGroupDeck", b =>
                 {
                     b.HasOne("CommanderTracker.Models.AppUser", "CreatedBy")
-                        .WithMany()
+                        .WithMany("PlayGroupDecks")
                         .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -673,7 +663,7 @@ namespace CommanderTracker.Migrations
             modelBuilder.Entity("CommanderTracker.Models.PlayInstance", b =>
                 {
                     b.HasOne("CommanderTracker.Models.AppUser", "CreatedBy")
-                        .WithMany()
+                        .WithMany("PlayInstances")
                         .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -762,6 +752,23 @@ namespace CommanderTracker.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("CommanderTracker.Models.AppUser", b =>
+                {
+                    b.Navigation("CreatedPilots");
+
+                    b.Navigation("Decks");
+
+                    b.Navigation("Games");
+
+                    b.Navigation("Pilots");
+
+                    b.Navigation("PlayGroupDecks");
+
+                    b.Navigation("PlayGroups");
+
+                    b.Navigation("PlayInstances");
                 });
 
             modelBuilder.Entity("CommanderTracker.Models.Deck", b =>

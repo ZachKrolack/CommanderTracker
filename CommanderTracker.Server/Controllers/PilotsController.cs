@@ -2,21 +2,26 @@
 using Microsoft.EntityFrameworkCore;
 using CommanderTracker.Data;
 using CommanderTracker.DTOs;
+using CommanderTracker.Models;
+using Microsoft.AspNetCore.Identity;
+using CommanderTracker.Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CommanderTracker.Controllers;
 
-[Route("api/pilots")]
+[Route("api")]
 [ApiController]
-public class PilotsController(DataContext context) : ControllerBase
+public class PilotsController(DataContext context, UserManager<AppUser> userManager) : ControllerBase
 {
     private readonly DataContext _context = context;
+    private readonly UserManager<AppUser> _userManager = userManager;
 
     // GET: api/Pilots/5
-    [HttpGet("{id}")]
-    public async Task<ActionResult<PilotResponseDTO>> GetPilot(Guid id)
+    [HttpGet("pilots/{pilotId}")]
+    public async Task<ActionResult<PilotResponseDTO>> GetPilot(Guid pilotId)
     {
         var pilot = await _context.Pilots
-            .Where(pilot => pilot.Id == id)
+            .Where(pilot => pilot.Id == pilotId)
             .Include(pilot => pilot.CreatedBy)
             .Include(pilot => pilot.PlayInstances
                 .OrderByDescending(playInstance => playInstance.CreatedDate)
@@ -39,30 +44,42 @@ public class PilotsController(DataContext context) : ControllerBase
                 .ThenInclude(pi => pi.PlayGroupDeck)
             .FirstOrDefaultAsync();
 
-        if (pilot == null)
-        {
-            return NotFound();
-        }
+        if (pilot == null) { return NotFound(); }
 
         return PilotDTOMapper.ToPilotResponseDTO(pilot);
     }
 
+    // GET: api/PlayGroups/5/Pilots
+    [HttpGet("play-groups/{playGroupId}/pilots")]
+    public async Task<ActionResult<IEnumerable<PilotBaseResponseDTO>>> GetPilots(Guid playGroupId)
+    {
+        return await _context.Pilots
+            .Where(pilot => pilot.PlayGroupId == playGroupId)
+            .Select(pilot => PilotDTOMapper.ToPilotBaseResponseDTO(pilot))
+            .ToListAsync();
+    }
+
     // PUT: api/Pilots/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-    [HttpPut("{id}")]
-    public async Task<IActionResult> PutPilot(Guid id, PilotUpdateRequestDTO request)
+    [HttpPut("play-groups/{playGroupId}/pilots/{pilotId}")]
+    [Authorize]
+    public async Task<IActionResult> PutPilot(Guid playGroupId, Guid pilotId, PilotUpdateRequestDTO request)
     {
-        if (id != request.Id)
-        {
-            return BadRequest();
-        }
+        if (pilotId != request.Id) { return BadRequest(); }
 
-        var pilot = await _context.Pilots.FindAsync(id);
+        var userId = User.GetId();
+        var appUser = await _userManager.FindByIdAsync(userId);
 
-        if (pilot == null)
-        {
-            return NotFound();
-        }
+        if (appUser == null) { return Unauthorized(); }
+
+        var playGroup = await _context.PlayGroups.FindAsync(playGroupId);
+
+        if (playGroup == null) { return NotFound(); }
+        if (playGroup.CreatedById != userId) { return NotFound(); }
+
+        var pilot = await _context.Pilots.FindAsync(pilotId);
+
+        if (pilot == null) { return NotFound(); }
 
         _context.Entry(pilot).State = EntityState.Modified;
 
@@ -74,7 +91,7 @@ public class PilotsController(DataContext context) : ControllerBase
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!PilotExists(id))
+            if (!PilotExists(pilotId))
             {
                 return NotFound();
             }
@@ -87,15 +104,50 @@ public class PilotsController(DataContext context) : ControllerBase
         return NoContent();
     }
 
-    // DELETE: api/Pilots/5
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeletePilot(Guid id)
+    // POST: api/PlayGroups/5/Pilots
+    [HttpPost("play-groups/{playGroupId}/pilots")]
+    [Authorize]
+    public async Task<ActionResult<PilotBaseResponseDTO>> PostPilot(Guid playGroupId, PilotCreateRequestDTO request)
     {
-        var pilot = await _context.Pilots.FindAsync(id);
-        if (pilot == null)
-        {
-            return NotFound();
-        }
+        var userId = User.GetId();
+        var appUser = await _userManager.FindByIdAsync(userId);
+
+        if (appUser == null) { return Unauthorized(); }
+
+        var playGroup = await _context.PlayGroups.FindAsync(playGroupId);
+
+        if (playGroup == null) { return NotFound(); }
+        if (playGroup.CreatedById != userId) { return NotFound(); }
+
+        var pilot = PilotDTOMapper.ToPilot(request, playGroupId, appUser.Id);
+
+        _context.Pilots.Add(pilot);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction(
+            nameof(PostPilot),
+            new { id = pilot.Id },
+            PilotDTOMapper.ToPilotBaseResponseDTO(pilot));
+    }
+
+    // DELETE: api/Pilots/5
+    [HttpDelete("play-groups/{playGroupId}/pilots/{pilotId}")]
+    [Authorize]
+    public async Task<IActionResult> DeletePilot(Guid playGroupId, Guid pilotId)
+    {
+        var userId = User.GetId();
+        var appUser = await _userManager.FindByIdAsync(userId);
+
+        if (appUser == null) { return Unauthorized(); }
+
+        var playGroup = await _context.PlayGroups.FindAsync(playGroupId);
+
+        if (playGroup == null) { return NotFound(); }
+        if (playGroup.CreatedById != userId) { return NotFound(); }
+
+        var pilot = await _context.Pilots.FindAsync(pilotId);
+
+        if (pilot == null) { return NotFound(); }
 
         _context.Pilots.Remove(pilot);
         await _context.SaveChangesAsync();

@@ -1,9 +1,12 @@
-﻿namespace CommanderTracker.DTOs;
+﻿using CommanderTracker.Enums;
+
+namespace CommanderTracker.DTOs;
 
 public class PilotBaseResponseDTO : BaseResponseDTO
 {
     public required string Name { get; set; } = string.Empty;
-    
+    public PilotRole Role { get; set; } = PilotRole.Member;
+    public required Guid PlayGroupId { get; set; }
 }
 
 public class PilotResponseDTO : PilotBaseResponseDTO

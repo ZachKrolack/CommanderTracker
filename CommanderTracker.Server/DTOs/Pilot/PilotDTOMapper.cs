@@ -1,4 +1,5 @@
-﻿using CommanderTracker.Models;
+﻿using CommanderTracker.Enums;
+using CommanderTracker.Models;
 
 namespace CommanderTracker.DTOs;
 
@@ -10,6 +11,8 @@ public class PilotDTOMapper
         {
             Id = pilot.Id,
             Name = pilot.Name,
+            Role = pilot.Role, // TODO
+            PlayGroupId = pilot.PlayGroupId,
             CreatedDate = pilot.CreatedDate,
             UpdatedDate = pilot.UpdatedDate
         };
@@ -21,6 +24,8 @@ public class PilotDTOMapper
         {
             Id = pilot.Id,
             Name = pilot.Name,
+            Role = pilot.Role, // TODO
+            PlayGroupId = pilot.PlayGroupId,
             PlayGroup = PlayGroupDTOMapper.ToPlayGroupBaseResponseDTO(pilot.PlayGroup),
             PlayInstances = pilot.PlayInstances.Select(PlayInstanceDTOMapper.ToPilotPlayInstanceResponseDTO).ToList(),
             CreatedDate = pilot.CreatedDate,
@@ -33,6 +38,7 @@ public class PilotDTOMapper
         return new Pilot
         { 
             Name = request.Name,
+            Role = self ? PilotRole.Owner : PilotRole.Member,
             AppUserId = self ? createdById : request.AppUserId,
             PlayGroupId = playGroupId,
             CreatedById = createdById,

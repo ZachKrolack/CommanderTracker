@@ -1,7 +1,6 @@
 ﻿using CommanderTracker.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 
 namespace CommanderTracker.Data;
 
@@ -9,6 +8,7 @@ public class DataContext(IConfiguration configuration) : IdentityDbContext<AppUs
 {
     protected readonly IConfiguration _configuration = configuration;
 
+    public DbSet<AppUser> AppUsers { get; set; } = null!;
     public DbSet<Deck> Decks { get; set; } = null!;
     public DbSet<Game> Games { get; set; } = null!;
     public DbSet<Pilot> Pilots { get; set; } = null!;
@@ -37,6 +37,9 @@ public class DataContext(IConfiguration configuration) : IdentityDbContext<AppUs
     {
         base.OnModelCreating(builder);
 
+        // TODO
+
+        /*
         List<IdentityRole> roles =
         [
             new IdentityRole { Name = "Admin", NormalizedName = "ADMIN" },
@@ -44,6 +47,49 @@ public class DataContext(IConfiguration configuration) : IdentityDbContext<AppUs
         ];
 
         builder.Entity<IdentityRole>().HasData(roles);
+        */
+        
+        builder.Entity<AppUser>()
+            .HasMany(e => e.Pilots)
+            .WithOne(e => e.AppUser)
+            .HasForeignKey(e => e.AppUserId)
+            .HasPrincipalKey(e => e.Id);
+
+        builder.Entity<AppUser>()
+            .HasMany(e => e.Decks)
+            .WithOne(e => e.CreatedBy)
+            .HasForeignKey(e => e.CreatedById)
+            .HasPrincipalKey(e => e.Id);
+
+        builder.Entity<AppUser>()
+            .HasMany(e => e.Games)
+            .WithOne(e => e.CreatedBy)
+            .HasForeignKey(e => e.CreatedById)
+            .HasPrincipalKey(e => e.Id);
+        
+        builder.Entity<AppUser>()
+            .HasMany(e => e.CreatedPilots)
+            .WithOne(e => e.CreatedBy)
+            .HasForeignKey(e => e.CreatedById)
+            .HasPrincipalKey(e => e.Id);
+
+        builder.Entity<AppUser>()
+            .HasMany(e => e.PlayGroups)
+            .WithOne(e => e.CreatedBy)
+            .HasForeignKey(e => e.CreatedById)
+            .HasPrincipalKey(e => e.Id);
+
+        builder.Entity<AppUser>()
+            .HasMany(e => e.PlayGroupDecks)
+            .WithOne(e => e.CreatedBy)
+            .HasForeignKey(e => e.CreatedById)
+            .HasPrincipalKey(e => e.Id);
+
+        builder.Entity<AppUser>()
+            .HasMany(e => e.PlayInstances)
+            .WithOne(e => e.CreatedBy)
+            .HasForeignKey(e => e.CreatedById)
+            .HasPrincipalKey(e => e.Id);
     }
 
     private void UpsertTimestamps()

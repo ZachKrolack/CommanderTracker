@@ -9,7 +9,7 @@ using CommanderTracker.Models;
 
 namespace CommanderTracker.Controllers
 {
-    [Route("api/decks")]
+    [Route("api")]
     [ApiController]
     public class DecksController(DataContext context, UserManager<AppUser> userManager) : ControllerBase
     {
@@ -17,7 +17,7 @@ namespace CommanderTracker.Controllers
         private readonly UserManager<AppUser> _userManager = userManager;
 
         // GET: api/Decks
-        [HttpGet]
+        [HttpGet("decks")]
         [Authorize]
         public async Task<ActionResult<IEnumerable<DeckBaseResponseDTO>>> GetDecks()
         {
@@ -35,13 +35,31 @@ namespace CommanderTracker.Controllers
                 .ToListAsync();
         }
 
-        // GET: api/Decks/5
-        [HttpGet("{id}")]
-        [Authorize]
-        public async Task<ActionResult<DeckResponseDTO>> GetDeck(Guid id)
+        // GET: api/PlayGroups/5/Decks
+        [HttpGet("play-groups/{playGroupId}/decks")]
+        public async Task<ActionResult<IEnumerable<PlayGroupDeckBaseResponseDTO>>> GetPlayGroupDecks(Guid playGroupId)
         {
+            return await _context.PlayGroupDecks
+                .Where(pgd => pgd.PlayGroupId == playGroupId)
+                .Include(pgd => pgd.Deck)
+                .Include(pgd => pgd.PlayGroup)
+                // .Include(pgd => pgd.Pilot)
+                .Select(pgd => PlayGroupDeckDTOMapper.ToPlayGroupDeckBaseResponseDTO(pgd))
+                .ToListAsync();
+        }
+
+        // GET: api/Decks/5
+        [HttpGet("decks/{deckId}")]
+        [Authorize]
+        public async Task<ActionResult<DeckResponseDTO>> GetDeck(Guid deckId)
+        {
+            var userId = User.GetId();
+            var appUser = await _userManager.FindByIdAsync(userId);
+
+            if (appUser == null) { return Unauthorized(); }         
+
             var deck = await _context.Decks
-                .Where(deck => deck.Id == id)
+                .Where(deck => deck.Id == deckId)
                 .Include(deck => deck.CreatedBy)
                 .Include(deck => deck.PlayGroupDecks)   
                     .ThenInclude(deck => deck.PlayInstances
@@ -67,44 +85,62 @@ namespace CommanderTracker.Controllers
                             .ThenInclude(game => game.PlayGroup)
                 .FirstOrDefaultAsync();
 
-            if (deck == null)
-            {
-                return NotFound();
-            }
+            if (deck == null) { return NotFound(); }
+            if (appUser.Id != deck.CreatedById) { return NotFound(); }
 
             return DeckDTOMapper.ToDeckResponseDTO(deck);
         }
 
+        // GET: api/PlayGroups/5/Decks/5
+        [HttpGet("play-groups/{playGroupId}/decks{deckId}")]
+        public async Task<ActionResult<PlayGroupDeckResponseDTO>> GetPlayGroupDeck(Guid playGroupId, Guid deckId)
+        {
+            var deck = await _context.PlayGroupDecks
+                .Where(pgd => pgd.PlayGroupId == playGroupId && pgd.DeckId == deckId)
+                .Include(pgd => pgd.Deck)
+                .Include(pgd => pgd.PlayGroup)
+                // .Include(pgd => pgd.Pilot)         
+                .Include(pgd => pgd.PlayInstances
+                    .OrderByDescending(playInstance => playInstance.CreatedDate)
+                    .ThenBy(playInstance => playInstance.Id))
+                .Include(pgd => pgd.PlayInstances)
+                    .ThenInclude(pi => pi.Pilot)
+                .Include(pgd => pgd.PlayInstances)
+                    .ThenInclude(pi => pi.Game)
+                        .ThenInclude(game => game.PlayInstances)
+                            .ThenInclude(pi => pi.PlayGroupDeck)
+                                .ThenInclude(pgd => pgd.Deck)
+                .Include(pgd => pgd.PlayInstances)
+                    .ThenInclude(pi => pi.Game)
+                        .ThenInclude(game => game.PlayInstances)
+                            .ThenInclude(pi => pi.Pilot)
+                .Include(pgd => pgd.PlayInstances)
+                    .ThenInclude(pi => pi.Game)
+                        .ThenInclude(game => game.PlayGroup)
+                .FirstOrDefaultAsync();
+
+            if (deck == null) { return NotFound(); }
+
+            return PlayGroupDeckDTOMapper.ToPlayGroupDeckResponseDTO(deck);
+        }
+
         // PUT: api/Decks/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("decks/{deckId}")]
         [Authorize]
-        public async Task<IActionResult> PutDeck(Guid id, DeckUpdateRequestDTO request)
+        public async Task<IActionResult> PutDeck(Guid deckId, DeckUpdateRequestDTO request)
         {
+            if (deckId != request.Id) { return BadRequest(); }
+
             var userId = User.GetId();
             var appUser = await _userManager.FindByIdAsync(userId);
 
-            if (appUser == null)
-            {
-                return Unauthorized();
-            }
+            if (appUser == null) { return Unauthorized(); }
 
-            if (id != request.Id)
-            {
-                return BadRequest();
-            }
+            var deck = await _context.Decks.FindAsync(deckId);
 
-            var deck = await _context.Decks.FindAsync(id);
-
-            if (deck == null) 
-            { 
-                return NotFound(); 
-            }
-
-            if (appUser.Id != deck.CreatedById)
-            {
-                return Unauthorized();
-            }
+            if (deck == null) { return NotFound(); }
+            if (appUser.Id != deck.CreatedById) { return NotFound(); }
 
             _context.Entry(deck).State = EntityState.Modified;
 
@@ -117,7 +153,7 @@ namespace CommanderTracker.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!DeckExists(id))
+                if (!DeckExists(deckId))
                 {
                     return NotFound();
                 }
@@ -132,17 +168,14 @@ namespace CommanderTracker.Controllers
 
         // POST: api/Decks
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
+        [HttpPost("decks")]
         [Authorize]
         public async Task<ActionResult<DeckBaseResponseDTO>> PostDeck(DeckCreateRequestDTO request)
         {
             var userId = User.GetId();
             var appUser = await _userManager.FindByIdAsync(userId);
 
-            if (appUser == null)
-            {
-                return Unauthorized();
-            }
+            if (appUser == null) { return Unauthorized(); }
 
             var deck = DeckDTOMapper.ToDeck(request, appUser.Id);
 
@@ -155,30 +188,57 @@ namespace CommanderTracker.Controllers
                 DeckDTOMapper.ToDeckBaseResponseDTO(deck));
         }
 
-        // DELETE: api/Decks/5
-        [HttpDelete("{id}")]
+        // POST: api/PlayGroups/5/Decks
+        [HttpPost("play-groups/{playGroupId}/decks")]
         [Authorize]
-        public async Task<IActionResult> DeleteDeck(Guid id)
+        public async Task<ActionResult<DeckBaseResponseDTO>> PostPlayGroupDeck(Guid playGroupId, DeckCreateRequestDTO request)
         {
             var userId = User.GetId();
             var appUser = await _userManager.FindByIdAsync(userId);
 
-            if (appUser == null)
-            {
-                return Unauthorized();
-            }
+            if (appUser == null) { return Unauthorized(); }
 
-            var deck = await _context.Decks.FindAsync(id);
+            var playGroup = await _context.PlayGroups.FindAsync(playGroupId);
 
-            if (deck == null)
-            {
-                return NotFound();
-            }
+            if (playGroup == null) { return NotFound(); }
+            if (appUser.Id != playGroup.CreatedById) { return NotFound(); }
 
-            if (appUser.Id != deck.CreatedById)
+            var deck = DeckDTOMapper.ToDeck(request, appUser.Id);
+
+            _context.Decks.Add(deck);
+
+            var playGroupDeckRequest = new PlayGroupDeckCreateRequestDTO
             {
-                return Unauthorized();
-            }
+                DeckId = deck.Id,
+                // PilotId = null // TODO
+            };
+
+            var playGroupDeck = PlayGroupDeckDTOMapper.ToPlayGroupDeck(playGroupDeckRequest, playGroupId, appUser.Id);
+
+            _context.PlayGroupDecks.Add(playGroupDeck);
+
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(
+                nameof(PostPlayGroupDeck),
+                new { id = deck.Id },
+                DeckDTOMapper.ToDeckBaseResponseDTO(deck));
+        }
+
+        // DELETE: api/Decks/5
+        [HttpDelete("decks/{deckId}")]
+        [Authorize]
+        public async Task<IActionResult> DeleteDeck(Guid deckId)
+        {
+            var userId = User.GetId();
+            var appUser = await _userManager.FindByIdAsync(userId);
+
+            if (appUser == null) { return Unauthorized(); }
+
+            var deck = await _context.Decks.FindAsync(deckId);
+
+            if (deck == null) { return NotFound(); }
+            if (appUser.Id != deck.CreatedById) { return NotFound(); }
 
             _context.Decks.Remove(deck);
             await _context.SaveChangesAsync();
