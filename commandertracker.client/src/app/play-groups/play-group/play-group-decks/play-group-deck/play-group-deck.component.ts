@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { Observable } from 'rxjs';
-import { PlayGroupApiService } from 'src/app/core/api/play-group.api.service';
+import { DeckApiService } from 'src/app/core/api/deck.api.service';
 import { PlayGroupDeck } from 'src/app/core/models/playGroupDeck.model';
 import { GameSummaryComponent } from 'src/app/shared/components/game-summary/game-summary.component';
 import { PageHeaderComponent } from 'src/app/shared/components/page-header/page-header.component';
@@ -25,7 +25,7 @@ export class PlayGroupDeckComponent implements OnInit {
 
     playGroupDeck$!: Observable<PlayGroupDeck>;
 
-    constructor(private playGroupApiService: PlayGroupApiService) {}
+    constructor(private deckApiService: DeckApiService) {}
 
     ngOnInit(): void {
         this.playGroupDeck$ = this.getPlayGroupDeck(
@@ -38,6 +38,6 @@ export class PlayGroupDeckComponent implements OnInit {
         playGroupId: string,
         deckId: string
     ): Observable<PlayGroupDeck> {
-        return this.playGroupApiService.getDeck(playGroupId, deckId);
+        return this.deckApiService.getPlayGroupDeck(playGroupId, deckId);
     }
 }

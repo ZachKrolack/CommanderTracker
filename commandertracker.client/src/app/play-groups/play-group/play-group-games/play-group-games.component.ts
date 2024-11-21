@@ -5,10 +5,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
-import { PlayGroupApiService } from 'src/app/core/api/play-group.api.service';
+import { AuthService } from 'src/app/core/api/auth.service';
+import { GameApiService } from 'src/app/core/api/game.api.service';
 import { Game } from 'src/app/core/models/game.model';
+import { PlayGroup } from 'src/app/core/models/playGroup.model';
 import { GameFormDialogComponent } from 'src/app/shared/components/game-form-dialog/game-form-dialog.component';
 import { GameSummaryComponent } from 'src/app/shared/components/game-summary/game-summary.component';
+import { IsCreatedByPipe } from 'src/app/shared/pipes/is-created-by.pipe';
+import { PlayGroupService } from '../play-group.service';
 
 @Component({
     selector: 'app-play-group-games',
@@ -18,7 +22,8 @@ import { GameSummaryComponent } from 'src/app/shared/components/game-summary/gam
         MatButtonModule,
         MatIconModule,
         MatDividerModule,
-        GameSummaryComponent
+        GameSummaryComponent,
+        IsCreatedByPipe
     ],
     templateUrl: './play-group-games.component.html',
     styleUrl: './play-group-games.component.scss'
@@ -26,15 +31,21 @@ import { GameSummaryComponent } from 'src/app/shared/components/game-summary/gam
 export class PlayGroupGamesComponent implements OnInit {
     @Input() playGroupId!: string;
 
+    userId: string | null = null;
     games$!: Observable<Game[]>;
+    playGroup$!: Observable<PlayGroup>;
 
     constructor(
-        private playGroupApiService: PlayGroupApiService,
+        private playGroupService: PlayGroupService,
+        private gameApiService: GameApiService,
+        private authService: AuthService,
         private dialog: MatDialog
     ) {}
 
     ngOnInit(): void {
+        this.userId = this.authService.userId;
         this.games$ = this.getGames(this.playGroupId);
+        this.playGroup$ = this.playGroupService.playGroup$;
     }
 
     openGameFormDialog(): void {
@@ -51,6 +62,6 @@ export class PlayGroupGamesComponent implements OnInit {
     }
 
     private getGames(id: string): Observable<Game[]> {
-        return this.playGroupApiService.getGames(id);
+        return this.gameApiService.getGames(id);
     }
 }

@@ -2,81 +2,52 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Deck, DeckCreateRequest } from '../models/deck.model';
-import { Game, GameCreateRequest } from '../models/game.model';
-import { Pilot, PilotCreateRequest } from '../models/pilot.model';
+import { PLAY_GROUPS_URL } from '../constants/api';
 import {
     PlayGroup,
     PlayGroupCreateRequest,
     PlayGroupUpdateRequest
 } from '../models/playGroup.model';
-import { PlayGroupDeck } from '../models/playGroupDeck.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PlayGroupApiService {
-    private readonly CONTROLLER_PATH = 'play-groups';
-    private readonly URL = `${environment.apiRoot}/${this.CONTROLLER_PATH}`;
+    private readonly ROOT = `${environment.apiRoot}`;
+    private readonly PLAY_GROUPS = PLAY_GROUPS_URL;
 
     constructor(private http: HttpClient) {}
 
     getPlayGroups(): Observable<PlayGroup[]> {
-        return this.http.get<PlayGroup[]>(`${this.URL}`);
+        return this.http.get<PlayGroup[]>(`${this.ROOT}/${this.PLAY_GROUPS}`);
     }
 
     createPlayGroup(playGroup: PlayGroupCreateRequest): Observable<PlayGroup> {
-        return this.http.post<PlayGroup>(`${this.URL}`, playGroup);
-    }
-
-    getPlayGroup(id: string): Observable<PlayGroup> {
-        return this.http.get<PlayGroup>(`${this.URL}/${id}`);
-    }
-
-    updatePlayGroup(
-        id: string,
-        playGroup: PlayGroupUpdateRequest
-    ): Observable<void> {
-        return this.http.put<void>(`${this.URL}/${id}`, playGroup);
-    }
-
-    deletePlayGroup(id: string): Observable<void> {
-        return this.http.delete<void>(`${this.URL}/${id}`);
-    }
-
-    // Decks
-
-    getDecks(id: string): Observable<PlayGroupDeck[]> {
-        return this.http.get<PlayGroupDeck[]>(`${this.URL}/${id}/decks`);
-    }
-
-    createDeck(id: string, deck: DeckCreateRequest): Observable<Deck> {
-        return this.http.post<Deck>(`${this.URL}/${id}/decks`, deck);
-    }
-
-    getDeck(id: string, deckId: string): Observable<PlayGroupDeck> {
-        return this.http.get<PlayGroupDeck>(
-            `${this.URL}/${id}/decks/${deckId}`
+        return this.http.post<PlayGroup>(
+            `${this.ROOT}/${this.PLAY_GROUPS}`,
+            playGroup
         );
     }
 
-    // Games
-
-    getGames(id: string): Observable<Game[]> {
-        return this.http.get<Game[]>(`${this.URL}/${id}/games`);
+    getPlayGroup(playGroupId: string): Observable<PlayGroup> {
+        return this.http.get<PlayGroup>(
+            `${this.ROOT}/${this.PLAY_GROUPS}/${playGroupId}`
+        );
     }
 
-    createGame(id: string, game: GameCreateRequest): Observable<Game> {
-        return this.http.post<Game>(`${this.URL}/${id}/games`, game);
+    updatePlayGroup(
+        playGroupId: string,
+        playGroup: PlayGroupUpdateRequest
+    ): Observable<void> {
+        return this.http.put<void>(
+            `${this.ROOT}/${this.PLAY_GROUPS}/${playGroupId}`,
+            playGroup
+        );
     }
 
-    // Pilots
-
-    getPilots(id: string): Observable<Pilot[]> {
-        return this.http.get<Pilot[]>(`${this.URL}/${id}/pilots`);
-    }
-
-    createPilot(id: string, pilot: PilotCreateRequest): Observable<Pilot> {
-        return this.http.post<Pilot>(`${this.URL}/${id}/pilots`, pilot);
+    deletePlayGroup(playGroupId: string): Observable<void> {
+        return this.http.delete<void>(
+            `${this.ROOT}/${this.PLAY_GROUPS}/${playGroupId}`
+        );
     }
 }

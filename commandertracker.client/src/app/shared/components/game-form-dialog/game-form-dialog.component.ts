@@ -18,7 +18,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { Observable, shareReplay } from 'rxjs';
-import { PlayGroupApiService } from 'src/app/core/api/play-group.api.service';
+import { DeckApiService } from 'src/app/core/api/deck.api.service';
+import { GameApiService } from 'src/app/core/api/game.api.service';
+import { PilotApiService } from 'src/app/core/api/pilot.api.service';
 import { Game, GameCreateRequest } from 'src/app/core/models/game.model';
 import { Pilot } from 'src/app/core/models/pilot.model';
 import { PlayGroupDeck } from 'src/app/core/models/playGroupDeck.model';
@@ -67,7 +69,9 @@ export class GameFormDialogComponent implements OnInit {
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: GameFormDialogData,
         private dialogRef: MatDialogRef<GameFormDialogComponent>,
-        private playGroupApiService: PlayGroupApiService
+        private gameApiService: GameApiService,
+        private deckApiService: DeckApiService,
+        private pilotApiService: PilotApiService
     ) {}
 
     ngOnInit(): void {
@@ -103,14 +107,14 @@ export class GameFormDialogComponent implements OnInit {
             this.form
         );
 
-        return this.playGroupApiService.createGame(
+        return this.gameApiService.createGame(
             this.playGroupId,
             gameCreateRequest
         );
     }
 
     private getDecks(playGroupId: string): Observable<PlayGroupDeck[]> {
-        return this.playGroupApiService.getDecks(playGroupId).pipe(
+        return this.deckApiService.getPlayGroupDecks(playGroupId).pipe(
             // map((decks: PlayGroupDeck[]) =>
             //     decks.map((deck) => deck.deck as Deck)
             // ), // TODO
@@ -119,9 +123,7 @@ export class GameFormDialogComponent implements OnInit {
     }
 
     private getPilots(playGroupId: string): Observable<Pilot[]> {
-        return this.playGroupApiService
-            .getPilots(playGroupId)
-            .pipe(shareReplay());
+        return this.pilotApiService.getPilots(playGroupId).pipe(shareReplay());
     }
 
     private initForm(): FormGroup<GameForm> {

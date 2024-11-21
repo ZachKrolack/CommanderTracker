@@ -9,8 +9,14 @@ export type ModelDate = {
     updatedDate: string;
 };
 
-export type BaseModel = ModelId & ModelDate & ModelCreatedBy;
-
 export type ModelCreatedBy = {
+    createdById: string;
     createdBy: AppUser;
 };
+
+export type ModelUpdatedBy = {
+    updatedById: string;
+    updatedBy: AppUser;
+};
+
+export type BaseModel = ModelId & ModelDate & ModelCreatedBy & ModelUpdatedBy;

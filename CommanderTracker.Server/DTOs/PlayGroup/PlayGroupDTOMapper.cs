@@ -25,7 +25,9 @@ public static class PlayGroupDTOMapper
             Pilots = playGroup.Pilots.Select(PilotDTOMapper.ToPilotBaseResponseDTO).ToList(),
             Decks = playGroup.PlayGroupDecks.Select(PlayGroupDeckDTOMapper.ToPlayGroupDeckBaseResponseDTO).ToList(),
             CreatedDate = playGroup.CreatedDate,
-            UpdatedDate = playGroup.UpdatedDate
+            UpdatedDate = playGroup.UpdatedDate,
+            CreatedById = playGroup.CreatedById,
+            UpdatedById = playGroup.UpdatedById,
         };
     }
 

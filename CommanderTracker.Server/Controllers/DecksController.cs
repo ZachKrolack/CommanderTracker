@@ -92,7 +92,7 @@ namespace CommanderTracker.Controllers
         }
 
         // GET: api/PlayGroups/5/Decks/5
-        [HttpGet("play-groups/{playGroupId}/decks{deckId}")]
+        [HttpGet("play-groups/{playGroupId}/decks/{deckId}")]
         public async Task<ActionResult<PlayGroupDeckResponseDTO>> GetPlayGroupDeck(Guid playGroupId, Guid deckId)
         {
             var deck = await _context.PlayGroupDecks

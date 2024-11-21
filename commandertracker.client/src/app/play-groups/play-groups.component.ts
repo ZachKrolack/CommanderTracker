@@ -5,12 +5,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 import { PlayGroupApiService } from '../core/api/play-group.api.service';
 import { PlayGroup } from '../core/models/playGroup.model';
-import { PageHeaderComponent } from '../shared/components/page-header/page-header.component';
 import { PageContainerComponent } from '../shared/components/page-container/page-container.component';
+import { PageHeaderComponent } from '../shared/components/page-header/page-header.component';
 import { PlayGroupFormDialogComponent } from '../shared/components/play-group-form-dialog/play-group-form-dialog.component';
 import { PlayGroupTableComponent } from './play-group-table/play-group-table.component';
 
@@ -23,7 +22,6 @@ import { PlayGroupTableComponent } from './play-group-table/play-group-table.com
         MatIconModule,
         MatDividerModule,
         MatProgressSpinnerModule,
-        RouterLink,
         PageContainerComponent,
         PageHeaderComponent,
         PlayGroupTableComponent

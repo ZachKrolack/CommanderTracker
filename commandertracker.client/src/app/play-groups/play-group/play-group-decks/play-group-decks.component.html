@@ -1,9 +1,13 @@
-<button mat-button (click)="openDeckFormDialog()" aria-label="">
-    <mat-icon>add</mat-icon>
-    <span>Add Deck</span>
-</button>
-
-<mat-divider class="my-4"></mat-divider>
+@if (playGroup$ | async; as playGroup) {
+    @if (playGroup | isCreatedBy : userId) {
+        <button mat-button (click)="openDeckFormDialog()" aria-label="">
+            <mat-icon>add</mat-icon>
+            <span>Add Deck</span>
+        </button>
+        
+        <mat-divider class="my-4"></mat-divider>
+    }
+}
 
 @if (playGroupDecks$ | async; as playGroupDecks) {
     <app-play-group-decks-table

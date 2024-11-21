@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
-import { DeckService } from '../core/api/deck.service';
+import { DeckApiService } from '../core/api/deck.api.service';
 import { Deck } from '../core/models/deck.model';
 import { ConfirmationDialogComponent } from '../shared/components/confirmation-dialog/confirmation-dialog.component';
 import {
@@ -34,7 +34,10 @@ import { PageHeaderComponent } from '../shared/components/page-header/page-heade
 export class DecksComponent implements OnInit {
     decks$!: Observable<Deck[]>;
 
-    constructor(private deckService: DeckService, private dialog: MatDialog) {}
+    constructor(
+        private deckApiService: DeckApiService,
+        private dialog: MatDialog
+    ) {}
 
     ngOnInit(): void {
         this.decks$ = this.getDecks();
@@ -69,7 +72,7 @@ export class DecksComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe((shouldDelete: boolean = false) => {
             if (shouldDelete) {
-                this.deckService.deleteDeck(id).subscribe(() => {
+                this.deckApiService.deleteDeck(id).subscribe(() => {
                     this.decks$ = this.getDecks();
                 });
             }
@@ -77,6 +80,6 @@ export class DecksComponent implements OnInit {
     }
 
     private getDecks(): Observable<Deck[]> {
-        return this.deckService.getDecks();
+        return this.deckApiService.getDecks();
     }
 }

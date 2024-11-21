@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { GameService } from 'src/app/core/api/game.service';
+import { GameApiService } from 'src/app/core/api/game.api.service';
 import { Game } from 'src/app/core/models/game.model';
 import { GameSummaryComponent } from 'src/app/shared/components/game-summary/game-summary.component';
 import { PageContainerComponent } from 'src/app/shared/components/page-container/page-container.component';
@@ -24,13 +24,13 @@ export class GameComponent implements OnInit {
 
     game$!: Observable<Game>;
 
-    constructor(private gameService: GameService) {}
+    constructor(private gameApiService: GameApiService) {}
 
     ngOnInit(): void {
         this.game$ = this.getGame(this.id);
     }
 
     private getGame(id: string): Observable<Game> {
-        return this.gameService.getGame(id);
+        return this.gameApiService.getUserGame(id);
     }
 }

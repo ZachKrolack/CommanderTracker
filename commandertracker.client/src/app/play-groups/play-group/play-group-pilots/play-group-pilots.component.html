@@ -1,9 +1,14 @@
-<button mat-button (click)="openPilotFormDialog()">
-    <mat-icon>add</mat-icon>
-    <span>Add Player To Play Group</span>
-</button>
+@if (playGroup$ | async; as playGroup) {
+    @if (playGroup | isCreatedBy : userId) {
+        <button mat-button (click)="openPilotFormDialog()">
+            <mat-icon>add</mat-icon>
+            <span>Add Player To Play Group</span>
+        </button>
+        
+        <mat-divider class="my-4"></mat-divider>
+    } 
+}
 
-<mat-divider class="my-4"></mat-divider>
 
 @if (pilots$ | async; as pilots) {
     <app-play-group-pilots-table

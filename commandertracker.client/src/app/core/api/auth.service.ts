@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { jwtDecode } from 'jwt-decode';
 import { Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {
@@ -7,6 +8,7 @@ import {
     TOKEN_LOCAL_STORAGE_KEY
 } from '../constants/localStorageKeys';
 import {
+    AppUserClaims,
     LoginRequest,
     RegisterRequest,
     TokenResponse
@@ -17,6 +19,14 @@ import {
 })
 export class AuthService {
     private readonly URL = `${environment.apiRoot}`;
+
+    private get appUserClaims(): AppUserClaims | null {
+        return this.getAppUserClaims();
+    }
+
+    get userId(): string | null {
+        return this.appUserClaims?.sub ?? null;
+    }
 
     constructor(private http: HttpClient) {}
 
@@ -33,8 +43,7 @@ export class AuthService {
     }
 
     logout(): void {
-        localStorage.removeItem(TOKEN_LOCAL_STORAGE_KEY);
-        localStorage.removeItem(EXPIRES_LOCAL_STORAGE_KEY);
+        this.clearSession();
     }
 
     isAuthenticated(): boolean {
@@ -60,6 +69,11 @@ export class AuthService {
         }
     }
 
+    private clearSession(): void {
+        localStorage.removeItem(TOKEN_LOCAL_STORAGE_KEY);
+        localStorage.removeItem(EXPIRES_LOCAL_STORAGE_KEY);
+    }
+
     private getToken(): string | null {
         return localStorage.getItem(TOKEN_LOCAL_STORAGE_KEY);
     }
@@ -74,5 +88,17 @@ export class AuthService {
 
     private isExpired(expires: number): boolean {
         return expires < Date.now();
+    }
+
+    private parseToken(token: string): AppUserClaims {
+        return jwtDecode<AppUserClaims>(token);
+    }
+
+    private getAppUserClaims(): AppUserClaims | null {
+        const token = this.getToken();
+
+        if (!token) return null;
+
+        return this.parseToken(token);
     }
 }

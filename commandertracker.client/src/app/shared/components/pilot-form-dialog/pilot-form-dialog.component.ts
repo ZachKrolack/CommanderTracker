@@ -14,8 +14,7 @@ import {
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { PilotService } from 'src/app/core/api/pilot.service';
-import { PlayGroupApiService } from 'src/app/core/api/play-group.api.service';
+import { PilotApiService } from 'src/app/core/api/pilot.api.service';
 import {
     Pilot,
     PilotCreateRequest,
@@ -71,8 +70,7 @@ export class PilotFormDialogComponent implements OnInit {
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: PilotFormDialogData,
         private dialogRef: MatDialogRef<PilotFormDialogComponent>,
-        private pilotService: PilotService,
-        private playGroupService: PlayGroupApiService
+        private pilotApiService: PilotApiService
     ) {}
 
     ngOnInit(): void {
@@ -94,7 +92,7 @@ export class PilotFormDialogComponent implements OnInit {
             name: name!
         };
 
-        this.playGroupService
+        this.pilotApiService
             .createPilot(this.playGroupId, pilot)
             .subscribe((pilot: Pilot) => {
                 this.dialogRef.close(pilot);
@@ -114,9 +112,11 @@ export class PilotFormDialogComponent implements OnInit {
             name: name!
         };
 
-        this.pilotService.updatePilot(id, deck).subscribe(() => {
-            this.dialogRef.close(true);
-        });
+        this.pilotApiService
+            .updatePilot(this.playGroupId, id, deck)
+            .subscribe(() => {
+                this.dialogRef.close(true);
+            });
     }
 
     private initForm(pilot: Pilot | null = null): FormGroup<PilotForm> {

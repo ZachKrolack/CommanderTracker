@@ -8,6 +8,7 @@ import { PlayGroup } from 'src/app/core/models/playGroup.model';
 import { PageContainerComponent } from 'src/app/shared/components/page-container/page-container.component';
 import { PageHeaderComponent } from 'src/app/shared/components/page-header/page-header.component';
 import { PlayGroupNavComponent } from './play-group-nav/play-group-nav.component';
+import { PlayGroupService } from './play-group.service';
 
 @Component({
     selector: 'app-play-group',
@@ -20,6 +21,7 @@ import { PlayGroupNavComponent } from './play-group-nav/play-group-nav.component
         PageHeaderComponent,
         MatDividerModule
     ],
+    providers: [PlayGroupService],
     templateUrl: './play-group.component.html',
     styleUrl: './play-group.component.scss'
 })
@@ -28,10 +30,14 @@ export class PlayGroupComponent implements OnInit {
 
     playGroup$!: Observable<PlayGroup>;
 
-    constructor(private playGroupApiService: PlayGroupApiService) {}
+    constructor(
+        private playGroupApiService: PlayGroupApiService,
+        private playGroupService: PlayGroupService
+    ) {}
 
     ngOnInit(): void {
         this.playGroup$ = this.getPlayGroup(this.playGroupId);
+        this.playGroupService.playGroup$ = this.playGroup$;
     }
 
     private getPlayGroup(id: string): Observable<PlayGroup> {

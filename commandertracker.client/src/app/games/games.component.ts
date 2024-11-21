@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
-import { GameService } from '../core/api/game.service';
+import { GameApiService } from '../core/api/game.api.service';
 import { Game } from '../core/models/game.model';
 import {
     GameFormDialogComponent,
@@ -33,7 +33,10 @@ export class GamesComponent implements OnInit {
 
     displayedColumns: string[] = ['game'];
 
-    constructor(private gameService: GameService, private dialog: MatDialog) {}
+    constructor(
+        private gameApiService: GameApiService,
+        private dialog: MatDialog
+    ) {}
 
     ngOnInit(): void {
         this.games$ = this.getGames();
@@ -54,12 +57,13 @@ export class GamesComponent implements OnInit {
     }
 
     deleteGame(id: string): void {
-        this.gameService.deleteGame(id).subscribe(() => {
-            this.games$ = this.getGames();
-        });
+        // TODO
+        // this.gameApiService.deleteGame(id).subscribe(() => {
+        //     this.games$ = this.getGames();
+        // });
     }
 
     private getGames(): Observable<Game[]> {
-        return this.gameService.getGames();
+        return this.gameApiService.getUserGames();
     }
 }

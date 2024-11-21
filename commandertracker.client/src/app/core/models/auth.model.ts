@@ -14,3 +14,7 @@ export type TokenResponse = {
     token: string;
     expires: Date;
 };
+
+export type AppUserClaims = {
+    sub: string;
+};

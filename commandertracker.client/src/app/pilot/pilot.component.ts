@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
-import { PilotService } from 'src/app/core/api/pilot.service';
+import { PilotApiService } from 'src/app/core/api/pilot.api.service';
 import { Pilot } from 'src/app/core/models/pilot.model';
 import { GameSummaryComponent } from 'src/app/shared/components/game-summary/game-summary.component';
 import { PageContainerComponent } from '../shared/components/page-container/page-container.component';
@@ -24,7 +24,7 @@ export class PilotComponent implements OnInit {
     pilot$!: Observable<Pilot>;
 
     constructor(
-        private pilotService: PilotService,
+        private pilotApiService: PilotApiService,
         private route: ActivatedRoute
     ) {}
 
@@ -35,6 +35,6 @@ export class PilotComponent implements OnInit {
     }
 
     private getPilot(id: string): Observable<Pilot> {
-        return this.pilotService.getPilot(id);
+        return this.pilotApiService.getPilot(id);
     }
 }

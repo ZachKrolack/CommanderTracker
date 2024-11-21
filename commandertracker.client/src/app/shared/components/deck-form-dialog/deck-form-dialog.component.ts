@@ -15,7 +15,7 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Observable } from 'rxjs';
-import { DeckService } from 'src/app/core/api/deck.service';
+import { DeckApiService } from 'src/app/core/api/deck.api.service';
 import { PlayGroupApiService } from 'src/app/core/api/play-group.api.service';
 import { ColorIdentity } from 'src/app/core/enums/colorIdentity.enum';
 import {
@@ -78,7 +78,7 @@ export class DeckFormDialogComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: DeckFormDialogData,
         private dialogRef: MatDialogRef<DeckFormDialogComponent>,
         private playGroupApiService: PlayGroupApiService,
-        private deckService: DeckService
+        private deckApiService: DeckApiService
     ) {}
 
     ngOnInit(): void {
@@ -104,8 +104,8 @@ export class DeckFormDialogComponent implements OnInit {
         };
 
         return this.playGroupId
-            ? this.playGroupApiService.createDeck(this.playGroupId, deck)
-            : this.deckService.createDeck(deck);
+            ? this.deckApiService.createPlayGroupDeck(this.playGroupId, deck)
+            : this.deckApiService.createDeck(deck);
     }
 
     private updateDeck(): Observable<void> {
@@ -118,7 +118,7 @@ export class DeckFormDialogComponent implements OnInit {
             colorIdentity: colorIdentity!
         };
 
-        return this.deckService.updateDeck(id, deck);
+        return this.deckApiService.updateDeck(id, deck);
     }
 
     private initForm(deck: BaseDeck | null = null): FormGroup<DeckForm> {

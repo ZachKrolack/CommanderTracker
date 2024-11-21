@@ -44,7 +44,7 @@ export const routes: Routes = [
     {
         path: 'play-groups/:playGroupId',
         component: PlayGroupComponent,
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard], // TODO
         children: [
             {
                 path: '',
