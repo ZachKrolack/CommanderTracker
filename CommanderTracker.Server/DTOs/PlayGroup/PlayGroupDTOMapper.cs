@@ -11,7 +11,9 @@ public static class PlayGroupDTOMapper
             Id = playGroup.Id,
             Name = playGroup.Name,
             CreatedDate = playGroup.CreatedDate,
-            UpdatedDate = playGroup.UpdatedDate
+            UpdatedDate = playGroup.UpdatedDate,
+            CreatedById = playGroup.CreatedById,
+            UpdatedById = playGroup.UpdatedById
         };
     }
 
@@ -27,7 +29,7 @@ public static class PlayGroupDTOMapper
             CreatedDate = playGroup.CreatedDate,
             UpdatedDate = playGroup.UpdatedDate,
             CreatedById = playGroup.CreatedById,
-            UpdatedById = playGroup.UpdatedById,
+            UpdatedById = playGroup.UpdatedById
         };
     }
 

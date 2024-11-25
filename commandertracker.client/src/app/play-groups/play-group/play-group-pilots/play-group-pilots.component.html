@@ -7,13 +7,14 @@
         
         <mat-divider class="my-4"></mat-divider>
     } 
-}
 
-
-@if (pilots$ | async; as pilots) {
-    <app-play-group-pilots-table
-        [pilots]="pilots"
-        (handleEditPilot)="openPilotFormDialog($event)"
-        (handleDeletePilot)="openDeletePilotDialog($event)">
-    </app-play-group-pilots-table>
+    @if (pilots$ | async; as pilots) {
+        <app-play-group-pilots-table
+            [pilots]="pilots"
+            [playGroup]="playGroup"
+            [userId]="userId"
+            (handleEditPilot)="openPilotFormDialog($event)"
+            (handleDeletePilot)="openDeletePilotDialog($event)">
+        </app-play-group-pilots-table>
+    }
 }

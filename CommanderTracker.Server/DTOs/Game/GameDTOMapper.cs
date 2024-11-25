@@ -13,6 +13,8 @@ public class GameDTOMapper
             Turns = game.Turns,
             CreatedDate = game.CreatedDate,
             UpdatedDate = game.UpdatedDate,
+            CreatedById = game.CreatedById,
+            UpdatedById = game.UpdatedById
         };
     }
 
@@ -25,8 +27,10 @@ public class GameDTOMapper
             Turns = game.Turns,
             CreatedDate = game.CreatedDate,
             UpdatedDate = game.UpdatedDate,
+            CreatedById = game.CreatedById,
+            UpdatedById = game.UpdatedById,
             PlayGroup = PlayGroupDTOMapper.ToPlayGroupBaseResponseDTO(game.PlayGroup),
-            PlayInstances = game.PlayInstances.Select(PlayInstanceDTOMapper.ToGamePlayInstanceResponseDTO).ToList(),
+            PlayInstances = game.PlayInstances.Select(PlayInstanceDTOMapper.ToGamePlayInstanceResponseDTO).ToList()
         };
     }
 

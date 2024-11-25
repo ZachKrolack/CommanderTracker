@@ -13,7 +13,9 @@ public static class PlayGroupDeckDTOMapper
             PlayGroup = PlayGroupDTOMapper.ToPlayGroupBaseResponseDTO(playGroupDeck.PlayGroup),
             // Pilot = playGroupDeck.Pilot != null ? PilotDTOMapper.ToPilotBaseResponseDTO(playGroupDeck.Pilot) : null, // TODO
             CreatedDate = playGroupDeck.CreatedDate,
-            UpdatedDate = playGroupDeck.UpdatedDate
+            UpdatedDate = playGroupDeck.UpdatedDate,
+            CreatedById = playGroupDeck.CreatedById,
+            UpdatedById = playGroupDeck.UpdatedById
         };
     }
 
@@ -27,7 +29,9 @@ public static class PlayGroupDeckDTOMapper
             // Pilot = playGroupDeck.Pilot != null ? PilotDTOMapper.ToPilotBaseResponseDTO(playGroupDeck.Pilot) : null, // TODO
             PlayInstances = playGroupDeck.PlayInstances.Select(PlayInstanceDTOMapper.ToDeckPlayInstanceResponseDTO).ToList(),
             CreatedDate = playGroupDeck.CreatedDate,
-            UpdatedDate = playGroupDeck.UpdatedDate
+            UpdatedDate = playGroupDeck.UpdatedDate,
+            CreatedById = playGroupDeck.CreatedById,
+            UpdatedById = playGroupDeck.UpdatedById
         };
     }
 

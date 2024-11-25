@@ -7,13 +7,16 @@
         
         <mat-divider class="my-4"></mat-divider>
     }
-}
 
-@if (playGroupDecks$ | async; as playGroupDecks) {
-    <app-play-group-decks-table
-        [playGroupDecks]="playGroupDecks"
-        (handleEditDeck)="openDeckFormDialog($event)"
-        (handleRemoveDeckFromPlayGroup)="openRemoveDeckFromPlayGroupDialog($event)"
-    >
-    </app-play-group-decks-table>
+    @if (playGroupDecks$ | async; as playGroupDecks) {
+        <app-play-group-decks-table
+            [playGroupDecks]="playGroupDecks"
+            [playGroup]="playGroup"
+            [userId]="userId"
+            (handleEditDeck)="openDeckFormDialog($event)"
+            (handleRemoveDeckFromPlayGroup)="openRemoveDeckFromPlayGroupDialog($event)"
+        >
+        </app-play-group-decks-table>
+    }
+    
 }

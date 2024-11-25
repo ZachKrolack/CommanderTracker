@@ -14,7 +14,9 @@ public class PilotDTOMapper
             Role = pilot.Role, // TODO
             PlayGroupId = pilot.PlayGroupId,
             CreatedDate = pilot.CreatedDate,
-            UpdatedDate = pilot.UpdatedDate
+            UpdatedDate = pilot.UpdatedDate,
+            CreatedById = pilot.CreatedById,
+            UpdatedById = pilot.UpdatedById
         };
     }
 
@@ -29,7 +31,9 @@ public class PilotDTOMapper
             PlayGroup = PlayGroupDTOMapper.ToPlayGroupBaseResponseDTO(pilot.PlayGroup),
             PlayInstances = pilot.PlayInstances.Select(PlayInstanceDTOMapper.ToPilotPlayInstanceResponseDTO).ToList(),
             CreatedDate = pilot.CreatedDate,
-            UpdatedDate = pilot.UpdatedDate
+            UpdatedDate = pilot.UpdatedDate,
+            CreatedById = pilot.CreatedById,
+            UpdatedById = pilot.UpdatedById
         };
     }
 

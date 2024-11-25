@@ -13,6 +13,8 @@ public class DeckDTOMapper
             ColorIdentity = deck.ColorIdentity,
             CreatedDate = deck.CreatedDate,
             UpdatedDate = deck.UpdatedDate,
+            CreatedById = deck.CreatedById,
+            UpdatedById = deck.UpdatedById
         };
     }
 
@@ -26,6 +28,8 @@ public class DeckDTOMapper
             PlayGroupDecks = deck.PlayGroupDecks.Select(PlayGroupDeckDTOMapper.ToPlayGroupDeckResponseDTO).ToList(),
             CreatedDate = deck.CreatedDate,
             UpdatedDate = deck.UpdatedDate,
+            CreatedById = deck.CreatedById,
+            UpdatedById = deck.UpdatedById
         };
     }
 

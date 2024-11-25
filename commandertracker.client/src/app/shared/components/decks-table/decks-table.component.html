@@ -16,14 +16,25 @@
     <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let deck">
-            <button class="float-end" mat-button (click)="editDeck(deck)">Edit</button>
-            <button
-                class="float-end"
-                mat-button
-                (click)="deleteDeck(deck.id)"
-            >
-                <span class="text-error">Delete</span>
-            </button>
+            @if (deck | isCreatedBy : userId) {
+                <button mat-icon-button class="text-primary float-right" [matMenuTriggerFor]="menu" aria-label="">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+
+                <mat-menu #menu xPosition="before">
+                    <button mat-menu-item (click)="editDeck(deck)">
+                        <mat-icon>edit</mat-icon>
+                        <span>Edit Deck</span>
+                    </button>
+                    <button
+                        mat-menu-item
+                        (click)="deleteDeck(deck.id)"
+                    >
+                        <mat-icon class="text-error">delete</mat-icon>
+                        <span class="text-error">Delete Deck</span>
+                    </button>
+                </mat-menu>
+            }
         </td>
     </ng-container>
 

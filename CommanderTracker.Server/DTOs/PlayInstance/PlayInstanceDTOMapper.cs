@@ -16,7 +16,9 @@ public class PlayInstanceDTOMapper
             GameId = playInstance.GameId,
             PilotId = playInstance.PilotId,
             CreatedDate = playInstance.CreatedDate,
-            UpdatedDate = playInstance.UpdatedDate
+            UpdatedDate = playInstance.UpdatedDate,
+            CreatedById = playInstance.CreatedById,
+            UpdatedById = playInstance.UpdatedById
         };
     }
 
@@ -30,6 +32,8 @@ public class PlayInstanceDTOMapper
             Notes = playInstance.Notes,
             CreatedDate = playInstance.CreatedDate,
             UpdatedDate = playInstance.UpdatedDate,
+            CreatedById = playInstance.CreatedById,
+            UpdatedById = playInstance.UpdatedById,
             Game = GameDTOMapper.ToGameResponseDTO(playInstance.Game),
             Pilot = PilotDTOMapper.ToPilotBaseResponseDTO(playInstance.Pilot),
         };
@@ -45,6 +49,8 @@ public class PlayInstanceDTOMapper
             Notes = playInstance.Notes,
             CreatedDate = playInstance.CreatedDate,
             UpdatedDate = playInstance.UpdatedDate,
+            CreatedById = playInstance.CreatedById,
+            UpdatedById = playInstance.UpdatedById,
             PlayGroupDeck = PlayGroupDeckDTOMapper.ToPlayGroupDeckBaseResponseDTO(playInstance.PlayGroupDeck),
             Pilot = PilotDTOMapper.ToPilotBaseResponseDTO(playInstance.Pilot)
         };
@@ -60,6 +66,8 @@ public class PlayInstanceDTOMapper
             Notes = playInstance.Notes,
             CreatedDate = playInstance.CreatedDate,
             UpdatedDate = playInstance.UpdatedDate,
+            CreatedById = playInstance.CreatedById,
+            UpdatedById = playInstance.UpdatedById,
             PlayGroupDeck = PlayGroupDeckDTOMapper.ToPlayGroupDeckBaseResponseDTO(playInstance.PlayGroupDeck),
             Game = GameDTOMapper.ToGameResponseDTO(playInstance.Game)
         };

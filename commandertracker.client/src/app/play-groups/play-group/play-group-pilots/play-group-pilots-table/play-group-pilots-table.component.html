@@ -9,14 +9,26 @@
     <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let pilot">
-            <button mat-button class="float-end" (click)="editPilot(pilot)">Edit</button>
-            <button
-                mat-button
-                class="float-end"
-                (click)="deletePilot(pilot.id)"
-            >
-                <span class="text-error">Delete</span>
-            </button>
+            @if (playGroup | isCreatedBy : userId) {
+                <button mat-icon-button class="text-primary float-right" [matMenuTriggerFor]="menu" aria-label="">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                
+                <mat-menu #menu xPosition="before">
+                    <button mat-menu-item (click)="editPilot(pilot)" aria-label="">
+                        <mat-icon>edit</mat-icon>
+                        <span>Edit Player</span>
+                    </button>
+                    <button
+                        mat-menu-item
+                        (click)="deletePilot(pilot.id)"
+                        aria-label=""
+                    >
+                        <mat-icon class="text-error">delete</mat-icon>
+                        <span class="text-error">Remove Player from Play Group</span>
+                    </button>
+                </mat-menu>
+            }
         </td>
     </ng-container>
 

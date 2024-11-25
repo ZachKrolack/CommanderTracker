@@ -23,14 +23,36 @@
     <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let playGroupDeck">
-            <button mat-button class="float-end" (click)="editDeck(playGroupDeck.deck)">Edit</button>
-            <button
-                mat-button
-                class="float-end"
-                (click)="removeDeckFromPlayGroup(playGroupDeck.deck.id)"
-            >
-                <span class="text-error">Remove</span>
-            </button>
+            
+            <!-- TODO -->
+            @if (
+                (playGroupDeck.deck | isCreatedBy : userId) ||
+                (playGroup | isCreatedBy : userId)
+            ) {
+                <button mat-icon-button class="text-primary float-right" [matMenuTriggerFor]="menu" aria-label="">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+
+                <mat-menu #menu xPosition="before">
+                    @if (playGroupDeck.deck | isCreatedBy : userId) {
+                        <button mat-menu-item (click)="editDeck(playGroupDeck.deck)" aria-label="">
+                            <mat-icon>edit</mat-icon>
+                            <span>Edit Deck</span>
+                        </button>
+                    }
+                    
+                    @if (playGroup | isCreatedBy : userId) {
+                        <button
+                            mat-menu-item
+                            (click)="removeDeckFromPlayGroup(playGroupDeck.deck.id)"
+                            aria-label=""
+                        >
+                            <mat-icon class="text-error">delete</mat-icon>
+                            <span class="text-error">Remove Deck from Play Group</span>
+                        </button>
+                    }
+                </mat-menu>
+            }
         </td>
     </ng-container>
 

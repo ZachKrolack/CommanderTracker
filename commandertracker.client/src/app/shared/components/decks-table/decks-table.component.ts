@@ -10,10 +10,13 @@ import {
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
+import { AuthService } from 'src/app/core/api/auth.service';
 import { Deck } from 'src/app/core/models/deck.model';
+import { IsCreatedByPipe } from '../../pipes/is-created-by.pipe';
 import { ToColorIdentityStringPipe } from '../../pipes/to-color-identity-string.pipe';
 import { ColorIdentityDisplayComponent } from '../color-identity-display/color-identity-display.component';
 
@@ -24,11 +27,13 @@ import { ColorIdentityDisplayComponent } from '../color-identity-display/color-i
         CommonModule,
         MatTableModule,
         MatSortModule,
+        MatMenuModule,
         MatButtonModule,
         MatIconModule,
         RouterLink,
         ColorIdentityDisplayComponent,
-        ToColorIdentityStringPipe
+        ToColorIdentityStringPipe,
+        IsCreatedByPipe
     ],
     templateUrl: './decks-table.component.html',
     styleUrl: './decks-table.component.scss'
@@ -41,13 +46,16 @@ export class DecksTableComponent implements OnInit, AfterViewInit {
     @Output() handleDeleteDeck: EventEmitter<string> =
         new EventEmitter<string>();
 
+    userId: string | null = null;
+
     displayedColumns: string[] = ['name', 'colorIdentity', 'actions'];
 
     @ViewChild(MatSort) sort!: MatSort;
 
-    constructor() {}
+    constructor(private authService: AuthService) {}
 
     ngOnInit(): void {
+        this.userId = this.authService.userId;
         this.dataSource = new MatTableDataSource<Deck>(this.decks);
     }
 
