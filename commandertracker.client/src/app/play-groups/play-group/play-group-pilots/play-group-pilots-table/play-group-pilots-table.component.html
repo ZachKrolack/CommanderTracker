@@ -10,7 +10,7 @@
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let pilot">
             @if (playGroup | isCreatedBy : userId) {
-                <button mat-icon-button class="text-primary float-right" [matMenuTriggerFor]="menu" aria-label="">
+                <button mat-icon-button class="text-primary float-end" [matMenuTriggerFor]="menu" aria-label="">
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 

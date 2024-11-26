@@ -8,8 +8,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Observable } from 'rxjs';
 import { PlayGroupApiService } from '../core/api/play-group.api.service';
 import { PlayGroup } from '../core/models/playGroup.model';
-import { PageContainerComponent } from '../shared/components/page-container/page-container.component';
-import { PageHeaderComponent } from '../shared/components/page-header/page-header.component';
+import { PageContainerComponent } from '../shared/components/page/page-container/page-container.component';
+import { PageHeaderComponent } from '../shared/components/page/page-header/page-header.component';
 import { PlayGroupFormDialogComponent } from '../shared/components/play-group-form-dialog/play-group-form-dialog.component';
 import { PlayGroupTableComponent } from './play-group-table/play-group-table.component';
 

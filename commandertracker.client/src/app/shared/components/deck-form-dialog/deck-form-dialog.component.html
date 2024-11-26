@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>{{ title }}</h2>
+<app-dialog-header>{{ title }}</app-dialog-header>
 <mat-dialog-content>
     <form [formGroup]="form">
         <div>
@@ -13,15 +13,14 @@
             </mat-form-field>
         </div>
 
-        <div>
-            <label>Colors</label>
-            <br>
+        <div class="mb-8 flex flex-col">
+            <label class="mb-2">Colors</label>
             <app-color-identity-selector formControlName="colorIdentity"></app-color-identity-selector>
         </div>
     </form>
 </mat-dialog-content>
-<mat-dialog-actions align="end">
-    <button mat-button [mat-dialog-close]="false">Cancel</button>
+<app-dialog-footer>
+    <app-dialog-cancel-button></app-dialog-cancel-button>
     <button
         mat-button
         [disabled]="!form.valid || form.pristine"
@@ -29,4 +28,4 @@
     >
         Submit
     </button>
-</mat-dialog-actions>
+</app-dialog-footer>

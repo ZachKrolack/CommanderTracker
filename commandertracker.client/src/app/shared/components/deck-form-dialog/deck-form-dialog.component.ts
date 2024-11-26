@@ -16,7 +16,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Observable } from 'rxjs';
 import { DeckApiService } from 'src/app/core/api/deck.api.service';
-import { PlayGroupApiService } from 'src/app/core/api/play-group.api.service';
 import { ColorIdentity } from 'src/app/core/enums/colorIdentity.enum';
 import {
     BaseDeck,
@@ -25,6 +24,9 @@ import {
     DeckUpdateRequest
 } from 'src/app/core/models/deck.model';
 import { ColorIdentitySelectorComponent } from '../color-identity-selector/color-identity-selector.component';
+import { DialogCancelButtonComponent } from '../dialog/dialog-cancel-button/dialog-cancel-button.component';
+import { DialogFooterComponent } from '../dialog/dialog-footer/dialog-footer.component';
+import { DialogHeaderComponent } from '../dialog/dialog-header/dialog-header.component';
 
 export type DeckFormDialogData = {
     playGroupId?: string;
@@ -46,7 +48,10 @@ export type DeckForm = {
         MatButtonModule,
         FormsModule,
         ReactiveFormsModule,
-        ColorIdentitySelectorComponent
+        ColorIdentitySelectorComponent,
+        DialogHeaderComponent,
+        DialogFooterComponent,
+        DialogCancelButtonComponent
     ],
     templateUrl: './deck-form-dialog.component.html',
     styleUrl: './deck-form-dialog.component.scss'
@@ -77,7 +82,6 @@ export class DeckFormDialogComponent implements OnInit {
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: DeckFormDialogData,
         private dialogRef: MatDialogRef<DeckFormDialogComponent>,
-        private playGroupApiService: PlayGroupApiService,
         private deckApiService: DeckApiService
     ) {}
 
@@ -128,7 +132,7 @@ export class DeckFormDialogComponent implements OnInit {
                 Validators.required
             ),
             colorIdentity: new FormControl<ColorIdentity | null>(
-                deck?.colorIdentity ?? null,
+                deck?.colorIdentity ?? 0,
                 Validators.required
             )
         });

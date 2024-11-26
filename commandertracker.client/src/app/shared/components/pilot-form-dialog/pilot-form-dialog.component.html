@@ -1,9 +1,9 @@
-<h2 mat-dialog-title>{{ title }}</h2>
+<app-dialog-header>{{ title }}</app-dialog-header>
 <mat-dialog-content>
     <form [formGroup]="form">
         <p>
             <mat-form-field>
-                <mat-label>Pilot Name</mat-label>
+                <mat-label>Player Name</mat-label>
                 <input
                     matInput
                     type="text"
@@ -14,8 +14,8 @@
         </p>
     </form>
 </mat-dialog-content>
-<mat-dialog-actions align="end">
-    <button mat-button [mat-dialog-close]="false">Cancel</button>
+<app-dialog-footer>
+    <app-dialog-cancel-button></app-dialog-cancel-button>
     <button
         mat-button
         [disabled]="!form.valid || form.pristine"
@@ -23,4 +23,4 @@
     >
         Submit
     </button>
-</mat-dialog-actions>
+</app-dialog-footer>

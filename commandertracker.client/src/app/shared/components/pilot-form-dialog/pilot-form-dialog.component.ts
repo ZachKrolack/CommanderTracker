@@ -20,6 +20,9 @@ import {
     PilotCreateRequest,
     PilotUpdateRequest
 } from 'src/app/core/models/pilot.model';
+import { DialogCancelButtonComponent } from '../dialog/dialog-cancel-button/dialog-cancel-button.component';
+import { DialogFooterComponent } from '../dialog/dialog-footer/dialog-footer.component';
+import { DialogHeaderComponent } from '../dialog/dialog-header/dialog-header.component';
 
 export type PilotFormDialogData = {
     pilot?: Pilot;
@@ -39,7 +42,10 @@ export type PilotForm = {
         MatDialogModule,
         MatButtonModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        DialogHeaderComponent,
+        DialogFooterComponent,
+        DialogCancelButtonComponent
     ],
     templateUrl: './pilot-form-dialog.component.html',
     styleUrl: './pilot-form-dialog.component.scss'
@@ -64,7 +70,7 @@ export class PilotFormDialogComponent implements OnInit {
     }
 
     get title(): string {
-        return this.isNew ? 'Add Pilot' : 'Edit Pilot';
+        return this.isNew ? 'Add Player' : 'Edit Player';
     }
 
     constructor(

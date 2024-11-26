@@ -24,6 +24,9 @@ import { PilotApiService } from 'src/app/core/api/pilot.api.service';
 import { Game, GameCreateRequest } from 'src/app/core/models/game.model';
 import { Pilot } from 'src/app/core/models/pilot.model';
 import { PlayGroupDeck } from 'src/app/core/models/playGroupDeck.model';
+import { DialogCancelButtonComponent } from '../dialog/dialog-cancel-button/dialog-cancel-button.component';
+import { DialogFooterComponent } from '../dialog/dialog-footer/dialog-footer.component';
+import { DialogHeaderComponent } from '../dialog/dialog-header/dialog-header.component';
 import {
     GameForm,
     PlayInstanceForm,
@@ -47,6 +50,9 @@ export type GameFormDialogData = {
         FormsModule,
         ReactiveFormsModule,
         MatIconModule,
+        DialogHeaderComponent,
+        DialogFooterComponent,
+        DialogCancelButtonComponent,
         GameFormPlayInstanceComponent
     ],
     templateUrl: './game-form-dialog.component.html',
@@ -128,7 +134,10 @@ export class GameFormDialogComponent implements OnInit {
 
     private initForm(): FormGroup<GameForm> {
         return new FormGroup<GameForm>({
-            turns: new FormControl<number | null>(null, Validators.required),
+            turns: new FormControl<number | null>(null, [
+                Validators.required,
+                Validators.min(0)
+            ]),
             notes: new FormControl<string>('', { nonNullable: true }),
             playInstances: new FormArray<FormGroup<PlayInstanceForm>>(
                 [],

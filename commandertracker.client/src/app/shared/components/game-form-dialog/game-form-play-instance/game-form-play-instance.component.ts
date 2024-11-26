@@ -14,6 +14,7 @@ import {
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -38,7 +39,8 @@ import { PlayInstanceForm } from '../game-form';
         FormsModule,
         ReactiveFormsModule,
         MatSelectModule,
-        MatIconModule
+        MatIconModule,
+        MatDividerModule
     ],
     templateUrl: './game-form-play-instance.component.html',
     styleUrl: './game-form-play-instance.component.scss',
@@ -58,10 +60,6 @@ export class GameFormPlayInstanceComponent {
     }
 
     constructor(private dialog: MatDialog) {}
-
-    // openDeckFormDialog(): void {
-    //     const dialogRef = this.dialog.open(DeckFormDialogComponent);
-    // }
 
     openPilotFormDialog(): void {
         const dialogRef = this.dialog.open<

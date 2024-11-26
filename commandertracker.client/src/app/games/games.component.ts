@@ -11,8 +11,8 @@ import {
     GameFormDialogData
 } from '../shared/components/game-form-dialog/game-form-dialog.component';
 import { GameSummaryComponent } from '../shared/components/game-summary/game-summary.component';
-import { PageContainerComponent } from '../shared/components/page-container/page-container.component';
-import { PageHeaderComponent } from '../shared/components/page-header/page-header.component';
+import { PageContainerComponent } from '../shared/components/page/page-container/page-container.component';
+import { PageHeaderComponent } from '../shared/components/page/page-header/page-header.component';
 
 @Component({
     selector: 'app-games',

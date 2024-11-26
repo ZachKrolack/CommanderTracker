@@ -16,6 +16,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { PlayGroupApiService } from 'src/app/core/api/play-group.api.service';
 import { PlayGroupCreateRequest } from 'src/app/core/models/playGroup.model';
+import { DialogCancelButtonComponent } from '../dialog/dialog-cancel-button/dialog-cancel-button.component';
+import { DialogFooterComponent } from '../dialog/dialog-footer/dialog-footer.component';
+import { DialogHeaderComponent } from '../dialog/dialog-header/dialog-header.component';
 
 type PlayGroupForm = {
     name: FormControl<string | null>;
@@ -30,7 +33,10 @@ type PlayGroupForm = {
         ReactiveFormsModule,
         MatFormFieldModule,
         MatInputModule,
-        MatButtonModule
+        MatButtonModule,
+        DialogHeaderComponent,
+        DialogFooterComponent,
+        DialogCancelButtonComponent
     ],
     templateUrl: './play-group-form-dialog.component.html',
     styleUrl: './play-group-form-dialog.component.scss'

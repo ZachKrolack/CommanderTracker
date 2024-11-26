@@ -1,76 +1,62 @@
 <form [formGroup]="form">
-    <p>
-        Player {{ index + 1 }}
+    <mat-divider class="mb-4"></mat-divider>
+    <div class="mb-4">
         <button
-            mat-icon-button
-            (click)="remove()"
-            aria-label=""
+        mat-button
+        (click)="remove()"
+        aria-label=""
         >
-            <mat-icon>remove</mat-icon>
+            <span class="text-tertiary">Player {{ index + 1 }}</span>
+            <mat-icon class="text-error">remove</mat-icon>
         </button>
-    </p>
-    <div>
-        <!-- @if (decks$ | async; as decks) { -->
-            <mat-form-field>
-                <mat-label>Deck</mat-label>
-                <mat-select formControlName="playGroupDeckId">
-                    @for (pgd of decks; track pgd.id) {
-                        <mat-option [value]="pgd.id">{{
-                            pgd.deck.name
-                        }}</mat-option>
-                    }
-                </mat-select>
-                @if (
-                    form.controls.playGroupDeckId.errors?.[
-                        "required"
-                    ]
-                ) {
-                    <mat-error></mat-error>
+    </div>
+
+    <div class="flex space-x-4">
+        <mat-form-field>
+            <mat-label>Deck</mat-label>
+            <mat-select formControlName="playGroupDeckId">
+                @for (pgd of decks; track pgd.id) {
+                    <mat-option [value]="pgd.id">{{
+                        pgd.deck.name
+                    }}</mat-option>
                 }
-            </mat-form-field>
-        <!-- } -->
-
-        <!-- <button mat-icon-button aria-label="" (click)="openDeckFormDialog()">
-            <mat-icon>add</mat-icon>
-        </button> -->
+            </mat-select>
+            @if (
+                form.controls.playGroupDeckId.errors?.[
+                    "required"
+                ]
+            ) {
+                <mat-error></mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Pilot</mat-label>
+            <mat-select formControlName="pilotId">
+                @for (pilot of pilots; track pilot.id) {
+                    <mat-option [value]="pilot.id">{{
+                        pilot.name
+                    }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
     </div>
 
-    <div>
-        <!-- @if (pilots$ | async; as pilots) { -->
-            <mat-form-field>
-                <mat-label>Pilot</mat-label>
-                <mat-select formControlName="pilotId">
-                    @for (pilot of pilots; track pilot.id) {
-                        <mat-option [value]="pilot.id">{{
-                            pilot.name
-                        }}</mat-option>
-                    }
-                </mat-select>
-            </mat-form-field>
-        <!-- } -->
-
-        <!-- <button mat-icon-button aria-label="" (click)="openPilotFormDialog()">
-            <mat-icon >add</mat-icon>
-        </button> -->
-    </div>
-
-    <div class="flex-container">
+    <div class="flex space-x-4">
         <mat-form-field>
             <mat-label>Turn Order</mat-label>
             <input
                 matInput
                 type="number"
+                min="1"
                 formControlName="turnOrder"
             />
         </mat-form-field>
-    </div>
-    
-    <div>
         <mat-form-field>
             <mat-label>End Position</mat-label>
             <input
                 matInput
                 type="number"
+                min="1"
                 formControlName="endPosition"
             />
         </mat-form-field>

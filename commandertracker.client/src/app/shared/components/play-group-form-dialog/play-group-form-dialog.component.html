@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>TODO</h2>
+<app-dialog-header>TODO</app-dialog-header>
 <mat-dialog-content>
     <form [formGroup]="form">
         <div>
@@ -14,8 +14,8 @@
         </div>
     </form>
 </mat-dialog-content>
-<mat-dialog-actions align="end">
-    <button mat-button [mat-dialog-close]="false">Cancel</button>
+<app-dialog-footer>
+    <app-dialog-cancel-button></app-dialog-cancel-button>
     <button
         mat-button  
         [disabled]="!form.valid || form.pristine"
@@ -23,4 +23,4 @@
     >
         Submit
     </button>
-</mat-dialog-actions>
+</app-dialog-footer>

@@ -16,9 +16,9 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
 import { AuthService } from 'src/app/core/api/auth.service';
 import { Deck } from 'src/app/core/models/deck.model';
-import { IsCreatedByPipe } from '../../pipes/is-created-by.pipe';
-import { ToColorIdentityStringPipe } from '../../pipes/to-color-identity-string.pipe';
-import { ColorIdentityDisplayComponent } from '../color-identity-display/color-identity-display.component';
+import { ColorIdentityDisplayComponent } from '../../shared/components/color-identity-display/color-identity-display.component';
+import { IsCreatedByPipe } from '../../shared/pipes/is-created-by.pipe';
+import { ToColorIdentityStringPipe } from '../../shared/pipes/to-color-identity-string.pipe';
 
 @Component({
     selector: 'app-decks-table',

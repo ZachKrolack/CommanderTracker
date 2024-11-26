@@ -12,9 +12,9 @@ import {
     DeckFormDialogComponent,
     DeckFormDialogData
 } from '../shared/components/deck-form-dialog/deck-form-dialog.component';
-import { DecksTableComponent } from '../shared/components/decks-table/decks-table.component';
-import { PageContainerComponent } from '../shared/components/page-container/page-container.component';
-import { PageHeaderComponent } from '../shared/components/page-header/page-header.component';
+import { PageContainerComponent } from '../shared/components/page/page-container/page-container.component';
+import { PageHeaderComponent } from '../shared/components/page/page-header/page-header.component';
+import { DecksTableComponent } from './decks-table/decks-table.component';
 
 @Component({
     selector: 'app-decks',
@@ -50,10 +50,7 @@ export class DecksComponent implements OnInit {
             boolean
         >(DeckFormDialogComponent, {
             data: { deck },
-            width: 'auto',
-            height: 'auto',
-            maxWidth: '60vw',
-            maxHeight: '80vh'
+            panelClass: 'custom-dialog'
         });
 
         dialogRef.afterClosed().subscribe((shouldUpdate: boolean = false) => {

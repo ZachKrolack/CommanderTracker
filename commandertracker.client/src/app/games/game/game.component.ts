@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { GameApiService } from 'src/app/core/api/game.api.service';
 import { Game } from 'src/app/core/models/game.model';
 import { GameSummaryComponent } from 'src/app/shared/components/game-summary/game-summary.component';
-import { PageContainerComponent } from 'src/app/shared/components/page-container/page-container.component';
-import { PageHeaderComponent } from 'src/app/shared/components/page-header/page-header.component';
+import { PageContainerComponent } from 'src/app/shared/components/page/page-container/page-container.component';
+import { PageHeaderComponent } from 'src/app/shared/components/page/page-header/page-header.component';
 
 @Component({
     selector: 'app-game',

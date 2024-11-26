@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { DeckApiService } from 'src/app/core/api/deck.api.service';
 import { PlayGroupDeck } from 'src/app/core/models/playGroupDeck.model';
 import { GameSummaryComponent } from 'src/app/shared/components/game-summary/game-summary.component';
-import { PageHeaderComponent } from 'src/app/shared/components/page-header/page-header.component';
+import { PageHeaderComponent } from 'src/app/shared/components/page/page-header/page-header.component';
 
 @Component({
     selector: 'app-play-group-deck',

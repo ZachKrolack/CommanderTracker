@@ -5,8 +5,8 @@ import { Observable, switchMap } from 'rxjs';
 import { PilotApiService } from 'src/app/core/api/pilot.api.service';
 import { Pilot } from 'src/app/core/models/pilot.model';
 import { GameSummaryComponent } from 'src/app/shared/components/game-summary/game-summary.component';
-import { PageContainerComponent } from '../shared/components/page-container/page-container.component';
-import { PageHeaderComponent } from '../shared/components/page-header/page-header.component';
+import { PageContainerComponent } from '../shared/components/page/page-container/page-container.component';
+import { PageHeaderComponent } from '../shared/components/page/page-header/page-header.component';
 
 @Component({
     selector: 'app-pilot',
