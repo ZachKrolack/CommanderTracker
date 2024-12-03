@@ -28,8 +28,8 @@ public class GamesController(DataContext context, UserManager<AppUser> userManag
 
         return await _context.Games
             .OrderByDescending(game => game.CreatedDate)
-            .ThenBy(game => game.Id)
-            .Include(game => game.PlayInstances.OrderBy(playInstance => playInstance.EndPosition))
+                .ThenBy(game => game.Id)
+            .Include(game => game.PlayInstances)
             .Include(game => game.PlayInstances)
                 .ThenInclude(playInstance => playInstance.Deck)
             .Include(game => game.PlayInstances)
@@ -46,8 +46,8 @@ public class GamesController(DataContext context, UserManager<AppUser> userManag
         return await _context.Games
             .Where(game => game.PlayGroupId == playGroupId)
                 .OrderByDescending(game => game.CreatedDate)
-                .ThenBy(game => game.Id)
-            .Include(game => game.PlayInstances.OrderBy(playInstance => playInstance.EndPosition))
+                    .ThenBy(game => game.Id)
+            .Include(game => game.PlayInstances)
             .Include(game => game.PlayInstances)
                 .ThenInclude(playInstance => playInstance.Deck)
             .Include(game => game.PlayInstances)
@@ -64,7 +64,7 @@ public class GamesController(DataContext context, UserManager<AppUser> userManag
         var game = await _context.Games
             .Where(game => game.Id == gameId)
             .Include(game => game.CreatedBy)
-            .Include(game => game.PlayInstances.OrderBy(playInstance => playInstance.EndPosition))
+            .Include(game => game.PlayInstances)
             .Include(game => game.PlayInstances)
                 .ThenInclude(playInstance => playInstance.Pilot)
             .Include(game => game.PlayInstances)

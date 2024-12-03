@@ -3,11 +3,17 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Game } from 'src/app/core/models/game.model';
 import { PlayInstanceSummaryComponent } from './play-instance-summary/play-instance-summary.component';
+import { SortPlayInstancesPipe } from './sort-play-instances.pipe';
 
 @Component({
     selector: 'app-game-summary',
     standalone: true,
-    imports: [DatePipe, PlayInstanceSummaryComponent, RouterLink],
+    imports: [
+        DatePipe,
+        PlayInstanceSummaryComponent,
+        RouterLink,
+        SortPlayInstancesPipe
+    ],
     templateUrl: './game-summary.component.html',
     styleUrl: './game-summary.component.scss'
 })

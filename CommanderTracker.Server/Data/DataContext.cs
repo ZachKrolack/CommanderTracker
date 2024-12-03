@@ -1,6 +1,8 @@
 ﻿using CommanderTracker.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
+using System.Reflection.Emit;
 
 namespace CommanderTracker.Data;
 
@@ -48,7 +50,12 @@ public class DataContext(IConfiguration configuration) : IdentityDbContext<AppUs
 
         builder.Entity<IdentityRole>().HasData(roles);
         */
-        
+
+        builder.Entity<Deck>()
+            .HasMany(e => e.PlayGroups)
+            .WithMany(e => e.Decks)
+            .UsingEntity<PlayGroupDeck>();
+
         builder.Entity<AppUser>()
             .HasMany(e => e.Pilots)
             .WithOne(e => e.AppUser)

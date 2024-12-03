@@ -14,4 +14,5 @@ public class Deck : BaseEntity
 
     public List<PlayInstance> PlayInstances { get; set; } = [];
     public List<PlayGroup> PlayGroups { get; set; } = [];
+    public List<PlayGroupDeck> PlayGroupsDecks { get; set;} = [];
 }

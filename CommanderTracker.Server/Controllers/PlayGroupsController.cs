@@ -39,7 +39,6 @@ public class PlayGroupsController(DataContext context, UserManager<AppUser> user
     {
         var playGroup = await _context.PlayGroups
             .Where(pg => pg.Id == playGroupId)
-            .Include(pg => pg.CreatedBy)
             .Include(pg => pg.Games)
             .Include(pg => pg.Pilots)
             .Include(pg => pg.Decks)

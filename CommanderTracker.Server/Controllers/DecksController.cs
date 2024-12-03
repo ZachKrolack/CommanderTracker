@@ -31,6 +31,8 @@ namespace CommanderTracker.Controllers
 
             return await _context.Decks
                 .Where(deck => deck.CreatedById == appUser.Id)
+                .OrderByDescending(deck => deck.UpdatedDate)
+                    .ThenBy(deck => deck.Id)
                 .Select(deck => DeckDTOMapper.ToDeckBaseResponseDTO(deck))
                 .ToListAsync();
         }
@@ -42,6 +44,8 @@ namespace CommanderTracker.Controllers
             return await _context.PlayGroupDecks
                 .Where(pgd => pgd.PlayGroupId == playGroupId)
                 .Include(pgd => pgd.Deck)
+                .OrderByDescending(pgd => pgd.Deck.UpdatedDate)
+                    .ThenBy(pgd => pgd.Deck.Id)
                 .Select(pgd => PlayGroupDeckDTOMapper.ToPlayGroupDeckBaseResponseDTO(pgd))
                 .ToListAsync();
         }
@@ -59,9 +63,8 @@ namespace CommanderTracker.Controllers
             var deck = await _context.Decks
                 .Where(deck => deck.Id == deckId)
                 .Include(deck => deck.PlayInstances
-                    .OrderByDescending(playInstance => playInstance.CreatedDate)
-                        .ThenBy(playInstance => playInstance.Id))
-                .Include(deck => deck.PlayInstances)
+                    .OrderByDescending(pi => pi.CreatedDate)
+                        .ThenBy(pi => pi.Id))
                     .ThenInclude(pi => pi.Game)
                         .ThenInclude(game => game.PlayInstances)
                             .ThenInclude(pgd => pgd.Deck)
@@ -90,14 +93,10 @@ namespace CommanderTracker.Controllers
                 .Include(pgd => pgd.Deck)       
                 .Include(pgd => pgd.PlayInstances
                     .OrderByDescending(playInstance => playInstance.CreatedDate)
-                    .ThenBy(playInstance => playInstance.Id))
-                .Include(pgd => pgd.PlayInstances)
-                    .ThenInclude(pi => pi.Pilot)
-                .Include(pgd => pgd.PlayInstances)
+                        .ThenBy(playInstance => playInstance.Id))
                     .ThenInclude(pi => pi.Game)
                         .ThenInclude(game => game.PlayInstances)
-                            .ThenInclude(pi => pi.PlayGroupDeck)
-                                .ThenInclude(pgd => pgd.Deck)
+                            .ThenInclude(pgd => pgd.Deck)       
                 .Include(pgd => pgd.PlayInstances)
                     .ThenInclude(pi => pi.Game)
                         .ThenInclude(game => game.PlayInstances)
@@ -105,6 +104,8 @@ namespace CommanderTracker.Controllers
                 .Include(pgd => pgd.PlayInstances)
                     .ThenInclude(pi => pi.Game)
                         .ThenInclude(game => game.PlayGroup)
+                .Include(pgd => pgd.PlayInstances)
+                    .ThenInclude(pi => pi.Pilot)
                 .FirstOrDefaultAsync();
 
             if (deck == null) { return NotFound(); }

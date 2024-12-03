@@ -3,6 +3,7 @@ using System;
 using CommanderTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CommanderTracker.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20241203182620_Updated Naming For PlayGroupDeck")]
+    partial class UpdatedNamingForPlayGroupDeck
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -288,13 +291,13 @@ namespace CommanderTracker.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_date");
 
-                    b.Property<Guid>("DeckId")
+                    b.Property<Guid>("DecksId")
                         .HasColumnType("uuid")
-                        .HasColumnName("deck_id");
+                        .HasColumnName("decks_id");
 
-                    b.Property<Guid>("PlayGroupId")
+                    b.Property<Guid>("PlayGroupsId")
                         .HasColumnType("uuid")
-                        .HasColumnName("play_group_id");
+                        .HasColumnName("play_groups_id");
 
                     b.Property<string>("UpdatedById")
                         .IsRequired()
@@ -309,9 +312,9 @@ namespace CommanderTracker.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.HasIndex("DeckId");
+                    b.HasIndex("DecksId");
 
-                    b.HasIndex("PlayGroupId");
+                    b.HasIndex("PlayGroupsId");
 
                     b.HasIndex("UpdatedById");
 
@@ -635,13 +638,13 @@ namespace CommanderTracker.Migrations
 
                     b.HasOne("CommanderTracker.Models.Deck", "Deck")
                         .WithMany("PlayGroupsDecks")
-                        .HasForeignKey("DeckId")
+                        .HasForeignKey("DecksId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CommanderTracker.Models.PlayGroup", "PlayGroup")
                         .WithMany("PlayGroupsDecks")
-                        .HasForeignKey("PlayGroupId")
+                        .HasForeignKey("PlayGroupsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -22,20 +22,17 @@ public class PilotsController(DataContext context, UserManager<AppUser> userMana
     {
         var pilot = await _context.Pilots
             .Where(pilot => pilot.Id == pilotId)
-            .Include(pilot => pilot.CreatedBy)
             .Include(pilot => pilot.PlayInstances
                 .OrderByDescending(playInstance => playInstance.CreatedDate)
-                .ThenBy(playInstance => playInstance.Id))
+                    .ThenBy(playInstance => playInstance.Id))
             .Include(pilot => pilot.PlayInstances)
                 .ThenInclude(pi => pi.Game)
                     .ThenInclude(game => game.PlayInstances)
-                        .ThenInclude(pi => pi.PlayGroupDeck)
-                            .ThenInclude(pgd => pgd.Deck)
+                        .ThenInclude(pgd => pgd.Deck)
             .Include(pilot => pilot.PlayInstances)
                 .ThenInclude(pi => pi.Game)
                     .ThenInclude(game => game.PlayInstances)
-                        .ThenInclude(pi => pi.PlayGroupDeck)
-                            .ThenInclude(pgd => pgd.PlayGroup)
+                        .ThenInclude(pgd => pgd.PlayGroup)
             .Include(pilot => pilot.PlayInstances)
                 .ThenInclude(pi => pi.Game)
                     .ThenInclude(game => game.PlayInstances)
