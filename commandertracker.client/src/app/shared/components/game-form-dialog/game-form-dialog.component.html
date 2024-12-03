@@ -26,25 +26,17 @@
         </div>
 
         <div>
-            <!-- <div class="mb-4">
-                <button mat-button (click)="addPlayInstance()" aria-label="">
-                    <span class="text-secondary">Add Player</span>
-                    <mat-icon class="text-secondary">add</mat-icon>
-                </button>
-            </div> -->
-            
-
             @for (
                 playInstanceForm of playInstances.controls;
                 track $index;
                 let i = $index
             ) {
-                @if (decks$ | async; as decks) {
+                @if (playGroupDecks$ | async; as playGroupDecks) {
                     @if (pilots$ | async; as pilots) {
                         <app-game-form-play-instance
                             [form]="playInstanceForm"
                             [index]="i"
-                            [decks]="decks"
+                            [playGroupDecks]="playGroupDecks"
                             [pilots]="pilots"
                             (removed)="removePlayInstance(i)"
                             (pilotAdded)="pilotCreated()"

@@ -10,8 +10,7 @@ public static class PlayGroupDeckDTOMapper
         {
             Id = playGroupDeck.Id,
             Deck = DeckDTOMapper.ToDeckBaseResponseDTO(playGroupDeck.Deck),
-            PlayGroup = PlayGroupDTOMapper.ToPlayGroupBaseResponseDTO(playGroupDeck.PlayGroup),
-            // Pilot = playGroupDeck.Pilot != null ? PilotDTOMapper.ToPilotBaseResponseDTO(playGroupDeck.Pilot) : null, // TODO
+            PlayGroupId = playGroupDeck.PlayGroupId,
             CreatedDate = playGroupDeck.CreatedDate,
             UpdatedDate = playGroupDeck.UpdatedDate,
             CreatedById = playGroupDeck.CreatedById,
@@ -25,8 +24,7 @@ public static class PlayGroupDeckDTOMapper
         {
             Id = playGroupDeck.Id,
             Deck = DeckDTOMapper.ToDeckBaseResponseDTO(playGroupDeck.Deck),
-            PlayGroup = PlayGroupDTOMapper.ToPlayGroupBaseResponseDTO(playGroupDeck.PlayGroup),
-            // Pilot = playGroupDeck.Pilot != null ? PilotDTOMapper.ToPilotBaseResponseDTO(playGroupDeck.Pilot) : null, // TODO
+            PlayGroupId = playGroupDeck.PlayGroupId,
             PlayInstances = playGroupDeck.PlayInstances.Select(PlayInstanceDTOMapper.ToDeckPlayInstanceResponseDTO).ToList(),
             CreatedDate = playGroupDeck.CreatedDate,
             UpdatedDate = playGroupDeck.UpdatedDate,
@@ -40,7 +38,6 @@ public static class PlayGroupDeckDTOMapper
         return new PlayGroupDeck {
             DeckId = request.DeckId,
             PlayGroupId = playGroupId,
-            // PilotId = request.PilotId,
             CreatedById = createdById,
             UpdatedById = createdById
         };

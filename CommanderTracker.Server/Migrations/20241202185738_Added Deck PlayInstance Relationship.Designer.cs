@@ -3,6 +3,7 @@ using System;
 using CommanderTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CommanderTracker.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20241202185738_Added Deck PlayInstance Relationship")]
+    partial class AddedDeckPlayInstanceRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -292,6 +295,10 @@ namespace CommanderTracker.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("deck_id");
 
+                    b.Property<Guid?>("PilotId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("pilot_id");
+
                     b.Property<Guid>("PlayGroupId")
                         .HasColumnType("uuid")
                         .HasColumnName("play_group_id");
@@ -310,6 +317,8 @@ namespace CommanderTracker.Migrations
                     b.HasIndex("CreatedById");
 
                     b.HasIndex("DeckId");
+
+                    b.HasIndex("PilotId");
 
                     b.HasIndex("PlayGroupId");
 
@@ -359,10 +368,6 @@ namespace CommanderTracker.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("play_group_deck_id");
 
-                    b.Property<Guid>("PlayGroupId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("play_group_id");
-
                     b.Property<int>("TurnOrder")
                         .HasColumnType("integer")
                         .HasColumnName("turn_order");
@@ -388,26 +393,9 @@ namespace CommanderTracker.Migrations
 
                     b.HasIndex("PlayGroupDeckId");
 
-                    b.HasIndex("PlayGroupId");
-
                     b.HasIndex("UpdatedById");
 
                     b.ToTable("play_instances");
-                });
-
-            modelBuilder.Entity("DeckPlayGroup", b =>
-                {
-                    b.Property<Guid>("DecksId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("PlayGroupsId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("DecksId", "PlayGroupsId");
-
-                    b.HasIndex("PlayGroupsId");
-
-                    b.ToTable("DeckPlayGroup");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -643,19 +631,23 @@ namespace CommanderTracker.Migrations
             modelBuilder.Entity("CommanderTracker.Models.PlayGroupDeck", b =>
                 {
                     b.HasOne("CommanderTracker.Models.AppUser", "CreatedBy")
-                        .WithMany()
+                        .WithMany("PlayGroupDecks")
                         .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CommanderTracker.Models.Deck", "Deck")
-                        .WithMany()
+                        .WithMany("PlayGroupDecks")
                         .HasForeignKey("DeckId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CommanderTracker.Models.PlayGroup", "PlayGroup")
+                    b.HasOne("CommanderTracker.Models.Pilot", "Pilot")
                         .WithMany()
+                        .HasForeignKey("PilotId");
+
+                    b.HasOne("CommanderTracker.Models.PlayGroup", "PlayGroup")
+                        .WithMany("PlayGroupDecks")
                         .HasForeignKey("PlayGroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -669,6 +661,8 @@ namespace CommanderTracker.Migrations
                     b.Navigation("CreatedBy");
 
                     b.Navigation("Deck");
+
+                    b.Navigation("Pilot");
 
                     b.Navigation("PlayGroup");
 
@@ -707,12 +701,6 @@ namespace CommanderTracker.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CommanderTracker.Models.PlayGroup", "PlayGroup")
-                        .WithMany("PlayInstances")
-                        .HasForeignKey("PlayGroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("CommanderTracker.Models.AppUser", "UpdatedBy")
                         .WithMany()
                         .HasForeignKey("UpdatedById")
@@ -727,26 +715,9 @@ namespace CommanderTracker.Migrations
 
                     b.Navigation("Pilot");
 
-                    b.Navigation("PlayGroup");
-
                     b.Navigation("PlayGroupDeck");
 
                     b.Navigation("UpdatedBy");
-                });
-
-            modelBuilder.Entity("DeckPlayGroup", b =>
-                {
-                    b.HasOne("CommanderTracker.Models.Deck", null)
-                        .WithMany()
-                        .HasForeignKey("DecksId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CommanderTracker.Models.PlayGroup", null)
-                        .WithMany()
-                        .HasForeignKey("PlayGroupsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -810,6 +781,8 @@ namespace CommanderTracker.Migrations
 
                     b.Navigation("Pilots");
 
+                    b.Navigation("PlayGroupDecks");
+
                     b.Navigation("PlayGroups");
 
                     b.Navigation("PlayInstances");
@@ -817,6 +790,8 @@ namespace CommanderTracker.Migrations
 
             modelBuilder.Entity("CommanderTracker.Models.Deck", b =>
                 {
+                    b.Navigation("PlayGroupDecks");
+
                     b.Navigation("PlayInstances");
                 });
 
@@ -836,7 +811,7 @@ namespace CommanderTracker.Migrations
 
                     b.Navigation("Pilots");
 
-                    b.Navigation("PlayInstances");
+                    b.Navigation("PlayGroupDecks");
                 });
 
             modelBuilder.Entity("CommanderTracker.Models.PlayGroupDeck", b =>

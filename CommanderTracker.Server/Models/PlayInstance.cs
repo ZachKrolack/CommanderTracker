@@ -14,15 +14,23 @@ public class PlayInstance : BaseEntity
     [Column("notes")]
     public string Notes { get; set; } = string.Empty;
 
-    [Column("pilot_id")]
-    public Guid PilotId { get; set; }
-    public Pilot Pilot { get; set; } = null!;
+    [Column("deck_id")]
+    public Guid DeckId { get; set; }
+    public Deck Deck { get; set; } = null!;
 
     [Column("game_id")]
     public Guid GameId { get; set; }
     public Game Game { get; set; } = null!;
 
+    [Column("pilot_id")]
+    public Guid PilotId { get; set; }
+    public Pilot Pilot { get; set; } = null!;
+
     [Column("play_group_deck_id")]
     public Guid PlayGroupDeckId { get; set; }
     public PlayGroupDeck PlayGroupDeck { get; set; } = null!;
+
+    [Column("play_group_id")]
+    public Guid PlayGroupId { get; set; }
+    public PlayGroup PlayGroup { get; set; } = null!;
 }

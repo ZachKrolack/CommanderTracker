@@ -14,5 +14,6 @@ public class Game : BaseEntity
     [Column("play_group_id")]
     public Guid PlayGroupId { get; set; }
     public PlayGroup PlayGroup { get; set; } = null!;
+
     public List<PlayInstance> PlayInstances { get; set; } = [];
 }

@@ -49,7 +49,7 @@ import { PlayInstanceForm } from '../game-form';
 export class GameFormPlayInstanceComponent {
     @Input() form!: FormGroup<PlayInstanceForm>;
     @Input() index = 0;
-    @Input() decks!: PlayGroupDeck[];
+    @Input() playGroupDecks!: PlayGroupDeck[];
     @Input() pilots!: Pilot[];
 
     @Output() removed: EventEmitter<void> = new EventEmitter<void>();

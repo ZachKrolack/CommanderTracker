@@ -1,5 +1,6 @@
 import { ColorIdentity } from '../enums/colorIdentity.enum';
-import { PlayGroupDeck } from './playGroupDeck.model';
+import { BasePlayGroup } from './playGroup.model';
+import { DeckPlayInstance } from './playInstance.model';
 import { BaseModel, ModelId } from './utils';
 
 type CoreDeck = {
@@ -10,7 +11,8 @@ type CoreDeck = {
 export type BaseDeck = BaseModel & CoreDeck;
 
 export type Deck = BaseDeck & {
-    playGroupDecks: PlayGroupDeck[];
+    playGroups: BasePlayGroup[];
+    playInstances: DeckPlayInstance[];
 };
 
 export type DeckCreateRequest = CoreDeck;

@@ -80,12 +80,6 @@ public class DataContext(IConfiguration configuration) : IdentityDbContext<AppUs
             .HasPrincipalKey(e => e.Id);
 
         builder.Entity<AppUser>()
-            .HasMany(e => e.PlayGroupDecks)
-            .WithOne(e => e.CreatedBy)
-            .HasForeignKey(e => e.CreatedById)
-            .HasPrincipalKey(e => e.Id);
-
-        builder.Entity<AppUser>()
             .HasMany(e => e.PlayInstances)
             .WithOne(e => e.CreatedBy)
             .HasForeignKey(e => e.CreatedById)

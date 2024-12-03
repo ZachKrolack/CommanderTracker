@@ -42,10 +42,7 @@ public class PlayGroupsController(DataContext context, UserManager<AppUser> user
             .Include(pg => pg.CreatedBy)
             .Include(pg => pg.Games)
             .Include(pg => pg.Pilots)
-            .Include(pg => pg.PlayGroupDecks)
-                .ThenInclude(pgd => pgd.Deck)
-            .Include(pg => pg.PlayGroupDecks)
-                .ThenInclude(pgd => pgd.Pilot)
+            .Include(pg => pg.Decks)
             .FirstOrDefaultAsync();
 
         if (playGroup == null) { return NotFound(); }

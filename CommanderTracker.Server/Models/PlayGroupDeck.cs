@@ -13,8 +13,5 @@ public class PlayGroupDeck : BaseEntity
     public Guid PlayGroupId { get; set; }
     public PlayGroup PlayGroup { get; set; } = null!;
 
-    [Column("pilot_id")]
-    public Guid? PilotId { get; set; } = null;
-    public Pilot? Pilot { get; set; } = null;
     public List<PlayInstance> PlayInstances { get; set; } = [];
 }

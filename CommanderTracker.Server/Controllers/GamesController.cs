@@ -31,8 +31,7 @@ public class GamesController(DataContext context, UserManager<AppUser> userManag
             .ThenBy(game => game.Id)
             .Include(game => game.PlayInstances.OrderBy(playInstance => playInstance.EndPosition))
             .Include(game => game.PlayInstances)
-                .ThenInclude(playInstance => playInstance.PlayGroupDeck)
-                    .ThenInclude(pgd => pgd.Deck)
+                .ThenInclude(playInstance => playInstance.Deck)
             .Include(game => game.PlayInstances)
                 .ThenInclude(playInstance => playInstance.Pilot)
             .Include(game => game.PlayGroup)
@@ -50,8 +49,7 @@ public class GamesController(DataContext context, UserManager<AppUser> userManag
                 .ThenBy(game => game.Id)
             .Include(game => game.PlayInstances.OrderBy(playInstance => playInstance.EndPosition))
             .Include(game => game.PlayInstances)
-                .ThenInclude(playInstance => playInstance.PlayGroupDeck)
-                    .ThenInclude(pgd => pgd.Deck)
+                .ThenInclude(playInstance => playInstance.Deck)
             .Include(game => game.PlayInstances)
                 .ThenInclude(playInstance => playInstance.Pilot)
             .Include(game => game.PlayGroup)
@@ -70,8 +68,7 @@ public class GamesController(DataContext context, UserManager<AppUser> userManag
             .Include(game => game.PlayInstances)
                 .ThenInclude(playInstance => playInstance.Pilot)
             .Include(game => game.PlayInstances)
-                .ThenInclude(playInstance => playInstance.PlayGroupDeck)
-                    .ThenInclude(pgd => pgd.Deck)
+                .ThenInclude(playInstance => playInstance.Deck)
             .Include(game => game.PlayGroup)
             .FirstOrDefaultAsync();
 
@@ -148,7 +145,7 @@ public class GamesController(DataContext context, UserManager<AppUser> userManag
         foreach (var playInstanceCreateRequest in request.PlayInstances)
         {
             var playInstance = PlayInstanceDTOMapper
-                .ToPlayInstance(playInstanceCreateRequest, game.Id, appUser.Id);
+                .ToPlayInstance(playInstanceCreateRequest, game.Id, playGroupId, appUser.Id);
 
             _context.PlayInstances.Add(playInstance);
         }

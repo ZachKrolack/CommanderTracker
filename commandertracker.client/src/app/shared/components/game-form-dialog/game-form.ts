@@ -1,5 +1,6 @@
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { GameCreateRequest } from 'src/app/core/models/game.model';
+import { PlayGroupDeck } from 'src/app/core/models/playGroupDeck.model';
 import { PlayInstanceCreateRequest } from 'src/app/core/models/playInstance.model';
 
 export type GameForm = {
@@ -9,7 +10,7 @@ export type GameForm = {
 };
 
 export type PlayInstanceForm = {
-    playGroupDeckId: FormControl<string | null>;
+    playGroupDeck: FormControl<PlayGroupDeck | null>;
     pilotId: FormControl<string | null>;
     turnOrder: FormControl<number | null>;
     endPosition: FormControl<number | null>;
@@ -36,11 +37,12 @@ export function parseGameCreateRequest(
 export function parsePlayInstanceCreateRequest(
     form: FormGroup<PlayInstanceForm>
 ): PlayInstanceCreateRequest {
-    const { playGroupDeckId, pilotId, turnOrder, endPosition, notes } =
+    const { playGroupDeck, pilotId, turnOrder, endPosition, notes } =
         form.value;
 
     return {
-        playGroupDeckId: playGroupDeckId!,
+        deckId: playGroupDeck!.deck!.id,
+        playGroupDeckId: playGroupDeck!.id,
         pilotId: pilotId!,
         turnOrder: turnOrder!,
         endPosition: endPosition!,

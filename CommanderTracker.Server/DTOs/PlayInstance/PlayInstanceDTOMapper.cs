@@ -12,9 +12,10 @@ public class PlayInstanceDTOMapper
             TurnOrder = playInstance.TurnOrder,
             EndPosition = playInstance.EndPosition,
             Notes = playInstance.Notes,
-            PlayGroupDeckId = playInstance.PlayGroupDeckId,
+            DeckId = playInstance.DeckId,
             GameId = playInstance.GameId,
             PilotId = playInstance.PilotId,
+            PlayGroupId = playInstance.PlayGroupId,
             CreatedDate = playInstance.CreatedDate,
             UpdatedDate = playInstance.UpdatedDate,
             CreatedById = playInstance.CreatedById,
@@ -36,6 +37,7 @@ public class PlayInstanceDTOMapper
             UpdatedById = playInstance.UpdatedById,
             Game = GameDTOMapper.ToGameResponseDTO(playInstance.Game),
             Pilot = PilotDTOMapper.ToPilotBaseResponseDTO(playInstance.Pilot),
+            PlayGroup = PlayGroupDTOMapper.ToPlayGroupBaseResponseDTO(playInstance.PlayGroup)
         };
     }
 
@@ -51,8 +53,9 @@ public class PlayInstanceDTOMapper
             UpdatedDate = playInstance.UpdatedDate,
             CreatedById = playInstance.CreatedById,
             UpdatedById = playInstance.UpdatedById,
-            PlayGroupDeck = PlayGroupDeckDTOMapper.ToPlayGroupDeckBaseResponseDTO(playInstance.PlayGroupDeck),
-            Pilot = PilotDTOMapper.ToPilotBaseResponseDTO(playInstance.Pilot)
+            Deck = DeckDTOMapper.ToDeckBaseResponseDTO(playInstance.Deck),
+            Pilot = PilotDTOMapper.ToPilotBaseResponseDTO(playInstance.Pilot),
+            PlayGroup = PlayGroupDTOMapper.ToPlayGroupBaseResponseDTO(playInstance.PlayGroup)
         };
     }
 
@@ -68,21 +71,24 @@ public class PlayInstanceDTOMapper
             UpdatedDate = playInstance.UpdatedDate,
             CreatedById = playInstance.CreatedById,
             UpdatedById = playInstance.UpdatedById,
-            PlayGroupDeck = PlayGroupDeckDTOMapper.ToPlayGroupDeckBaseResponseDTO(playInstance.PlayGroupDeck),
-            Game = GameDTOMapper.ToGameResponseDTO(playInstance.Game)
+            Deck = DeckDTOMapper.ToDeckBaseResponseDTO(playInstance.Deck),
+            Game = GameDTOMapper.ToGameResponseDTO(playInstance.Game),
+            PlayGroup = PlayGroupDTOMapper.ToPlayGroupBaseResponseDTO(playInstance.PlayGroup)
         };
     }
 
-    public static PlayInstance ToPlayInstance(PlayInstanceCreateRequestDTO request, Guid gameId, string createdById)
+    public static PlayInstance ToPlayInstance(PlayInstanceCreateRequestDTO request, Guid gameId, Guid playGroupId, string createdById)
     {
         return new PlayInstance
         {
             TurnOrder = request.TurnOrder,
             EndPosition = request.EndPosition,
             Notes = request.Notes,
-            PlayGroupDeckId = request.PlayGroupDeckId,
-            PilotId = request.PilotId,
+            DeckId = request.DeckId,
             GameId = gameId,
+            PilotId = request.PilotId,
+            PlayGroupDeckId = request.PlayGroupDeckId,
+            PlayGroupId = playGroupId,
             CreatedById = createdById,
             UpdatedById = createdById
         };

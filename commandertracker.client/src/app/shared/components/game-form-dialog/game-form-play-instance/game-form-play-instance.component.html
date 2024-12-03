@@ -14,15 +14,15 @@
     <div class="flex space-x-4">
         <mat-form-field>
             <mat-label>Deck</mat-label>
-            <mat-select formControlName="playGroupDeckId">
-                @for (pgd of decks; track pgd.id) {
-                    <mat-option [value]="pgd.id">{{
+            <mat-select formControlName="playGroupDeck">
+                @for (pgd of playGroupDecks; track pgd.id) {
+                    <mat-option [value]="pgd">{{
                         pgd.deck.name
                     }}</mat-option>
                 }
             </mat-select>
             @if (
-                form.controls.playGroupDeckId.errors?.[
+                form.controls.playGroupDeck.errors?.[
                     "required"
                 ]
             ) {

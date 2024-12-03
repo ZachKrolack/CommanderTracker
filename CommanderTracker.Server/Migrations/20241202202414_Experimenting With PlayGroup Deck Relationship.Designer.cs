@@ -3,6 +3,7 @@ using System;
 using CommanderTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CommanderTracker.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20241202202414_Experimenting With PlayGroup Deck Relationship")]
+    partial class ExperimentingWithPlayGroupDeckRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -292,6 +295,10 @@ namespace CommanderTracker.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("deck_id");
 
+                    b.Property<Guid?>("PilotId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("pilot_id");
+
                     b.Property<Guid>("PlayGroupId")
                         .HasColumnType("uuid")
                         .HasColumnName("play_group_id");
@@ -310,6 +317,8 @@ namespace CommanderTracker.Migrations
                     b.HasIndex("CreatedById");
 
                     b.HasIndex("DeckId");
+
+                    b.HasIndex("PilotId");
 
                     b.HasIndex("PlayGroupId");
 
@@ -643,19 +652,23 @@ namespace CommanderTracker.Migrations
             modelBuilder.Entity("CommanderTracker.Models.PlayGroupDeck", b =>
                 {
                     b.HasOne("CommanderTracker.Models.AppUser", "CreatedBy")
-                        .WithMany()
+                        .WithMany("PlayGroupDecks")
                         .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CommanderTracker.Models.Deck", "Deck")
-                        .WithMany()
+                        .WithMany("PlayGroupDecks")
                         .HasForeignKey("DeckId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CommanderTracker.Models.PlayGroup", "PlayGroup")
+                    b.HasOne("CommanderTracker.Models.Pilot", "Pilot")
                         .WithMany()
+                        .HasForeignKey("PilotId");
+
+                    b.HasOne("CommanderTracker.Models.PlayGroup", "PlayGroup")
+                        .WithMany("PlayGroupDecks")
                         .HasForeignKey("PlayGroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -669,6 +682,8 @@ namespace CommanderTracker.Migrations
                     b.Navigation("CreatedBy");
 
                     b.Navigation("Deck");
+
+                    b.Navigation("Pilot");
 
                     b.Navigation("PlayGroup");
 
@@ -810,6 +825,8 @@ namespace CommanderTracker.Migrations
 
                     b.Navigation("Pilots");
 
+                    b.Navigation("PlayGroupDecks");
+
                     b.Navigation("PlayGroups");
 
                     b.Navigation("PlayInstances");
@@ -817,6 +834,8 @@ namespace CommanderTracker.Migrations
 
             modelBuilder.Entity("CommanderTracker.Models.Deck", b =>
                 {
+                    b.Navigation("PlayGroupDecks");
+
                     b.Navigation("PlayInstances");
                 });
 
@@ -835,6 +854,8 @@ namespace CommanderTracker.Migrations
                     b.Navigation("Games");
 
                     b.Navigation("Pilots");
+
+                    b.Navigation("PlayGroupDecks");
 
                     b.Navigation("PlayInstances");
                 });

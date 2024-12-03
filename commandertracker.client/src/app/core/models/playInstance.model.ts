@@ -1,6 +1,7 @@
+import { Deck } from './deck.model';
 import { Game } from './game.model';
 import { Pilot } from './pilot.model';
-import { PlayGroupDeck } from './playGroupDeck.model';
+import { PlayGroup } from './playGroup.model';
 import { BaseModel } from './utils';
 
 type CorePlayInstance = {
@@ -12,16 +13,18 @@ type CorePlayInstance = {
 type BasePlayInstance = BaseModel & CorePlayInstance;
 
 type PlayInstance = BasePlayInstance & {
-    playGroupDeck: PlayGroupDeck;
+    deck: Deck;
     game: Game;
     pilot: Pilot;
+    playGroup: PlayGroup;
 };
 
-export type DeckPlayInstance = Omit<PlayInstance, 'playGroupDeck'>;
+export type DeckPlayInstance = Omit<PlayInstance, 'deck'>;
 export type GamePlayInstance = Omit<PlayInstance, 'game'>;
 export type PilotPlayInstance = Omit<PlayInstance, 'pilot'>;
 
 export type PlayInstanceCreateRequest = CorePlayInstance & {
-    playGroupDeckId: string;
+    deckId: string;
     pilotId: string;
+    playGroupDeckId: string;
 };

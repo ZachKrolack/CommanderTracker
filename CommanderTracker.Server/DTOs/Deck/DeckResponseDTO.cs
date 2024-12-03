@@ -10,5 +10,6 @@ public class DeckBaseResponseDTO : BaseResponseDTO
 
 public class DeckResponseDTO : DeckBaseResponseDTO
 {
-    public required List<PlayGroupDeckResponseDTO> PlayGroupDecks { get; set; }
+    public required List<PlayGroupBaseResponseDTO> PlayGroups { get; set; }
+    public required List<DeckPlayInstanceResponseDTO> PlayInstances { get; set;}
 }

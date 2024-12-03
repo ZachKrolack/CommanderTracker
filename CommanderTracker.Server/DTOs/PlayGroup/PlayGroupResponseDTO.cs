@@ -6,7 +6,7 @@ public class PlayGroupBaseResponseDTO : BaseResponseDTO {
 
 public class PlayGroupResponseDTO : PlayGroupBaseResponseDTO
 {
+    public List<DeckBaseResponseDTO> Decks { get; set; } = [];
     public List<GameBaseResponseDTO> Games { get; set; } = [];
     public List<PilotBaseResponseDTO> Pilots { get; set; } = [];
-    public List<PlayGroupDeckBaseResponseDTO> Decks { get; set; } = [];
 }

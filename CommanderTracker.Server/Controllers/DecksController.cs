@@ -42,8 +42,6 @@ namespace CommanderTracker.Controllers
             return await _context.PlayGroupDecks
                 .Where(pgd => pgd.PlayGroupId == playGroupId)
                 .Include(pgd => pgd.Deck)
-                .Include(pgd => pgd.PlayGroup)
-                // .Include(pgd => pgd.Pilot)
                 .Select(pgd => PlayGroupDeckDTOMapper.ToPlayGroupDeckBaseResponseDTO(pgd))
                 .ToListAsync();
         }
@@ -56,33 +54,25 @@ namespace CommanderTracker.Controllers
             var userId = User.GetId();
             var appUser = await _userManager.FindByIdAsync(userId);
 
-            if (appUser == null) { return Unauthorized(); }         
+            if (appUser == null) { return Unauthorized(); }
 
             var deck = await _context.Decks
                 .Where(deck => deck.Id == deckId)
-                .Include(deck => deck.CreatedBy)
-                .Include(deck => deck.PlayGroupDecks)   
-                    .ThenInclude(deck => deck.PlayInstances
-                        .OrderByDescending(playInstance => playInstance.CreatedDate)
-                            .ThenBy(playInstance => playInstance.Id))
-                .Include(deck => deck.PlayGroupDecks)
-                    .ThenInclude(deck => deck.PlayInstances)
-                        .ThenInclude(pi => pi.Pilot)
-                .Include(deck => deck.PlayGroupDecks)
-                    .ThenInclude(deck => deck.PlayInstances)
-                        .ThenInclude(pi => pi.Game)
-                            .ThenInclude(game => game.PlayInstances)
-                                .ThenInclude(pi => pi.PlayGroupDeck)
-                                    .ThenInclude(pgd => pgd.Deck)
-                .Include(deck => deck.PlayGroupDecks)
-                    .ThenInclude(deck => deck.PlayInstances)
-                        .ThenInclude(pi => pi.Game)
-                            .ThenInclude(game => game.PlayInstances)
-                                .ThenInclude(pi => pi.Pilot)
-                .Include(deck => deck.PlayGroupDecks)
-                    .ThenInclude(deck => deck.PlayInstances)
-                        .ThenInclude(pi => pi.Game)
-                            .ThenInclude(game => game.PlayGroup)
+                .Include(deck => deck.PlayInstances
+                    .OrderByDescending(playInstance => playInstance.CreatedDate)
+                        .ThenBy(playInstance => playInstance.Id))
+                .Include(deck => deck.PlayInstances)
+                    .ThenInclude(pi => pi.Game)
+                        .ThenInclude(game => game.PlayInstances)
+                            .ThenInclude(pgd => pgd.Deck)
+                .Include(deck => deck.PlayInstances)
+                    .ThenInclude(pi => pi.Game)
+                        .ThenInclude(game => game.PlayInstances)
+                            .ThenInclude(pi => pi.Pilot)
+                .Include(deck => deck.PlayInstances)
+                    .ThenInclude(pi => pi.Game)
+                        .ThenInclude(game => game.PlayGroup)
+                .Include(deck => deck.PlayGroups)
                 .FirstOrDefaultAsync();
 
             if (deck == null) { return NotFound(); }
@@ -97,9 +87,7 @@ namespace CommanderTracker.Controllers
         {
             var deck = await _context.PlayGroupDecks
                 .Where(pgd => pgd.PlayGroupId == playGroupId && pgd.DeckId == deckId)
-                .Include(pgd => pgd.Deck)
-                .Include(pgd => pgd.PlayGroup)
-                // .Include(pgd => pgd.Pilot)         
+                .Include(pgd => pgd.Deck)       
                 .Include(pgd => pgd.PlayInstances
                     .OrderByDescending(playInstance => playInstance.CreatedDate)
                     .ThenBy(playInstance => playInstance.Id))
@@ -209,8 +197,7 @@ namespace CommanderTracker.Controllers
 
             var playGroupDeckRequest = new PlayGroupDeckCreateRequestDTO
             {
-                DeckId = deck.Id,
-                // PilotId = null // TODO
+                DeckId = deck.Id
             };
 
             var playGroupDeck = PlayGroupDeckDTOMapper.ToPlayGroupDeck(playGroupDeckRequest, playGroupId, appUser.Id);

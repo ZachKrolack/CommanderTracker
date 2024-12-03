@@ -8,10 +8,10 @@
     <div class="flex flex-col">
         <a 
             class="hover:underline"
-            [routerLink]="['/', 'play-groups', playInstance.playGroupDeck.playGroup.id, 'decks', playInstance.playGroupDeck.deck.id]"
+            [routerLink]="['/', 'play-groups', playInstance.playGroup.id, 'decks', playInstance.deck.id]"
         >
-            {{ playInstance.playGroupDeck.deck.name }}
+            {{ playInstance.deck.name }}
         </a>
-        <app-color-identity-display [isReadOnly]="true" [colorIdentityString]="playInstance.playGroupDeck.deck.colorIdentity | toColorIdentityString"></app-color-identity-display>
+        <app-color-identity-display [isReadOnly]="true" [colorIdentityString]="playInstance.deck.colorIdentity | toColorIdentityString"></app-color-identity-display>
     </div>
 </div>

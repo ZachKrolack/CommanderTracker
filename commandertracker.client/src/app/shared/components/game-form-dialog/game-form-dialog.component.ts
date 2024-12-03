@@ -61,7 +61,7 @@ export type GameFormDialogData = {
 export class GameFormDialogComponent implements OnInit {
     form!: FormGroup<GameForm>;
 
-    decks$!: Observable<PlayGroupDeck[]>;
+    playGroupDecks$!: Observable<PlayGroupDeck[]>;
     pilots$!: Observable<Pilot[]>;
 
     get playGroupId(): string {
@@ -81,7 +81,7 @@ export class GameFormDialogComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.decks$ = this.getDecks(this.playGroupId);
+        this.playGroupDecks$ = this.getPlayGroupDecks(this.playGroupId);
         this.pilots$ = this.getPilots(this.playGroupId);
 
         this.form = this.initForm();
@@ -119,7 +119,9 @@ export class GameFormDialogComponent implements OnInit {
         );
     }
 
-    private getDecks(playGroupId: string): Observable<PlayGroupDeck[]> {
+    private getPlayGroupDecks(
+        playGroupId: string
+    ): Observable<PlayGroupDeck[]> {
         return this.deckApiService.getPlayGroupDecks(playGroupId).pipe(
             // map((decks: PlayGroupDeck[]) =>
             //     decks.map((deck) => deck.deck as Deck)
@@ -150,8 +152,7 @@ export class GameFormDialogComponent implements OnInit {
         playInstanceIndex: number | null = null
     ): FormGroup<PlayInstanceForm> {
         return new FormGroup<PlayInstanceForm>({
-            // deckId: new FormControl<string | null>(null, Validators.required),
-            playGroupDeckId: new FormControl<string | null>(
+            playGroupDeck: new FormControl<PlayGroupDeck | null>(
                 null,
                 Validators.required
             ),
