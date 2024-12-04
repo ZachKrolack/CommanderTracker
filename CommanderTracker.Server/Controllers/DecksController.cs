@@ -81,6 +81,11 @@ namespace CommanderTracker.Controllers
             if (deck == null) { return NotFound(); }
             if (appUser.Id != deck.CreatedById) { return NotFound(); }
 
+            var avgEndPosition = await _context.PlayInstances
+                .Where(pi => pi.DeckId == deckId)
+                .Select(pi => pi.EndPosition)
+                .AverageAsync();
+
             return DeckDTOMapper.ToDeckResponseDTO(deck);
         }
 
@@ -109,6 +114,11 @@ namespace CommanderTracker.Controllers
                 .FirstOrDefaultAsync();
 
             if (deck == null) { return NotFound(); }
+
+            var avgEndPosition = await _context.PlayInstances
+                .Where(pgd => pgd.PlayGroupId == playGroupId && pgd.DeckId == deckId)
+                .Select(pi => pi.EndPosition)
+                .AverageAsync();
 
             return PlayGroupDeckDTOMapper.ToPlayGroupDeckResponseDTO(deck);
         }
@@ -213,6 +223,43 @@ namespace CommanderTracker.Controllers
                 DeckDTOMapper.ToDeckBaseResponseDTO(deck));
         }
 
+        // POST: api/PlayGroups/5/Decks
+        [HttpPost("play-groups/{playGroupId}/decks/{deckId}")]
+        [Authorize]
+        public async Task<ActionResult<DeckBaseResponseDTO>> PostPlayGroupDeck(Guid playGroupId, Guid deckId)
+        {
+            var userId = User.GetId();
+            var appUser = await _userManager.FindByIdAsync(userId);
+
+            if (appUser == null) { return Unauthorized(); }
+
+            var playGroup = await _context.PlayGroups.FindAsync(playGroupId);
+
+            if (playGroup == null) { return NotFound(); }
+            if (appUser.Id != playGroup.CreatedById) { return NotFound(); }
+
+            var deck = await _context.Decks.FindAsync(deckId);
+
+            if (deck == null) { return NotFound(); }
+            if (appUser.Id != deck.CreatedById) { return NotFound(); }
+
+            var playGroupDeckRequest = new PlayGroupDeckCreateRequestDTO
+            {
+                DeckId = deckId
+            };
+
+            var playGroupDeck = PlayGroupDeckDTOMapper.ToPlayGroupDeck(playGroupDeckRequest, playGroupId, appUser.Id);
+
+            _context.PlayGroupDecks.Add(playGroupDeck);
+
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(
+                nameof(PostPlayGroupDeck),
+                new { id = deck.Id },
+                DeckDTOMapper.ToDeckBaseResponseDTO(deck));
+        }
+
         // DELETE: api/Decks/5
         [HttpDelete("decks/{deckId}")]
         [Authorize]
@@ -229,6 +276,30 @@ namespace CommanderTracker.Controllers
             if (appUser.Id != deck.CreatedById) { return NotFound(); }
 
             _context.Decks.Remove(deck);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        // DELETE: api/PlayGroups/5/Decks/5
+        [HttpDelete("play-groups/{playGroupId}/decks/{deckId}")]
+        [Authorize]
+        public async Task<IActionResult> DeletePlayGroupDeck(Guid playGroupId, Guid deckId)
+        {
+            var userId = User.GetId();
+            var appUser = await _userManager.FindByIdAsync(userId);
+
+            if (appUser == null) { return Unauthorized(); }
+
+            // TODO: Deck Authorization?
+
+            var playGroupDeck = await _context.PlayGroupDecks
+                .Where(pgd => pgd.PlayGroupId == playGroupId && pgd.DeckId == deckId)
+                .FirstOrDefaultAsync();
+
+            if (playGroupDeck == null) { return NotFound(); }
+
+            _context.PlayGroupDecks.Remove(playGroupDeck);
             await _context.SaveChangesAsync();
 
             return NoContent();

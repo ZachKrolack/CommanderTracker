@@ -28,7 +28,7 @@ import { PlayGroupService } from './play-group.service';
 export class PlayGroupComponent implements OnInit {
     @Input() playGroupId!: string;
 
-    playGroup$!: Observable<PlayGroup>;
+    playGroup!: PlayGroup;
 
     constructor(
         private playGroupApiService: PlayGroupApiService,
@@ -36,11 +36,17 @@ export class PlayGroupComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.playGroup$ = this.getPlayGroup(this.playGroupId);
-        this.playGroupService.playGroup$ = this.playGroup$;
+        this.getPlayGroup(this.playGroupId).subscribe((playGroup) => {
+            /**
+             * Set PlayGroup in local service so play group child routes
+             * can access play group data without re-fetching.
+             */
+            this.playGroupService.playGroup = playGroup;
+            this.playGroup = playGroup;
+        });
     }
 
-    private getPlayGroup(id: string): Observable<PlayGroup> {
-        return this.playGroupApiService.getPlayGroup(id);
+    private getPlayGroup(playGroupId: string): Observable<PlayGroup> {
+        return this.playGroupApiService.getPlayGroup(playGroupId);
     }
 }

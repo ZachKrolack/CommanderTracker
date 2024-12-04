@@ -30,7 +30,8 @@ public class DeckDTOMapper
             CreatedDate = deck.CreatedDate,
             UpdatedDate = deck.UpdatedDate,
             CreatedById = deck.CreatedById,
-            UpdatedById = deck.UpdatedById
+            UpdatedById = deck.UpdatedById,
+            PlayCount = deck.PlayInstances.Count
         };
     }
 

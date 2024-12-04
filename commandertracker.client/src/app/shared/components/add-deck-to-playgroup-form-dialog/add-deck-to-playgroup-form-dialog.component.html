@@ -1,0 +1,27 @@
+<app-dialog-header>Add Existing Deck to Play Group</app-dialog-header>
+<mat-dialog-content>
+    <form [formGroup]="form">
+        @if (decks$ | async; as decks) {
+            <mat-form-field>
+                <mat-label>Deck</mat-label>
+                <mat-select formControlName="deckId">
+                    @for (deck of (decks | addableDecks : playGroupDecks); track deck.id) {
+                        <mat-option [value]="deck.id">
+                            {{ deck.name }}
+                        </mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+        }
+    </form>
+</mat-dialog-content>
+<app-dialog-footer>
+    <app-dialog-cancel-button></app-dialog-cancel-button>
+    <button
+        mat-button
+        [disabled]="!form.valid || form.pristine"
+        (click)="submit()"
+    >
+        Submit
+    </button>
+</app-dialog-footer>

@@ -1,22 +1,26 @@
-@if (playGroup$ | async; as playGroup) {
-    @if (playGroup | isCreatedBy : userId) {
-        <button mat-button (click)="openDeckFormDialog()" aria-label="">
-            <mat-icon>add</mat-icon>
-            <span>Add Deck</span>
-        </button>
-        
-        <mat-divider class="my-4"></mat-divider>
-    }
+ @if (playGroup | isCreatedBy : userId) {
+    <button mat-button (click)="openDeckFormDialog()" aria-label="">
+        <mat-icon>add</mat-icon>
+        <span>Create Deck</span>
+    </button>
 
     @if (playGroupDecks$ | async; as playGroupDecks) {
-        <app-play-group-decks-table
-            [playGroupDecks]="playGroupDecks"
-            [playGroup]="playGroup"
-            [userId]="userId"
-            (handleEditDeck)="openDeckFormDialog($event)"
-            (handleRemoveDeckFromPlayGroup)="openRemoveDeckFromPlayGroupDialog($event)"
-        >
-        </app-play-group-decks-table>
+        <button mat-button (click)="openAddDeckToPlayGroupFormDialog(playGroupDecks)" aria-label="">
+            <mat-icon>playlist_add</mat-icon>
+            <span>Add Existing Deck to Play Group</span>
+        </button>
     }
     
+    <mat-divider class="my-4"></mat-divider>
+}
+
+@if (playGroupDecks$ | async; as playGroupDecks) {
+    <app-play-group-decks-table
+        [playGroupDecks]="playGroupDecks"
+        [playGroup]="playGroup"
+        [userId]="userId"
+        (handleEditDeck)="openDeckFormDialog($event)"
+        (handleRemoveDeckFromPlayGroup)="openRemoveDeckFromPlayGroupDialog($event)"
+    >
+    </app-play-group-decks-table>
 }

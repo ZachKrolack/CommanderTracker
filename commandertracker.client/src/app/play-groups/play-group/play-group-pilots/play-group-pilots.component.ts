@@ -34,7 +34,8 @@ export class PlayGroupPilotsComponent implements OnInit {
 
     userId: string | null = null;
     pilots$!: Observable<Pilot[]>;
-    playGroup$!: Observable<PlayGroup>;
+
+    playGroup!: PlayGroup;
 
     constructor(
         private playGroupService: PlayGroupService,
@@ -46,7 +47,7 @@ export class PlayGroupPilotsComponent implements OnInit {
     ngOnInit(): void {
         this.userId = this.authService.userId;
         this.pilots$ = this.getPilots(this.playGroupId);
-        this.playGroup$ = this.playGroupService.playGroup$;
+        this.playGroup = this.playGroupService.playGroup;
     }
 
     openPilotFormDialog(pilot?: Pilot): void {

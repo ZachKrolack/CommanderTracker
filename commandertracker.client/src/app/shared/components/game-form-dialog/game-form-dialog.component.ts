@@ -122,12 +122,9 @@ export class GameFormDialogComponent implements OnInit {
     private getPlayGroupDecks(
         playGroupId: string
     ): Observable<PlayGroupDeck[]> {
-        return this.deckApiService.getPlayGroupDecks(playGroupId).pipe(
-            // map((decks: PlayGroupDeck[]) =>
-            //     decks.map((deck) => deck.deck as Deck)
-            // ), // TODO
-            shareReplay()
-        );
+        return this.deckApiService
+            .getPlayGroupDecks(playGroupId)
+            .pipe(shareReplay());
     }
 
     private getPilots(playGroupId: string): Observable<Pilot[]> {

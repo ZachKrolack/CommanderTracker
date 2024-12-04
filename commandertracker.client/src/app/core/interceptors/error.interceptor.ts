@@ -13,7 +13,7 @@ export const errorInterceptor: HttpInterceptorFn = (
     next: HttpHandlerFn
 ): Observable<HttpEvent<any>> => {
     return next(req).pipe(
-        catchError((err: any) => {
+        catchError((err: HttpErrorResponse) => {
             if (err instanceof HttpErrorResponse) {
                 // TODO
                 switch (err.status) {

@@ -4,12 +4,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { Observable } from 'rxjs';
+import { Observable, shareReplay } from 'rxjs';
 import { AuthService } from 'src/app/core/api/auth.service';
 import { DeckApiService } from 'src/app/core/api/deck.api.service';
 import { BaseDeck } from 'src/app/core/models/deck.model';
 import { PlayGroup } from 'src/app/core/models/playGroup.model';
 import { PlayGroupDeck } from 'src/app/core/models/playGroupDeck.model';
+import { AddDeckToPlaygroupFormDialogComponent } from 'src/app/shared/components/add-deck-to-playgroup-form-dialog/add-deck-to-playgroup-form-dialog.component';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { DeckFormDialogComponent } from 'src/app/shared/components/deck-form-dialog/deck-form-dialog.component';
 import { IsCreatedByPipe } from 'src/app/shared/pipes/is-created-by.pipe';
@@ -35,7 +36,8 @@ export class PlayGroupDecksComponent implements OnInit {
 
     userId: string | null = null;
     playGroupDecks$!: Observable<PlayGroupDeck[]>;
-    playGroup$!: Observable<PlayGroup>;
+
+    playGroup!: PlayGroup;
 
     constructor(
         private deckApiService: DeckApiService,
@@ -47,7 +49,7 @@ export class PlayGroupDecksComponent implements OnInit {
     ngOnInit(): void {
         this.userId = this.authService.userId;
         this.playGroupDecks$ = this.getDecks(this.playGroupId);
-        this.playGroup$ = this.playGroupService.playGroup$;
+        this.playGroup = this.playGroupService.playGroup;
     }
 
     openDeckFormDialog(deck?: BaseDeck): void {
@@ -56,28 +58,46 @@ export class PlayGroupDecksComponent implements OnInit {
             { data: { playGroupId: this.playGroupId, deck } }
         );
 
-        dialogRef.afterClosed().subscribe((shouldUpdate: boolean) => {
+        dialogRef.afterClosed().subscribe((shouldUpdate: boolean = false) => {
             if (shouldUpdate) {
                 this.playGroupDecks$ = this.getDecks(this.playGroupId);
             }
         });
     }
 
-    openRemoveDeckFromPlayGroupDialog(id: string): void {
+    openAddDeckToPlayGroupFormDialog(playGroupDecks: PlayGroupDeck[]): void {
+        const dialogRef =
+            this.dialog.open<AddDeckToPlaygroupFormDialogComponent>(
+                AddDeckToPlaygroupFormDialogComponent,
+                { data: { playGroupId: this.playGroupId, playGroupDecks } }
+            );
+
+        dialogRef.afterClosed().subscribe((shouldUpdate: boolean = false) => {
+            if (shouldUpdate) {
+                this.playGroupDecks$ = this.getDecks(this.playGroupId);
+            }
+        });
+    }
+
+    openRemoveDeckFromPlayGroupDialog(deckId: string): void {
         const dialogRef = this.dialog.open<
             ConfirmationDialogComponent,
-            any,
+            any, // TODO
             boolean
         >(ConfirmationDialogComponent, {});
 
         dialogRef.afterClosed().subscribe((shouldRemove: boolean = false) => {
             if (shouldRemove) {
-                // TODO
+                this.deckApiService
+                    .removeDeckFromPlayGroup(this.playGroupId, deckId)
+                    .subscribe(() => {
+                        this.playGroupDecks$ = this.getDecks(this.playGroupId);
+                    });
             }
         });
     }
 
     private getDecks(id: string): Observable<PlayGroupDeck[]> {
-        return this.deckApiService.getPlayGroupDecks(id);
+        return this.deckApiService.getPlayGroupDecks(id).pipe(shareReplay());
     }
 }

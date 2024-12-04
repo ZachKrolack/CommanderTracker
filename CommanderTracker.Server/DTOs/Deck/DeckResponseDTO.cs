@@ -12,4 +12,5 @@ public class DeckResponseDTO : DeckBaseResponseDTO
 {
     public required List<PlayGroupBaseResponseDTO> PlayGroups { get; set; }
     public required List<DeckPlayInstanceResponseDTO> PlayInstances { get; set;}
+    public int? PlayCount { get; set; }
 }

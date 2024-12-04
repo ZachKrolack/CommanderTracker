@@ -1,11 +1,8 @@
 <app-page-container>
-    @if (playGroup$ | async; as playGroup) {
+    @if (playGroup) {
         <app-page-header>{{ playGroup.name }}</app-page-header>
-
         <app-play-group-nav></app-play-group-nav>
-
         <mat-divider class="my-4"></mat-divider>
-    
         <router-outlet></router-outlet>
     }
 </app-page-container>

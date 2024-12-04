@@ -1,15 +1,11 @@
-@if (playGroup$ | async; as playGroup) {
-    @if (playGroup | isCreatedBy : userId) {
-        <button mat-button (click)="openGameFormDialog()" aria-label="">
-            <mat-icon>add</mat-icon>
-            <span>Add Game</span>
-        </button>
-        
-        <mat-divider class="my-4"></mat-divider>
-    }
+@if (playGroup | isCreatedBy : userId) {
+    <button mat-button (click)="openGameFormDialog()" aria-label="">
+        <mat-icon>add</mat-icon>
+        <span>Add Game</span>
+    </button>
     
+    <mat-divider class="my-4"></mat-divider>
 }
-
 
 @if (games$ | async; as games) {
     <div>
@@ -20,4 +16,3 @@
         }
     </div>
 }
-

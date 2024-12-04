@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
 import { Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { LOGIN_URL, REGISTER_URL } from '../constants/api';
 import {
     EXPIRES_LOCAL_STORAGE_KEY,
     TOKEN_LOCAL_STORAGE_KEY
@@ -32,13 +33,13 @@ export class AuthService {
 
     register(request: RegisterRequest): Observable<TokenResponse> {
         return this.http
-            .post<TokenResponse>(`${this.URL}/register`, request)
+            .post<TokenResponse>(`${this.URL}/${REGISTER_URL}`, request)
             .pipe(tap((res) => this.setSession(res)));
     }
 
     login(request: LoginRequest): Observable<TokenResponse> {
         return this.http
-            .post<TokenResponse>(`${this.URL}/login`, request)
+            .post<TokenResponse>(`${this.URL}/${LOGIN_URL}`, request)
             .pipe(tap((res) => this.setSession(res)));
     }
 

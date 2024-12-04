@@ -44,6 +44,13 @@ export class DeckApiService {
         );
     }
 
+    addDeckToPlayGroup(playGroupId: string, deckId: string): Observable<Deck> {
+        return this.http.post<Deck>(
+            `${this.ROOT}/${this.PLAY_GROUPS}/${playGroupId}/${this.DECKS}/${deckId}`,
+            null
+        );
+    }
+
     getDeck(deckId: string): Observable<Deck> {
         return this.http.get<Deck>(`${this.ROOT}/${this.DECKS}/${deckId}`);
     }
@@ -66,5 +73,14 @@ export class DeckApiService {
 
     deleteDeck(deckId: string): Observable<void> {
         return this.http.delete<void>(`${this.ROOT}/${this.DECKS}/${deckId}`);
+    }
+
+    removeDeckFromPlayGroup(
+        playGroupId: string,
+        deckId: string
+    ): Observable<void> {
+        return this.http.delete<void>(
+            `${this.ROOT}/${this.PLAY_GROUPS}/${playGroupId}/${this.DECKS}/${deckId}`
+        );
     }
 }

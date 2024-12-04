@@ -43,6 +43,11 @@ public class PilotsController(DataContext context, UserManager<AppUser> userMana
 
         if (pilot == null) { return NotFound(); }
 
+        var avgEndPosition = await _context.PlayInstances
+            .Where(pi => pi.PilotId == pilotId)
+            .Select(pi => pi.EndPosition)
+            .AverageAsync();
+
         return PilotDTOMapper.ToPilotResponseDTO(pilot);
     }
 

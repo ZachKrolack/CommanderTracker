@@ -89,7 +89,7 @@ export class DeckFormDialogComponent implements OnInit {
         this.form = this.initForm(this.deck);
     }
 
-    submit() {
+    submit(): void {
         const submissionObservable: Observable<Deck | void> = this.isNew
             ? this.createDeck()
             : this.updateDeck();
