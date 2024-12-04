@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PlayGroupTableComponent } from './play-group-table.component';
+import { PlayGroupsTableComponent } from './play-groups-table.component';
 
-describe('PlayGroupTableComponent', () => {
-  let component: PlayGroupTableComponent;
-  let fixture: ComponentFixture<PlayGroupTableComponent>;
+describe('PlayGroupsTableComponent', () => {
+  let component: PlayGroupsTableComponent;
+  let fixture: ComponentFixture<PlayGroupsTableComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PlayGroupTableComponent]
+      imports: [PlayGroupsTableComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(PlayGroupTableComponent);
+    fixture = TestBed.createComponent(PlayGroupsTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

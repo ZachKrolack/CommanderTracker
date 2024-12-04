@@ -17,7 +17,7 @@ import { PlayGroup } from 'src/app/core/models/playGroup.model';
 import { IsCreatedByPipe } from 'src/app/shared/pipes/is-created-by.pipe';
 
 @Component({
-    selector: 'app-play-group-table',
+    selector: 'app-play-groups-table',
     standalone: true,
     imports: [
         CommonModule,
@@ -29,10 +29,10 @@ import { IsCreatedByPipe } from 'src/app/shared/pipes/is-created-by.pipe';
         RouterLink,
         IsCreatedByPipe
     ],
-    templateUrl: './play-group-table.component.html',
-    styleUrl: './play-group-table.component.scss'
+    templateUrl: './play-groups-table.component.html',
+    styleUrl: './play-groups-table.component.scss'
 })
-export class PlayGroupTableComponent implements OnInit, AfterViewInit {
+export class PlayGroupsTableComponent implements OnInit, AfterViewInit {
     @Input() playGroups!: PlayGroup[];
     dataSource!: MatTableDataSource<PlayGroup>;
 

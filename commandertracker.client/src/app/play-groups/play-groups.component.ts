@@ -11,7 +11,7 @@ import { PlayGroup } from '../core/models/playGroup.model';
 import { PageContainerComponent } from '../shared/components/page/page-container/page-container.component';
 import { PageHeaderComponent } from '../shared/components/page/page-header/page-header.component';
 import { PlayGroupFormDialogComponent } from '../shared/components/play-group-form-dialog/play-group-form-dialog.component';
-import { PlayGroupTableComponent } from './play-group-table/play-group-table.component';
+import { PlayGroupsTableComponent } from './play-groups-table/play-groups-table.component';
 
 @Component({
     selector: 'app-play-groups',
@@ -24,7 +24,7 @@ import { PlayGroupTableComponent } from './play-group-table/play-group-table.com
         MatProgressSpinnerModule,
         PageContainerComponent,
         PageHeaderComponent,
-        PlayGroupTableComponent
+        PlayGroupsTableComponent
     ],
     templateUrl: './play-groups.component.html',
     styleUrl: './play-groups.component.scss'
