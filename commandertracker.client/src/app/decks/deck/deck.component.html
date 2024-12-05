@@ -1,6 +1,8 @@
 <app-page-container>
     @if (deck$ | async; as deck) {
         <app-page-header>{{ deck.name }}</app-page-header>
+
+        <mat-divider class="mb-4"></mat-divider>
     
         @for(playInstance of deck.playInstances; track playInstance.id;) {
             <div class="mb-4">

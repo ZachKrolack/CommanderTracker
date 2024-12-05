@@ -2,8 +2,10 @@ import { CommonModule } from '@angular/common';
 import {
     AfterViewInit,
     Component,
+    EventEmitter,
     Input,
     OnInit,
+    Output,
     ViewChild
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -36,6 +38,11 @@ export class PlayGroupsTableComponent implements OnInit, AfterViewInit {
     @Input() playGroups!: PlayGroup[];
     dataSource!: MatTableDataSource<PlayGroup>;
 
+    @Output() handleEditPlayGroup: EventEmitter<PlayGroup> =
+        new EventEmitter<PlayGroup>();
+    @Output() handleDeletePlayGroup: EventEmitter<string> =
+        new EventEmitter<string>();
+
     userId: string | null = null;
 
     displayedColumns: string[] = ['name', 'actions'];
@@ -51,5 +58,13 @@ export class PlayGroupsTableComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit(): void {
         this.dataSource.sort = this.sort;
+    }
+
+    editPlayGroup(playGroup: PlayGroup): void {
+        this.handleEditPlayGroup.emit(playGroup);
+    }
+
+    deletePlayGroup(id: string): void {
+        this.handleDeletePlayGroup.emit(id);
     }
 }

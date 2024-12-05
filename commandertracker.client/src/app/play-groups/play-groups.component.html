@@ -11,7 +11,12 @@
     <mat-divider class="my-4"></mat-divider>
     
     @if (playGroups$ | async; as playGroups) {
-        <app-play-groups-table [playGroups]="playGroups"></app-play-groups-table>
+        <app-play-groups-table
+            [playGroups]="playGroups"
+            (handleEditPlayGroup)="openPlayGroupFormDialog($event)"
+            (handleDeletePlayGroup)="openDeletePlayGroupDialog($event)"
+        >
+        </app-play-groups-table>
     } @else {
         <div class="my-16 flex justify-center items-center">
             <mat-spinner></mat-spinner>

@@ -8,6 +8,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Observable } from 'rxjs';
 import { PlayGroupApiService } from '../core/api/play-group.api.service';
 import { PlayGroup } from '../core/models/playGroup.model';
+import { ConfirmationDialogComponent } from '../shared/components/confirmation-dialog/confirmation-dialog.component';
 import { PageModule } from '../shared/components/page/page.module';
 import { PlayGroupFormDialogComponent } from '../shared/components/play-group-form-dialog/play-group-form-dialog.component';
 import { PlayGroupsTableComponent } from './play-groups-table/play-groups-table.component';
@@ -39,14 +40,31 @@ export class PlayGroupsComponent implements OnInit {
         this.playGroups$ = this.getPlayGroups();
     }
 
-    openPlayGroupFormDialog(): void {
+    openPlayGroupFormDialog(playGroup?: PlayGroup): void {
         const dialogRef = this.dialog.open<PlayGroupFormDialogComponent>(
-            PlayGroupFormDialogComponent
+            PlayGroupFormDialogComponent,
+            { data: { playGroup } }
         );
 
         dialogRef.afterClosed().subscribe((shouldUpdate: boolean = false) => {
             if (shouldUpdate) {
                 this.playGroups$ = this.getPlayGroups();
+            }
+        });
+    }
+
+    openDeletePlayGroupDialog(id: string): void {
+        const dialogRef = this.dialog.open<
+            ConfirmationDialogComponent,
+            any, // TODO
+            boolean
+        >(ConfirmationDialogComponent, {});
+
+        dialogRef.afterClosed().subscribe((shouldDelete: boolean = false) => {
+            if (shouldDelete) {
+                this.playGroupApiService.deletePlayGroup(id).subscribe(() => {
+                    this.playGroups$ = this.getPlayGroups();
+                });
             }
         });
     }

@@ -16,13 +16,14 @@
                 </button>
 
                 <mat-menu #menu xPosition="before">
-                    <button mat-menu-item aria-label="">
+                    <button mat-menu-item (click)="editPlayGroup(playGroup)" aria-label="">
                         <mat-icon>edit</mat-icon>
                         <span>Edit Play Group</span>
                     </button>
                 
                     <button
                         mat-menu-item
+                        (click)="deletePlayGroup(playGroup.id)"
                         aria-label=""
                     >
                         <mat-icon class="text-error">delete</mat-icon>

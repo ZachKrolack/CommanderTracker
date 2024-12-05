@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDividerModule } from '@angular/material/divider';
 import { Observable } from 'rxjs';
 import { DeckApiService } from 'src/app/core/api/deck.api.service';
 import { Deck } from 'src/app/core/models/deck.model';
@@ -9,7 +10,7 @@ import { PageModule } from 'src/app/shared/components/page/page.module';
 @Component({
     selector: 'app-deck',
     standalone: true,
-    imports: [CommonModule, PageModule, GameSummaryComponent],
+    imports: [CommonModule, MatDividerModule, PageModule, GameSummaryComponent],
     templateUrl: './deck.component.html',
     styleUrl: './deck.component.scss'
 })

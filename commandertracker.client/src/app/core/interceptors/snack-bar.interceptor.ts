@@ -10,7 +10,30 @@ import { inject } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { LOGIN_URL, REGISTER_URL } from '../constants/api';
+import { API_CONSTANTS } from '../constants/api';
+
+const MODEL_URLS: Set<string> = new Set<string>([
+    API_CONSTANTS.DECKS_URL,
+    API_CONSTANTS.GAMES_URL,
+    API_CONSTANTS.PILOTS_URL,
+    API_CONSTANTS.PLAY_GROUPS_URL
+]);
+
+function parseModelFromUrl(url: string): string {
+    const splitUrl: string[] = url.split('/');
+
+    if (!splitUrl.length) return '';
+
+    const model = splitUrl
+        .reverse()
+        .find((segment) => MODEL_URLS.has(segment.toLowerCase()));
+
+    return model ?? '';
+}
+
+function normalizeModelName(model: string): string {
+    return model.slice(0, -1).replace('-', ' ');
+}
 
 export const snackBarInterceptor: HttpInterceptorFn = (
     req: HttpRequest<any>,
@@ -33,8 +56,8 @@ export const snackBarInterceptor: HttpInterceptorFn = (
      * Do not show success snack bar for requests made to these URLs.
      */
     const URL_BLACKLIST: Set<string> = new Set<string>([
-        `${environment.apiRoot}/${LOGIN_URL}`,
-        `${environment.apiRoot}/${REGISTER_URL}`
+        `${environment.apiRoot}/${API_CONSTANTS.LOGIN_URL}`,
+        `${environment.apiRoot}/${API_CONSTANTS.REGISTER_URL}`
     ]);
 
     return next(req).pipe(
@@ -45,24 +68,29 @@ export const snackBarInterceptor: HttpInterceptorFn = (
                 ACCEPTED_METHODS.has(req.method) &&
                 !URL_BLACKLIST.has(req.url)
             ) {
+                let model = parseModelFromUrl(req.url);
+                model = normalizeModelName(model);
+
                 switch (req.method) {
                     case 'POST':
-                        snackBar.open('Created', 'close');
+                        snackBar.open(`Successfully created ${model}`, 'close');
                         break;
                     case 'PUT':
-                        snackBar.open('Updated', 'close');
+                        snackBar.open(`Successfully updated ${model}`, 'close');
                         break;
                     case 'PATCH':
-                        snackBar.open('Updated', 'close');
+                        snackBar.open(`Successfully updated ${model}`, 'close');
                         break;
                     case 'DELETE':
-                        snackBar.open('Deleted', 'close');
+                        snackBar.open(`Successfully deleted ${model}`, 'close');
                         break;
                     default:
+                    // TODO
                 }
             }
         }),
         catchError((err: HttpErrorResponse) => {
+            // TODO
             snackBar.open('Error', 'close');
 
             return throwError(() => err);
