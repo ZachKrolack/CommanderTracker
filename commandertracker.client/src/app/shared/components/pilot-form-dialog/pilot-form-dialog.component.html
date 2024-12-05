@@ -1,7 +1,7 @@
 <app-dialog-header>{{ title }}</app-dialog-header>
 <mat-dialog-content>
     <form [formGroup]="form">
-        <p>
+        <div class="mb-2">
             <mat-form-field>
                 <mat-label>Player Name</mat-label>
                 <input
@@ -10,8 +10,11 @@
                     formControlName="name"
                     cdkFocusInitial
                 />
+                @if (form.controls.name.errors?.['required']) {
+                    <mat-error>{{ 'required' | formError }}</mat-error>
+                }
             </mat-form-field>
-        </p>
+        </div>
     </form>
 </mat-dialog-content>
 <app-dialog-footer>

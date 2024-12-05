@@ -21,12 +21,11 @@ import { Observable, shareReplay } from 'rxjs';
 import { DeckApiService } from 'src/app/core/api/deck.api.service';
 import { GameApiService } from 'src/app/core/api/game.api.service';
 import { PilotApiService } from 'src/app/core/api/pilot.api.service';
+import { GAME_CONSTANTS } from 'src/app/core/constants/game';
 import { Game, GameCreateRequest } from 'src/app/core/models/game.model';
 import { Pilot } from 'src/app/core/models/pilot.model';
 import { PlayGroupDeck } from 'src/app/core/models/playGroupDeck.model';
-import { DialogCancelButtonComponent } from '../dialog/dialog-cancel-button/dialog-cancel-button.component';
-import { DialogFooterComponent } from '../dialog/dialog-footer/dialog-footer.component';
-import { DialogHeaderComponent } from '../dialog/dialog-header/dialog-header.component';
+import { DialogModule } from '../dialog/dialog.module';
 import {
     GameForm,
     PlayInstanceForm,
@@ -50,9 +49,7 @@ export type GameFormDialogData = {
         FormsModule,
         ReactiveFormsModule,
         MatIconModule,
-        DialogHeaderComponent,
-        DialogFooterComponent,
-        DialogCancelButtonComponent,
+        DialogModule,
         GameFormPlayInstanceComponent
     ],
     templateUrl: './game-form-dialog.component.html',
@@ -63,6 +60,9 @@ export class GameFormDialogComponent implements OnInit {
 
     playGroupDecks$!: Observable<PlayGroupDeck[]>;
     pilots$!: Observable<Pilot[]>;
+
+    minPlayers = GAME_CONSTANTS.MIN_PLAYERS;
+    maxPlayers = GAME_CONSTANTS.MAX_PLAYERS;
 
     get playGroupId(): string {
         return this.data.playGroupId;
@@ -85,6 +85,8 @@ export class GameFormDialogComponent implements OnInit {
         this.pilots$ = this.getPilots(this.playGroupId);
 
         this.form = this.initForm();
+
+        this.addPlayInstance();
     }
 
     addPlayInstance(): void {
@@ -140,7 +142,10 @@ export class GameFormDialogComponent implements OnInit {
             notes: new FormControl<string>('', { nonNullable: true }),
             playInstances: new FormArray<FormGroup<PlayInstanceForm>>(
                 [],
-                [Validators.minLength(2), Validators.maxLength(8)]
+                [
+                    Validators.minLength(this.minPlayers),
+                    Validators.maxLength(this.maxPlayers)
+                ]
             )
         });
     }
@@ -156,11 +161,13 @@ export class GameFormDialogComponent implements OnInit {
             pilotId: new FormControl<string | null>(null, Validators.required),
             turnOrder: new FormControl<number | null>(playInstanceIndex, [
                 Validators.required,
-                Validators.min(1)
+                Validators.min(1),
+                Validators.max(this.maxPlayers)
             ]),
             endPosition: new FormControl<number | null>(playInstanceIndex, [
                 Validators.required,
-                Validators.min(1)
+                Validators.min(1),
+                Validators.max(this.maxPlayers)
             ]),
             notes: new FormControl<string>('', { nonNullable: true })
         });

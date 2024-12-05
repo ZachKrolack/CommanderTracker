@@ -4,18 +4,12 @@ import { Observable } from 'rxjs';
 import { DeckApiService } from 'src/app/core/api/deck.api.service';
 import { Deck } from 'src/app/core/models/deck.model';
 import { GameSummaryComponent } from 'src/app/shared/components/game-summary/game-summary.component';
-import { PageContainerComponent } from 'src/app/shared/components/page/page-container/page-container.component';
-import { PageHeaderComponent } from 'src/app/shared/components/page/page-header/page-header.component';
+import { PageModule } from 'src/app/shared/components/page/page.module';
 
 @Component({
     selector: 'app-deck',
     standalone: true,
-    imports: [
-        CommonModule,
-        PageContainerComponent,
-        PageHeaderComponent,
-        GameSummaryComponent
-    ],
+    imports: [CommonModule, PageModule, GameSummaryComponent],
     templateUrl: './deck.component.html',
     styleUrl: './deck.component.scss'
 })

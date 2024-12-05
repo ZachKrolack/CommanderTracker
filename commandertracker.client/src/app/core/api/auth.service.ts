@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
 import { Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { LOGIN_URL, REGISTER_URL } from '../constants/api';
+import { API_CONSTANTS } from '../constants/api';
 import {
     EXPIRES_LOCAL_STORAGE_KEY,
     TOKEN_LOCAL_STORAGE_KEY
@@ -19,7 +19,9 @@ import {
     providedIn: 'root'
 })
 export class AuthService {
-    private readonly URL = `${environment.apiRoot}`;
+    private readonly ROOT = `${environment.apiRoot}`;
+    private readonly REGISTER = API_CONSTANTS.REGISTER_URL;
+    private readonly LOGIN = API_CONSTANTS.LOGIN_URL;
 
     private get appUserClaims(): AppUserClaims | null {
         return this.getAppUserClaims();
@@ -33,13 +35,13 @@ export class AuthService {
 
     register(request: RegisterRequest): Observable<TokenResponse> {
         return this.http
-            .post<TokenResponse>(`${this.URL}/${REGISTER_URL}`, request)
+            .post<TokenResponse>(`${this.ROOT}/${this.REGISTER}`, request)
             .pipe(tap((res) => this.setSession(res)));
     }
 
     login(request: LoginRequest): Observable<TokenResponse> {
         return this.http
-            .post<TokenResponse>(`${this.URL}/${LOGIN_URL}`, request)
+            .post<TokenResponse>(`${this.ROOT}/${this.LOGIN}`, request)
             .pipe(tap((res) => this.setSession(res)));
     }
 

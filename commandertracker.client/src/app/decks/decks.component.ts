@@ -12,8 +12,7 @@ import {
     DeckFormDialogComponent,
     DeckFormDialogData
 } from '../shared/components/deck-form-dialog/deck-form-dialog.component';
-import { PageContainerComponent } from '../shared/components/page/page-container/page-container.component';
-import { PageHeaderComponent } from '../shared/components/page/page-header/page-header.component';
+import { PageModule } from '../shared/components/page/page.module';
 import { DecksTableComponent } from './decks-table/decks-table.component';
 
 @Component({
@@ -24,8 +23,7 @@ import { DecksTableComponent } from './decks-table/decks-table.component';
         MatButtonModule,
         MatIconModule,
         MatDividerModule,
-        PageContainerComponent,
-        PageHeaderComponent,
+        PageModule,
         DecksTableComponent
     ],
     templateUrl: './decks.component.html',

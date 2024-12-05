@@ -2,16 +2,21 @@
 <mat-dialog-content>
     <form [formGroup]="form">
         @if (decks$ | async; as decks) {
-            <mat-form-field>
-                <mat-label>Deck</mat-label>
-                <mat-select formControlName="deckId">
-                    @for (deck of (decks | addableDecks : playGroupDecks); track deck.id) {
-                        <mat-option [value]="deck.id">
-                            {{ deck.name }}
-                        </mat-option>
+            <div class="mb-2">
+                <mat-form-field>
+                    <mat-label>Deck</mat-label>
+                    <mat-select formControlName="deckId">
+                        @for (deck of (decks | addableDecks : playGroupDecks); track deck.id) {
+                            <mat-option [value]="deck.id">
+                                {{ deck.name }}
+                            </mat-option>
+                        }
+                    </mat-select>
+                    @if (form.controls.deckId.errors?.['required']) {
+                        <mat-error>{{ 'required' | formError }}</mat-error>
                     }
-                </mat-select>
-            </mat-form-field>
+                </mat-form-field>
+            </div>
         }
     </form>
 </mat-dialog-content>

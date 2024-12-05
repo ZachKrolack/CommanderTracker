@@ -1,7 +1,7 @@
 <app-dialog-header>Add Game</app-dialog-header>
 <mat-dialog-content>
     <form [formGroup]="form">
-        <div>
+        <div class="mb-2">
             <mat-form-field>
                 <mat-label>Number of Turns</mat-label>
                 <input
@@ -11,10 +11,17 @@
                     formControlName="turns"
                     cdkFocusInitial
                 />
+                @if (
+                form.controls.turns.errors?.[
+                    "required"
+                ]
+            ) {
+                <mat-error>This field is required</mat-error>
+            }
             </mat-form-field>
         </div>
 
-        <div>
+        <div class="mb-2">
             <mat-form-field>
                 <mat-label>Notes</mat-label>
                 <textarea
@@ -49,14 +56,18 @@
     </form>
 </mat-dialog-content>
 <app-dialog-footer>
-    <button mat-button class="float-start mr-auto" (click)="addPlayInstance()" aria-label="">
-        <span class="text-secondary">Add Player</span>
-        <mat-icon class="text-secondary">add</mat-icon>
+    <button 
+        mat-button class="float-start mr-auto"
+        (click)="addPlayInstance()"
+        [disabled]="playInstances.length >= maxPlayers"
+        aria-label=""
+    >
+        <span>Add Player</span>
+        <mat-icon>add</mat-icon>
     </button>
     <app-dialog-cancel-button></app-dialog-cancel-button>
     <button
         mat-button
-        
         [disabled]="!form.valid || form.pristine"
         (click)="submit()"
     >

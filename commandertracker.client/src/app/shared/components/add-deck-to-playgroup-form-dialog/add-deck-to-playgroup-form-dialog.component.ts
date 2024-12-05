@@ -19,9 +19,8 @@ import { Observable } from 'rxjs';
 import { DeckApiService } from 'src/app/core/api/deck.api.service';
 import { BaseDeck } from 'src/app/core/models/deck.model';
 import { PlayGroupDeck } from 'src/app/core/models/playGroupDeck.model';
-import { DialogCancelButtonComponent } from '../dialog/dialog-cancel-button/dialog-cancel-button.component';
-import { DialogFooterComponent } from '../dialog/dialog-footer/dialog-footer.component';
-import { DialogHeaderComponent } from '../dialog/dialog-header/dialog-header.component';
+import { FormErrorPipe } from '../../pipes/form-error.pipe';
+import { DialogModule } from '../dialog/dialog.module';
 import { AddableDecksPipe } from './addable-decks.pipe';
 
 export type AddDeckToPlayGroupFromDialogData = {
@@ -44,10 +43,9 @@ export type AddDeckToPlayGroupForm = {
         MatButtonModule,
         FormsModule,
         ReactiveFormsModule,
-        DialogHeaderComponent,
-        DialogFooterComponent,
-        DialogCancelButtonComponent,
-        AddableDecksPipe
+        DialogModule,
+        AddableDecksPipe,
+        FormErrorPipe
     ],
     templateUrl: './add-deck-to-playgroup-form-dialog.component.html',
     styleUrl: './add-deck-to-playgroup-form-dialog.component.scss'

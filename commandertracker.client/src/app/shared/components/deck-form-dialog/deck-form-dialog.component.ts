@@ -23,10 +23,9 @@ import {
     DeckCreateRequest,
     DeckUpdateRequest
 } from 'src/app/core/models/deck.model';
+import { FormErrorPipe } from '../../pipes/form-error.pipe';
 import { ColorIdentitySelectorComponent } from '../color-identity-selector/color-identity-selector.component';
-import { DialogCancelButtonComponent } from '../dialog/dialog-cancel-button/dialog-cancel-button.component';
-import { DialogFooterComponent } from '../dialog/dialog-footer/dialog-footer.component';
-import { DialogHeaderComponent } from '../dialog/dialog-header/dialog-header.component';
+import { DialogModule } from '../dialog/dialog.module';
 
 export type DeckFormDialogData = {
     playGroupId?: string;
@@ -48,10 +47,9 @@ export type DeckForm = {
         MatButtonModule,
         FormsModule,
         ReactiveFormsModule,
+        DialogModule,
         ColorIdentitySelectorComponent,
-        DialogHeaderComponent,
-        DialogFooterComponent,
-        DialogCancelButtonComponent
+        FormErrorPipe
     ],
     templateUrl: './deck-form-dialog.component.html',
     styleUrl: './deck-form-dialog.component.scss'

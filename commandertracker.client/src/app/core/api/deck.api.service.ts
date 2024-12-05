@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { DECKS_URL, PLAY_GROUPS_URL } from '../constants/api';
+import { API_CONSTANTS } from '../constants/api';
 import {
     Deck,
     DeckCreateRequest,
@@ -15,8 +15,8 @@ import { PlayGroupDeck } from '../models/playGroupDeck.model';
 })
 export class DeckApiService {
     private readonly ROOT = `${environment.apiRoot}`;
-    private readonly PLAY_GROUPS = PLAY_GROUPS_URL;
-    private readonly DECKS = DECKS_URL;
+    private readonly PLAY_GROUPS = API_CONSTANTS.PLAY_GROUPS_URL;
+    private readonly DECKS = API_CONSTANTS.DECKS_URL;
 
     constructor(private http: HttpClient) {}
 

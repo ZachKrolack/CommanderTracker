@@ -21,6 +21,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Pilot } from 'src/app/core/models/pilot.model';
 import { PlayGroupDeck } from 'src/app/core/models/playGroupDeck.model';
+import { FormErrorPipe } from 'src/app/shared/pipes/form-error.pipe';
 import {
     PilotFormDialogComponent,
     PilotFormDialogData
@@ -40,7 +41,8 @@ import { PlayInstanceForm } from '../game-form';
         ReactiveFormsModule,
         MatSelectModule,
         MatIconModule,
-        MatDividerModule
+        MatDividerModule,
+        FormErrorPipe
     ],
     templateUrl: './game-form-play-instance.component.html',
     styleUrl: './game-form-play-instance.component.scss',
@@ -55,8 +57,20 @@ export class GameFormPlayInstanceComponent {
     @Output() removed: EventEmitter<void> = new EventEmitter<void>();
     @Output() pilotCreated: EventEmitter<Pilot> = new EventEmitter<Pilot>();
 
+    get playGroupDeck(): FormControl<PlayGroupDeck | null> {
+        return this.form.controls.playGroupDeck;
+    }
+
     get pilotId(): FormControl<string | null> {
         return this.form.controls.pilotId;
+    }
+
+    get turnOrder(): FormControl<number | null> {
+        return this.form.controls.turnOrder;
+    }
+
+    get endPosition(): FormControl<number | null> {
+        return this.form.controls.endPosition;
     }
 
     constructor(private dialog: MatDialog) {}

@@ -8,8 +8,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Observable } from 'rxjs';
 import { PlayGroupApiService } from '../core/api/play-group.api.service';
 import { PlayGroup } from '../core/models/playGroup.model';
-import { PageContainerComponent } from '../shared/components/page/page-container/page-container.component';
-import { PageHeaderComponent } from '../shared/components/page/page-header/page-header.component';
+import { PageModule } from '../shared/components/page/page.module';
 import { PlayGroupFormDialogComponent } from '../shared/components/play-group-form-dialog/play-group-form-dialog.component';
 import { PlayGroupsTableComponent } from './play-groups-table/play-groups-table.component';
 
@@ -22,8 +21,7 @@ import { PlayGroupsTableComponent } from './play-groups-table/play-groups-table.
         MatIconModule,
         MatDividerModule,
         MatProgressSpinnerModule,
-        PageContainerComponent,
-        PageHeaderComponent,
+        PageModule,
         PlayGroupsTableComponent
     ],
     templateUrl: './play-groups.component.html',

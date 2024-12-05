@@ -11,7 +11,7 @@
         </button>
     </div>
 
-    <div class="flex space-x-4">
+    <div class="flex space-x-4 mb-2">
         <mat-form-field>
             <mat-label>Deck</mat-label>
             <mat-select formControlName="playGroupDeck">
@@ -21,12 +21,8 @@
                     }}</mat-option>
                 }
             </mat-select>
-            @if (
-                form.controls.playGroupDeck.errors?.[
-                    "required"
-                ]
-            ) {
-                <mat-error></mat-error>
+            @if (playGroupDeck.errors?.['required']) {
+                <mat-error>{{ 'required' | formError }}</mat-error>
             }
         </mat-form-field>
         <mat-form-field>
@@ -38,10 +34,13 @@
                     }}</mat-option>
                 }
             </mat-select>
+            @if (pilotId.errors?.['required']) {
+                <mat-error>{{ 'required' | formError }}</mat-error>
+            }
         </mat-form-field>
     </div>
 
-    <div class="flex space-x-4">
+    <div class="flex space-x-4 mb-2">
         <mat-form-field>
             <mat-label>Turn Order</mat-label>
             <input
@@ -50,6 +49,15 @@
                 min="1"
                 formControlName="turnOrder"
             />
+            @if (turnOrder.errors?.['required']) {
+                <mat-error>{{ 'required' | formError }}</mat-error>
+            }
+            @else if (turnOrder.errors?.['min']) {
+                <mat-error>{{ 'min' | formError : turnOrder }}</mat-error>
+            }
+            @else if (turnOrder.errors?.['max']) {
+                <mat-error>{{ 'max' | formError : turnOrder }}</mat-error>
+            }
         </mat-form-field>
         <mat-form-field>
             <mat-label>End Position</mat-label>
@@ -59,10 +67,19 @@
                 min="1"
                 formControlName="endPosition"
             />
+            @if (endPosition.errors?.['required']) {
+                <mat-error>{{ 'required' | formError }}</mat-error>
+            }
+            @else if (endPosition.errors?.['min']) {
+                <mat-error>{{ 'min' | formError : endPosition }}</mat-error>
+            }
+            @else if (endPosition.errors?.['max']) {
+                <mat-error>{{ 'max' | formError : endPosition }}</mat-error>
+            }
         </mat-form-field>
     </div>
 
-    <div>
+    <div class="mb-2">
         <mat-form-field>
             <mat-label>Notes</mat-label>
             <textarea

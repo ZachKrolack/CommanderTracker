@@ -20,9 +20,8 @@ import {
     PilotCreateRequest,
     PilotUpdateRequest
 } from 'src/app/core/models/pilot.model';
-import { DialogCancelButtonComponent } from '../dialog/dialog-cancel-button/dialog-cancel-button.component';
-import { DialogFooterComponent } from '../dialog/dialog-footer/dialog-footer.component';
-import { DialogHeaderComponent } from '../dialog/dialog-header/dialog-header.component';
+import { FormErrorPipe } from '../../pipes/form-error.pipe';
+import { DialogModule } from '../dialog/dialog.module';
 
 export type PilotFormDialogData = {
     pilot?: Pilot;
@@ -43,9 +42,8 @@ export type PilotForm = {
         MatButtonModule,
         FormsModule,
         ReactiveFormsModule,
-        DialogHeaderComponent,
-        DialogFooterComponent,
-        DialogCancelButtonComponent
+        DialogModule,
+        FormErrorPipe
     ],
     templateUrl: './pilot-form-dialog.component.html',
     styleUrl: './pilot-form-dialog.component.scss'

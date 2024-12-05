@@ -5,8 +5,7 @@ import { RouterOutlet } from '@angular/router';
 import { Observable } from 'rxjs';
 import { PlayGroupApiService } from 'src/app/core/api/play-group.api.service';
 import { PlayGroup } from 'src/app/core/models/playGroup.model';
-import { PageContainerComponent } from 'src/app/shared/components/page/page-container/page-container.component';
-import { PageHeaderComponent } from 'src/app/shared/components/page/page-header/page-header.component';
+import { PageModule } from 'src/app/shared/components/page/page.module';
 import { PlayGroupNavComponent } from './play-group-nav/play-group-nav.component';
 import { PlayGroupService } from './play-group.service';
 
@@ -17,8 +16,7 @@ import { PlayGroupService } from './play-group.service';
         CommonModule,
         RouterOutlet,
         PlayGroupNavComponent,
-        PageContainerComponent,
-        PageHeaderComponent,
+        PageModule,
         MatDividerModule
     ],
     providers: [PlayGroupService],
